@@ -21,6 +21,7 @@ body {
 .content {
     padding-left: 100px;
     padding-right: 100px;
+    padding-bottom: 20px;
 }
 
 .jumbotron {
@@ -112,8 +113,14 @@ h2 {
 }
 
 img.about {
-    padding-left: 100px;
-    padding-bottom: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100px;
+}
+
+table.about td {
+    font-size: large;
+    vertical-align: top;
 }
 
 hr {
@@ -152,11 +159,6 @@ code {
 
     .footer {
         padding-right: 10px;
-    }
-
-    img.about {
-        padding-left: 10px;
-        padding-bottom: 10px;
     }
 
 }
