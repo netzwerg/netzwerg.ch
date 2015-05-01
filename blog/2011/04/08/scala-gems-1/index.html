@@ -1,0 +1,83 @@
+<html>
+<head>
+
+    <title>Above, Below, and Beyond Tech Talk</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="/favicon.png" rel="icon" />
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/tomorrow-night-bright.css" />
+
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+
+    <link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container header">
+    <div class="jumbotron">
+        <h1>Above, Below, and Beyond Tech Talk</h1>
+        <p>by Rahel Lüthy</p>
+    </div>
+    <nav class="navbar navbar-default">
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archive.html">Archive</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container content">
+    <div class="info">
+    April  8, 2011
+</div>
+<h1>Scala Gems: #1</h1>
+<p>This article finally did it: <a href="http://www.infoq.com/articles/guardian_scala">“Guardian.co.uk Switching from Java to Scala”</a> – it made me jump head first into the Scala newbie pool. Of course I wanted to learn Scala for quite some time already, but I somehow never managed to get my act together.</p>
+<p>Life as a Java programmer had gotten harder over the last few years. Not that I don’t enjoy my job anymore, to the contrary, but reading about all these highly dynamic youngsters hacking together their Python/Ruby/Groovy wizardy at the speed of light has made me feel even older than I already am. Old-fashionedness at its finest: I absolutely can’t relate to all this enthusiasm for dynamic languages. Ok, I admit that some script-fu will certainly help getting this nasty little problem solved quickly, but how the heck will a huge Rails project be maintainable over 10+ years? Or do we still have to wait longer for time to tell that it will fail? Do these people write tests for each and every thing that otherwise would be checked by a compiler? Isn’t this a rather high price for a little duck-typing?</p>
+<p>I am obviously being cynical, but luckily I am not the only one in doubt. Some great brains also think that throwing away the type system is not the best compromise to make in order to get rid of Java’s (admittedly extensive) boilerplate. In <a href="http://www.parleys.com/#st=5&amp;sl=1&amp;id=10">this excellent talk</a>, Bill Venners speaks about his preference for typed languages. He mentions “deterministic refactoring” as the main benefit, which he explains like this:</p>
+<blockquote>
+<p>
+I don’t like types because I think they proof my program correct […] but because they can proof changes that I make to my programs are correct
+</p>
+<small><a href="http://www.parleys.com/#st=5&sl=1&id=10">Bill Venners</a></small>
+</blockquote>
+<p>Coming back to Scala: It seems to combine the best of all worlds – strictly typed, functional &amp; object-oriented, radically concise, and just close enough to the Java world for old-timers to transition gradually ;-)</p>
+<p>To keep my new Scala heart beating, I will start posting weekly Scala gems. Let me start with the example given in the above interview – just to illustrate what “no boilerplate” and “concise” really mean. In Java:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> HowdyClass {
+
+    <span class="kw">private</span> String name;
+
+    <span class="kw">public</span> <span class="fu">HowdyClass</span>(String name) {
+        <span class="kw">this</span>.<span class="fu">name</span> = name;
+    }
+
+
+    <span class="kw">public</span> String <span class="fu">sayHowdy</span>() {
+        <span class="kw">return</span> <span class="st">&quot;Howdy &quot;</span> + name;
+    }
+}</code></pre></div>
+<p>and in Scala:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">HowdyClass</span>(name: String) {
+    <span class="kw">def</span> sayHowdy = <span class="st">&quot;Howdy &quot;</span> + name
+}</code></pre></div>
+<p>The following example is my personal highlight after roughly two hours of playing around with the interpreter: Initializing a two-dimensional grid with indexed cells:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">Cell</span>(x: Int, y: Int)
+Seq.<span class="fu">tabulate</span>(<span class="dv">3</span>, <span class="dv">9</span>)(<span class="kw">new</span> <span class="fu">Cell</span>(_, _))</code></pre></div>
+<p>This is actually almost too concise (or at least as a functional noob it took me quite some time to understand it). Here’s a verbose equivalent which is a bit more self explanatory: <code>scala Seq.tabulate(3, 9)((x: Int, y: Int) =&gt; new Cell(x, y))</code>And now <a href="http://www.scala-lang.org/">go get it</a> and have a lot of fun!</p>
+
+</div>
+<div class="container footer">
+    <p>Written by Rahel Lüthy &mdash; Generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a></p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

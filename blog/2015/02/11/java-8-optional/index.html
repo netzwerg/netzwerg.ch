@@ -1,0 +1,102 @@
+<html>
+<head>
+
+    <title>Above, Below, and Beyond Tech Talk</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="/favicon.png" rel="icon" />
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/tomorrow-night-bright.css" />
+
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+
+    <link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container header">
+    <div class="jumbotron">
+        <h1>Above, Below, and Beyond Tech Talk</h1>
+        <p>by Rahel Lüthy</p>
+    </div>
+    <nav class="navbar navbar-default">
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archive.html">Archive</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container content">
+    <div class="info">
+    February 11, 2015
+</div>
+<h1>Java 8 Optional</h1>
+<p><a href="http://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>, inventor of the <code>null</code> reference, apologetically called it “the billion dollar mistake”.</p>
+<p>The problem with <code>null</code> is not that it was invented back in 1965, but that we are still struggling with it 50 years later. Any Java developer has probably seen and written code like this:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+String value;
+<span class="kw">if</span> (result != <span class="kw">null</span>) {
+    value = result.<span class="fu">trim</span>();
+} <span class="kw">else</span> {
+    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;
+}
+System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</code></pre></div>
+<p>In fact, most Java monoglots have probably seen and written code like this so many times, that they don’t even see the problem anymore. And yet, with Java 8, they have to deal with a solution: the <code>Optional</code> type.</p>
+<p>I recently came across this popular article: <a href="https://www.voxxed.com/blog/2015/01/embracing-void-6-refined-tricks-dealing-nulls-java/">Embracing the Void: 6 Refined Tricks for Dealing with Nulls in Java</a>. It gives a nice rundown of strategies around the <code>null</code> reference. Sadly, it discourages the use of Java 8’s <code>Optional</code>. In this post I will explain why the argumentation is flawed.</p>
+<h2 id="types-to-the-rescue">Types to the rescue</h2>
+<p>One way to re-write the above snippet using <code>Optional</code> could look like this:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+String value;
+<span class="kw">if</span> (result.<span class="fu">isPresent</span>()) {
+    value = result.<span class="fu">get</span>().<span class="fu">trim</span>();
+} <span class="kw">else</span> {
+    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;
+}
+System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</code></pre></div>
+<p>The service returns an <code>Optional&lt;String&gt;</code> and the caller is working her way around it. From a complexity point of view, the change is argueably not much of an improvement: We still need a mutable <code>value</code> variable, and the overall logic is roughly the same. And yet, the expressiveness has improved. The signature of the service has clearer semantics now. Originally, the caller of the service could not distinguish between <em>“the implementor of the service made a programming error”</em> and <em>“the value has not been found”</em> – both were resulting in <code>null</code>. This is possible now and – even better – the type system <strong>forces</strong> the caller to deal with absents values.</p>
+<h2 id="but-wait-theres-more">But wait, there’s more</h2>
+<p>Now that the semantics are straight, let’s make the <code>value</code> variable immutable and eliminate the <code>if .. else</code> construct:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+<span class="dt">final</span> String value = result.<span class="fu">orElseGet</span>(() -&gt; <span class="st">&quot;&lt;absent&gt;&quot;</span>).<span class="fu">trim</span>();</code></pre></div>
+<p>This code is safer, more expressive, and more concise than the original version, but the <code>() -&gt; &quot;...&quot;</code> clutter makes my Scala heart cringe, so I’m offering yet another variant:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+String value = result.<span class="fu">map</span>(String::trim).<span class="fu">orElse</span>(<span class="st">&quot;&lt;absent&gt;&quot;</span>);</code></pre></div>
+<p>We are taking advantage of the fact that <code>Optional</code> behaves like a collection: If it is absent, it behaves like an empty list, the call to <code>map</code> is never executed, and the result is an empty <code>Optional</code> (which we handle via <code>orElse</code>). If the result is present, it behaves like a list with one element, which we trim and return.</p>
+<h2 id="wrapping-legacy-code">Wrapping legacy code</h2>
+<p>Imagine that our original <code>service</code> interface is actually coming from a 3rd party library. You can’t simply change all the signatures to properly return <code>Option&lt;T&gt;</code>. But you can wrap the service calls and create yourself a <code>null</code>-safe world:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = Optional.<span class="fu">ofNullable</span>(legacyService.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>));</code></pre></div>
+<h2 id="unboxing-a-cat-in-a-box-in-a-box">Unboxing a cat in a box in a box</h2>
+<p>And finally: The holy grail of functional programming, <code>flatMap</code>.</p>
+<p>Let’s start with a simple <code>User</code> which has an optional middle name:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> User {
+    String <span class="fu">getName</span>();
+    Option&lt;String&gt; <span class="fu">getMiddleName</span>();
+}</code></pre></div>
+<p>Looking up the user via service is straightforward, but look at all those types:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;User&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+Optional&lt;Optional&lt;String&gt;&gt; middleName = result.<span class="fu">map</span>(User::getMiddleName);</code></pre></div>
+<p>The outer <code>Optional</code> is the result of the <code>map</code> call (presence/absence of <code>User</code>), while the inner <code>Optional</code> is wrapping the middle name value.</p>
+<p><code>flatMap</code> is our power tool to unwrap the value from nested <code>Optional</code>s:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String middleName = result.<span class="fu">flatMap</span>(User::getMiddleName).<span class="fu">orElse</span>(<span class="st">&quot;Ada&quot;</span>);</code></pre></div>
+<p>So next time you can’t remember the semantics of <code>flatMap</code>, just think of all those cats stuck in their nested boxes:</p>
+<p><img src="/images/cat.png" /></p>
+<p><em>(via <span class="citation">[@channingwalton]</span>(https://twitter.com/channingwalton/status/447778554114502657))</em></p>
+<p>I highly recommend <a href="http://danielwestheide.com/blog/2012/12/19/the-neophytes-guide-to-scala-part-5-the-option-type.html">The Neophyte’s Guide to Scala - Part 5: The Option Type</a> for anyone interested in further details.</p>
+
+</div>
+<div class="container footer">
+    <p>Written by Rahel Lüthy &mdash; Generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a></p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

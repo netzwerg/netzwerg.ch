@@ -1,0 +1,187 @@
+<html>
+<head>
+
+    <title>Above, Below, and Beyond Tech Talk</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="/favicon.png" rel="icon" />
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/tomorrow-night-bright.css" />
+
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+
+    <link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container header">
+    <div class="jumbotron">
+        <h1>Above, Below, and Beyond Tech Talk</h1>
+        <p>by Rahel Lüthy</p>
+    </div>
+    <nav class="navbar navbar-default">
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archive.html">Archive</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container content">
+    
+<div class="info">
+    March 22, 2015
+</div>
+<h1>JavaFX 3D Line</h1>
+<p>I have no experience in 3D programming whatsoever. Last week, I took my first steps in JavaFX 3D, but hit a wall when I wanted to draw a line between two points: There is no <code>Line</code> shape! The only out-of-the-box <code>Shape3D</code> classes are <code>Box</code>, <code>Cylinder</code>, <code>Sphere</code>, and <code>MeshView</code> – wow…</p>
+<p>Well, it shouldn’t be too difficult to connect the points with a slender cylinder, right?</p>
+<p>I was wrong, it took me an <em>embarrassingly</em> long time to get the trigonometry right :-)</p>
+<p>Here’s my magic crutch:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Cylinder <span class="fu">createConnection</span>(Point3D origin, Point3D target) {
+    Point3D yAxis = <span class="kw">new</span> <span class="fu">Point3D</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>);
+    Point3D diff = target.<span class="fu">subtract</span>(origin);
+    <span class="dt">double</span> height = diff.<span class="fu">magnitude</span>();
+
+    Point3D mid = target.<span class="fu">midpoint</span>(origin);
+    Translate moveToMidpoint = <span class="kw">new</span> <span class="fu">Translate</span>(mid.<span class="fu">getX</span>(), mid.<span class="fu">getY</span>(), mid.<span class="fu">getZ</span>());
+
+    Point3D axisOfRotation = diff.<span class="fu">crossProduct</span>(yAxis);
+    <span class="dt">double</span> angle = Math.<span class="fu">acos</span>(diff.<span class="fu">normalize</span>().<span class="fu">dotProduct</span>(yAxis));
+    Rotate rotateAroundCenter = <span class="kw">new</span> <span class="fu">Rotate</span>(-Math.<span class="fu">toDegrees</span>(angle), axisOfRotation);
+
+    Cylinder line = <span class="kw">new</span> <span class="fu">Cylinder</span>(<span class="dv">1</span>, height);
+
+    line.<span class="fu">getTransforms</span>().<span class="fu">addAll</span>(moveToMidpoint, rotateAroundCenter);
+
+    <span class="kw">return</span> line;
+}</code></pre></div>
+<p>To illustrate what’s going on, I created a 2D representation of all individual steps, starting off with the creation of the cylinder. By default, its center is placed at the origin:</p>
+<p><img src="/images/cylinder-1.png" width="150px" /></p>
+<p>The <code>moveToMidpoint</code> transformation moves its center to the final location (the yellow midpoint in the above image):</p>
+<p><img src="/images/cylinder-2.png" width="150px" /></p>
+<p>And finally, the <code>rotateAroundCenter</code> transformation corrects the cylinder’s direction:</p>
+<p><img src="/images/cylinder-3.png" width="150px" /></p>
+<p>Obviously, the tricky part is finding the proper axis and angle of rotation. Both are calculated relative to the <code>yAxis</code> because of the cylinder’s initial direction. The <code>axisOfRotation</code> must be perpendicular to the plane defined by the <code>yAxis</code> and the <code>diff</code> vector. To find such a perpendicular vector, we can (by definition) calculate the <a href="http://en.wikipedia.org/wiki/Cross_product">cross product</a> of the two vectors. In the 2D case, the result is equivalent to the z-axis, but in 3D it may be tilted.</p>
+<p>The angle is calculated based on the <a href="http://en.wikipedia.org/wiki/Dot_product">dot product</a> (aka scalar product) of the two vectors, which is defined by</p>
+<p><code>A • B = |A| |B| cos(alpha)</code></p>
+<p>If <code>A</code> and <code>B</code> are both unit vectors, this becomes</p>
+<p><code>A • B = cos(alpha)</code></p>
+<p>which we can resolve to</p>
+<p><code>alpha = acos(A • B)</code></p>
+<p>That’s it!</p>
+
+<hr />
+
+<div class="info">
+    February 27, 2015
+</div>
+<h1>Scala Gems #9: Regex Extractors</h1>
+<p>Suppose you have a simple date string: <code>&quot;2015-02-27&quot;</code></p>
+<p>Regular expressions allow to parse the date and extract parts thereof[^1]: <code>(\d\d\d\d)-(\d\d)-(\d\d)</code> defines a pattern which matches the digits and defines capturing groups for the year, month, and day parts.</p>
+<p>In Java, a simple example usage would look like this:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Pattern pattern = Pattern.<span class="fu">compile</span>(<span class="st">&quot;(</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d)-(</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d)-(</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d)&quot;</span>);
+Matcher matcher = pattern.<span class="fu">matcher</span>(<span class="st">&quot;2015-02-27&quot;</span>);
+<span class="kw">while</span> (matcher.<span class="fu">find</span>()) {
+    System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Year: &quot;</span> + matcher.<span class="fu">group</span>(<span class="dv">1</span>));
+    System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Month: &quot;</span> + matcher.<span class="fu">group</span>(<span class="dv">2</span>));
+    System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Day: &quot;</span> + matcher.<span class="fu">group</span>(<span class="dv">3</span>));
+}</code></pre></div>
+<p>Accessing the groups by index is rather awkward and error prone. Luckily, Java 7 introduced support for named groups:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Pattern pattern = Pattern.<span class="fu">compile</span>(<span class="st">&quot;(?&lt;year&gt;</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d)-(?&lt;month&gt;</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d)-(?&lt;day&gt;</span><span class="ch">\\</span><span class="st">d</span><span class="ch">\\</span><span class="st">d)&quot;</span>);
+Matcher matcher = pattern.<span class="fu">matcher</span>(<span class="st">&quot;2015-02-27&quot;</span>);
+<span class="kw">while</span> (matcher.<span class="fu">find</span>()) {
+    System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Year: &quot;</span> + matcher.<span class="fu">group</span>(<span class="st">&quot;year&quot;</span>));
+    System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Month: &quot;</span> + matcher.<span class="fu">group</span>(<span class="st">&quot;month&quot;</span>));
+    System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Day: &quot;</span> + matcher.<span class="fu">group</span>(<span class="st">&quot;day&quot;</span>));
+}</code></pre></div>
+<p>That’s better, but I personally don’t like how the group names pollute the pattern. Regular expressions are hard to read already, the Java escape characters add yet more clutter, and the additional <code>?&lt;group&gt;</code> constructs are a kiss of death.</p>
+<p>Let’s look at how the same problem can be tackled in Scala:</p>
+<p><a href="http://www.scala-lang.org/api/current/#scala.util.matching.Regex">According to the docs</a>, the canonical way to create a <code>Regex</code> is by using the method <code>r</code>, which is provided implicitly for strings:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> Date = <span class="st">&quot;&quot;&quot;(\d\d\d\d)-(\d\d)-(\d\d)&quot;&quot;&quot;</span>.<span class="fu">r</span></code></pre></div>
+<p>Note the triple quotes, which allow to use the backslashes without further escaping. While this is nice, the true advantage of Scala is that regular expressions can be used as extractors in a pattern match. The pattern stays plain and simple, and yet we have all the freedom to name groups as we please:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="st">&quot;2015-02-27&quot;</span> <span class="kw">match</span> {
+  <span class="kw">case</span> Date(year, month, day) =&gt;
+    <span class="fu">println</span>(s<span class="st">&quot;Year: $year&quot;</span>)
+    <span class="fu">println</span>(s<span class="st">&quot;Month: $month&quot;</span>)
+    <span class="fu">println</span>(s<span class="st">&quot;Day: $day&quot;</span>)
+}</code></pre></div>
+<p>Look ma, no clutter! [^1]:Yes, using <a href="https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html">java.time.format.DateTimeFormatter</a> would be easier in this simple case.</p>
+
+<hr />
+
+<div class="info">
+    February 11, 2015
+</div>
+<h1>Java 8 Optional</h1>
+<p><a href="http://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>, inventor of the <code>null</code> reference, apologetically called it “the billion dollar mistake”.</p>
+<p>The problem with <code>null</code> is not that it was invented back in 1965, but that we are still struggling with it 50 years later. Any Java developer has probably seen and written code like this:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+String value;
+<span class="kw">if</span> (result != <span class="kw">null</span>) {
+    value = result.<span class="fu">trim</span>();
+} <span class="kw">else</span> {
+    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;
+}
+System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</code></pre></div>
+<p>In fact, most Java monoglots have probably seen and written code like this so many times, that they don’t even see the problem anymore. And yet, with Java 8, they have to deal with a solution: the <code>Optional</code> type.</p>
+<p>I recently came across this popular article: <a href="https://www.voxxed.com/blog/2015/01/embracing-void-6-refined-tricks-dealing-nulls-java/">Embracing the Void: 6 Refined Tricks for Dealing with Nulls in Java</a>. It gives a nice rundown of strategies around the <code>null</code> reference. Sadly, it discourages the use of Java 8’s <code>Optional</code>. In this post I will explain why the argumentation is flawed.</p>
+<h2 id="types-to-the-rescue">Types to the rescue</h2>
+<p>One way to re-write the above snippet using <code>Optional</code> could look like this:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+String value;
+<span class="kw">if</span> (result.<span class="fu">isPresent</span>()) {
+    value = result.<span class="fu">get</span>().<span class="fu">trim</span>();
+} <span class="kw">else</span> {
+    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;
+}
+System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</code></pre></div>
+<p>The service returns an <code>Optional&lt;String&gt;</code> and the caller is working her way around it. From a complexity point of view, the change is argueably not much of an improvement: We still need a mutable <code>value</code> variable, and the overall logic is roughly the same. And yet, the expressiveness has improved. The signature of the service has clearer semantics now. Originally, the caller of the service could not distinguish between <em>“the implementor of the service made a programming error”</em> and <em>“the value has not been found”</em> – both were resulting in <code>null</code>. This is possible now and – even better – the type system <strong>forces</strong> the caller to deal with absents values.</p>
+<h2 id="but-wait-theres-more">But wait, there’s more</h2>
+<p>Now that the semantics are straight, let’s make the <code>value</code> variable immutable and eliminate the <code>if .. else</code> construct:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+<span class="dt">final</span> String value = result.<span class="fu">orElseGet</span>(() -&gt; <span class="st">&quot;&lt;absent&gt;&quot;</span>).<span class="fu">trim</span>();</code></pre></div>
+<p>This code is safer, more expressive, and more concise than the original version, but the <code>() -&gt; &quot;...&quot;</code> clutter makes my Scala heart cringe, so I’m offering yet another variant:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+String value = result.<span class="fu">map</span>(String::trim).<span class="fu">orElse</span>(<span class="st">&quot;&lt;absent&gt;&quot;</span>);</code></pre></div>
+<p>We are taking advantage of the fact that <code>Optional</code> behaves like a collection: If it is absent, it behaves like an empty list, the call to <code>map</code> is never executed, and the result is an empty <code>Optional</code> (which we handle via <code>orElse</code>). If the result is present, it behaves like a list with one element, which we trim and return.</p>
+<h2 id="wrapping-legacy-code">Wrapping legacy code</h2>
+<p>Imagine that our original <code>service</code> interface is actually coming from a 3rd party library. You can’t simply change all the signatures to properly return <code>Option&lt;T&gt;</code>. But you can wrap the service calls and create yourself a <code>null</code>-safe world:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;String&gt; result = Optional.<span class="fu">ofNullable</span>(legacyService.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>));</code></pre></div>
+<h2 id="unboxing-a-cat-in-a-box-in-a-box">Unboxing a cat in a box in a box</h2>
+<p>And finally: The holy grail of functional programming, <code>flatMap</code>.</p>
+<p>Let’s start with a simple <code>User</code> which has an optional middle name:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> User {
+    String <span class="fu">getName</span>();
+    Option&lt;String&gt; <span class="fu">getMiddleName</span>();
+}</code></pre></div>
+<p>Looking up the user via service is straightforward, but look at all those types:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Optional&lt;User&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);
+Optional&lt;Optional&lt;String&gt;&gt; middleName = result.<span class="fu">map</span>(User::getMiddleName);</code></pre></div>
+<p>The outer <code>Optional</code> is the result of the <code>map</code> call (presence/absence of <code>User</code>), while the inner <code>Optional</code> is wrapping the middle name value.</p>
+<p><code>flatMap</code> is our power tool to unwrap the value from nested <code>Optional</code>s:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String middleName = result.<span class="fu">flatMap</span>(User::getMiddleName).<span class="fu">orElse</span>(<span class="st">&quot;Ada&quot;</span>);</code></pre></div>
+<p>So next time you can’t remember the semantics of <code>flatMap</code>, just think of all those cats stuck in their nested boxes:</p>
+<p><img src="/images/cat.png" /></p>
+<p><em>(via <span class="citation">[@channingwalton]</span>(https://twitter.com/channingwalton/status/447778554114502657))</em></p>
+<p>I highly recommend <a href="http://danielwestheide.com/blog/2012/12/19/the-neophytes-guide-to-scala-part-5-the-option-type.html">The Neophyte’s Guide to Scala - Part 5: The Option Type</a> for anyone interested in further details.</p>
+
+<hr />
+
+<a class="index-footer" href="/archive.html">Older Posts &raquo; Archive</a>
+
+</div>
+<div class="container footer">
+    <p>Written by Rahel Lüthy &mdash; Generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a></p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

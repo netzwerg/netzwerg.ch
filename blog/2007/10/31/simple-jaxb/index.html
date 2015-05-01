@@ -1,0 +1,95 @@
+<html>
+<head>
+
+    <title>Above, Below, and Beyond Tech Talk</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="/favicon.png" rel="icon" />
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/tomorrow-night-bright.css" />
+
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+
+    <link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container header">
+    <div class="jumbotron">
+        <h1>Above, Below, and Beyond Tech Talk</h1>
+        <p>by Rahel Lüthy</p>
+    </div>
+    <nav class="navbar navbar-default">
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archive.html">Archive</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container content">
+    <div class="info">
+    October 31, 2007
+</div>
+<h1>Simple JAXB</h1>
+<p>At <a href="http://www.genedata.com/screener">work</a>, we use the <em>Java Architecture for XML Binding</em> (<a href="http://en.wikipedia.org/wiki/JAXB">JAXB</a>) for almost all of our XML input/output. Our approach consists of the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>We start with the definition of a schema</li>
+<li>Use ant to compile Java classes from this schema (via xjc)</li>
+<li>Have a dedicated conversion layer where we translate back and forth between the generated Java classes and our business objects.</li>
+</ol>
+<p>We have deliberately chosen this architecture because we need total control over XML format changes (1.), want to automate the process as much as possible (2.), and want to keep all xml-related code in a dedicated layer (3.).</p>
+<p>This approach works really well for a big project. However, if all you need is reading a simple xml and accessing its data from your java classes (or vice-versa: dumping parts of your java objects to xml), you’d probably want to use something less heavy-weight.</p>
+<p>what’s quite cool, is that you can also use jaxb for such simple tasks. when the jaxb compiler generates java classes, it uses annotations like <code>@XmlRootElement</code> to map from java types to xml elements. manually annotating your java classes can thus serve as a very simple marshalling/unmarshalling strategy, which doesn’t involve a schema, nor an xjc task, nor any further manual work.</p>
+<p>Here is an example of a simple Java → XML → Java round-trip:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">JAXBContext context = JAXBContext.<span class="fu">newInstance</span>(Foo.<span class="fu">class</span>);
+
+Foo foo = <span class="kw">new</span> <span class="fu">Foo</span>();
+foo.<span class="fu">setText</span>(<span class="st">&quot;bar&quot;</span>);
+System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Original: &quot;</span> + foo);
+
+StringWriter result = <span class="kw">new</span> StringWriter();
+Marshaller marshaller = context.<span class="fu">createMarshaller</span>();
+marshaller.<span class="fu">marshal</span>(foo, result);
+String xml = <span class="kw">new</span> String(result.<span class="fu">getBuffer</span>());
+System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Marshalled: &quot;</span> + xml);
+
+Unmarshaller um = context.<span class="fu">createUnmarshaller</span>();
+Object o = um.<span class="fu">unmarshal</span>(<span class="kw">new</span> StringReader(xml));
+System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Unmarshalled: &quot;</span> + o);
+
+<span class="fu">@XmlRootElement</span>
+<span class="kw">private</span> <span class="dt">static</span> <span class="kw">class</span> Foo {
+
+    <span class="fu">@XmlAttribute</span>
+    <span class="kw">private</span> String text;
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setText</span>(String text) {
+        <span class="kw">this</span>.<span class="fu">text</span> = text;
+    }
+
+    <span class="fu">@Override</span>
+    <span class="kw">public</span> String <span class="fu">toString</span>() {
+        <span class="kw">return</span> <span class="st">&quot;[&quot;</span>
+          + Foo.<span class="fu">class</span>.<span class="fu">getSimpleName</span>()
+          + <span class="st">&quot;] &quot;</span> + text;
+    }
+}</code></pre></div>
+<p>The fact that JAXB 2.0 is part of <a href="http://java.sun.com/javase/6/">Java 6</a> makes this approach even more attractive.</p>
+
+</div>
+<div class="container footer">
+    <p>Written by Rahel Lüthy &mdash; Generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a></p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
