@@ -1,0 +1,52 @@
+---
+comments: true
+date: 2011-04-08 07:01:00
+layout: post
+slug: scala-gems-1
+title: Scala Gems: #1
+wordpress_id: 190
+---
+This article finally did it: ["Guardian.co.uk Switching from Java to Scala"](http://www.infoq.com/articles/guardian_scala) -- it made me jump head first into the Scala newbie pool. Of course I wanted to learn Scala for quite some time already, but I somehow never managed to get my act together.
+
+Life as a Java programmer had gotten harder over the last few years. Not that I don't enjoy my job anymore, to the contrary, but reading about all these highly dynamic youngsters hacking together their Python/Ruby/Groovy wizardy at the speed of light has made me feel even older than I already am. Old-fashionedness at its finest: I absolutely can't relate to all this enthusiasm for dynamic languages. Ok, I admit that some script-fu will certainly help getting this nasty little problem solved quickly, but how the heck will a huge Rails project be maintainable over 10+ years? Or do we still have to wait longer for time to tell that it will fail? Do these people write tests for each and every thing that otherwise would be checked by a compiler? Isn't this a rather high price for a little duck-typing?
+
+I am obviously being cynical, but luckily I am not the only one in doubt. Some great brains also think that throwing away the type system is not the best compromise to make in order to get rid of Java's (admittedly extensive) boilerplate. In [this excellent talk](http://www.parleys.com/#st=5&sl=1&id=10), Bill Venners speaks about his preference for typed languages. He mentions "deterministic refactoring" as the main benefit, which he explains like this: 
+
+<blockquote>
+<p>I don't like types because I think they proof my program correct [...] but  because they can proof changes that I make to my programs are correct</p>
+<small><a href="http://www.parleys.com/#st=5&sl=1&id=10">Bill Venners</a></small>
+</blockquote>
+
+Coming back to Scala: It seems to combine the best of all worlds -- strictly typed, functional & object-oriented, radically concise, and just close enough to the Java world for old-timers to transition gradually ;-)
+
+To keep my new Scala heart beating, I will start posting weekly Scala gems. Let me start with the example given in the above interview -- just to illustrate what "no boilerplate" and "concise" really mean. In Java:
+``` java
+public class HowdyClass {
+
+    private String name;
+
+    public HowdyClass(String name) {
+        this.name = name;
+    }
+
+
+    public String sayHowdy() {
+        return "Howdy " + name;
+    }
+}
+```
+and in Scala:
+``` scala
+class HowdyClass(name: String) {
+    def sayHowdy = "Howdy " + name
+}
+```
+The following example is my personal highlight after roughly two hours of playing around with the interpreter: Initializing a two-dimensional grid with indexed cells:
+``` scala
+class Cell(x: Int, y: Int)
+Seq.tabulate(3, 9)(new Cell(_, _))
+```
+This is actually almost too concise (or at least as a functional noob it took me quite some time to understand it). Here's a verbose equivalent which is a bit more self explanatory:
+``` scala
+Seq.tabulate(3, 9)((x: Int, y: Int) => new Cell(x, y))
+```And now [go get it](http://www.scala-lang.org/) and have a lot of fun!

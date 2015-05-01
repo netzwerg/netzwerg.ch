@@ -1,0 +1,25 @@
+---
+comments: true
+date: 2012-11-13 12:24:51
+layout: post
+slug: bloxorz
+title: Bloxorz
+wordpress_id: 438
+---
+Unfortunately, the [Scala course at Coursera](http://class.coursera.org/progfun-2012-001) is over. It was really an 
+excellent experience and I am desperately waiting for part two. The lectures were a bit on the slow side (luckily the player 
+featured nice high-speed playback), but the assignments were rather challenging. As far as I know, the course material will 
+stay available indefinitely, so if you missed the course, you can still sign up and watch the videos or download the 
+exercises just for fun.
+
+Due to the official code of honour, I am not allowed to discuss any actual code here, but the last assignment is still worth 
+mentioning: Based on the concept of lazy data structures, we were asked to find a generic solution to the [Bloxorz game](
+http://www.coolmath-games.com/0-bloxorz/index.html). When I initially read the assignment, I doubted that this would be 
+possible within a reasonable amount of time. But the exercises were so well crafted, that they guided us in a step-by-step 
+fashion -- in the end, I managed to get the maximal score within less than two hours.
+
+Inspired by the addictive block-rolling, I was recently playing around with CSS3. I really have no 3D experience whatsoever, 
+but here's my quick shot at some basic transformations (webkit only; put focus on cube and press left/right arrows):
+
+<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/netzwerg/Rrreu/embedded/result,js,html,css/"
+allowfullscreen="allowfullscreen" frameborder="0"></iframe>

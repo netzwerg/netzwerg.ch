@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html data-ng-app>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Simon Says</title>
+</head>
+<body gameCtrl ng-keydown="ctrl.onKeyDown($event)">
+    <div id="header" ng-click="ctrl.start()">
+        <kbd>Space</kbd>
+        <div id="state">{{ctrl.state.description}}</div>
+        <div id="level" ng-if="ctrl.sequence.length > 0">Level {{ctrl.sequence.length}}</div>
+    </div>
+    <div id="check" ng-if="ctrl.showCheckMark">&#x2713;</div>
+    <div id="buttons">
+        <div ng-repeat="button in ctrl.buttons" id="{{button.color}}"  ng-mousedown="ctrl.onClick(button)" ng-mouseup="ctrl.inactivateAll()" ng-class="{'active' : button.active}">
+            <kbd>{{button.keyBinding}}</kbd>
+        </div>
+    </div>
+<script type="application/dart" src="main.dart"></script>
+<script type="text/javascript" src="packages/browser/dart.js"></script>
+
+<!-- 'Fork me on GitHub' Ribbon (https://github.com/blog/273-github-ribbons) -->
+<a href="https://github.com/netzwerg/simon-says-dart"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+
+</body>
+</html>

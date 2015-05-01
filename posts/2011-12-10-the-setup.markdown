@@ -1,0 +1,51 @@
+---
+comments: true
+date: 2011-12-10 14:45:50
+layout: post
+slug: the-setup
+title: The Setup
+wordpress_id: 296
+---
+I started my new job at [edorasware](http://edorasware.com) last week, with a
+new & shiny 15-inch MacBook Pro. A fresh computer with a blank OS is both, a
+blessing and a curse -- it takes quite a while until it feels like home again. And
+even after a week, I still miss a few configuration settings or shortcuts here and
+there.
+
+Setting up the new machine was certainly an opportunity to consolidate the apps and 
+tools I like and need. Inspired by [The Setup](http://usesthis.com), here's what I 
+currently use to get things done:
+
+As a Java developer, I spend most of my time in [IntelliJ IDEA](http://www.jetbrains
+.com/idea), the best IDE ever (weight this statement by the fact that I used 
+Eclipse for 7+ years before). My second home is the command line. I use [iTerm2](
+http://www.iterm2.com), which has excellent search support, provides mouseless 
+copying, and is more unixy than the official _Terminal_. I'm still learning to use _
+Finder_ efficiently. The [TotalFinder](http://totalfinder.binaryage.com) plug-in, 
+with tab support and its _Folders on Top_ mode, is my latest attempt at making 
+friends.
+
+A few crucial things help me organize & navigate my workspace: I use three virtual 
+desktops (via _Mission Control_) which I access by keyboard shortcuts -- 1 for 
+Mail/Calendar, 2 for Browser, and 3 for IDEA. A launcher helps me kick-start 
+applications. I switched from Quicksilver to [Alfred](http://alfredapp.com) -- it 
+provides the same features and is under active development. [Divvy](http://mizage.
+com) tames all window sizes & positions, clearly a missing feature in OSX.
+
+Transitioning from _Snow Leopard_ to _Lion_ was more challenging than anticipated, 
+mainly because of its different mouse usage paradigms. Most of the built-in 
+gestures are easy to use, but some of them collide with my old habits (how the heck 
+can I turn off horizontal scrolling in order to re-map the swipe gesture to 
+back/forward navigation in IDEA?!). A while back I forced myself to exclusively use 
+taps (rather than clicks) on the trackpad. Wow -- the absence of the mechanical 
+noise makes such a difference, everything suddenly feels very light and smooth!
+
+These are pretty much the apps at the core. In addition, I like [Chrome](http://www.
+google.ch/chrome), [1Password](http://agilebits.com/onepassword), [TextMate](
+http://macromates.com), [Dropbox](http://dropbox.com), [Skype](http://skype.com),
+[Spotify](http://spotify.com), [Acorn](http://flyingmeat.com/acorn), [Inkscape](
+http://inkscape.org), [Lightroom](http://www.adobe.com/products/photoshoplightroom) 
+and [OmniGraffle](http://www.omnigroup.com/products/omnigraffle) -- just to name a 
+few.
+
+What are your favorite tools we should all know about?
