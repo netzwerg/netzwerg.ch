@@ -40,7 +40,7 @@
 </div>
 <h1>Java 8 Unsigned Int</h1>
 <p>When I recently profiled one of our applications, it turned out that a lot of memory was wasted on a huge number of <code>long</code> primitives. They were used to represent IDs, which were originating from a 3rd party text file. Someone must have loved huge numbers, so they chose an ID format that didn’t fit into an <code>int</code>.</p>
-<p>Well, while being huge, the IDs were at least always positive. So I was confident that some data massage would allow me to squeeze them into primitive <code>int</code> values eventually. It took me be surprise that Java 8 actually supports unsigned primitives out of the box. Guess we all missed that while wrapping our heads around lambdas and streams, right?</p>
+<p>Well, while being huge, the IDs were at least always positive. So I was confident that some data massage would allow me to squeeze them into primitive <code>int</code> values eventually. It took me by surprise that Java 8 actually supports unsigned primitives out of the box. Guess we all missed that while wrapping our heads around lambdas and streams, right?</p>
 <p>Here’s how it works:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> UnsignedIntTest {
 
