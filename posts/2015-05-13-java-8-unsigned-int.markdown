@@ -7,7 +7,7 @@ When I recently profiled one of our applications, it turned out that a lot of me
 have loved huge numbers, so they chose an ID format that didn't fit into an `int`.
 
 Well, while being huge, the IDs were at least always positive. So I was confident that some data massage would allow
-me to squeeze them into primitive `int` values eventually. It took me be surprise that Java 8 actually supports unsigned
+me to squeeze them into primitive `int` values eventually. It took me by surprise that Java 8 actually supports unsigned
 primitives out of the box. Guess we all missed that while wrapping our heads around lambdas and streams, right?
 
 Here's how it works:
