@@ -34,8 +34,7 @@
     </nav>
 </div>
 <div class="container content">
-    
-<div class="info">
+    <div class="info">
     May 29, 2015
 </div>
 <h1>Partial Function Application in Haskell</h1>
@@ -63,83 +62,6 @@ tenGreaterThan <span class="dv">42</span> <span class="co">-- also still False</
 <p>Applying <code>(&gt;10)</code> to 42 correctly gives <code>True</code>, but applying <code>(&gt;)10</code> to 42 did give <code>False</code> in the example before, right? Things that make you go hmmmm…</p>
 <p>Turns out the parenthesis are <strong>really</strong> crucial here! In Haskell there is a syntax called <a href="https://wiki.haskell.org/Section_of_an_infix_operator">sectioning</a>, which is special for partial application on infix operators. The term <code>(&gt;10)</code> corresponds to a <em>right section</em>, which is equivalent to <code>flip (&gt;) 10</code>. No wonder the semantics seemed flipped!</p>
 <p>Long story short: While it is quite intuitive that the <code>(&gt;10)</code> corresponds to a <code>\x -&gt; x &gt; 10</code> in the initial map example, the magic happens through Haskell’s special sectioning syntax.</p>
-
-<hr />
-
-<div class="info">
-    May 13, 2015
-</div>
-<h1>Java 8 Unsigned Int</h1>
-<p>When I recently profiled one of our applications, it turned out that a lot of memory was wasted on a huge number of <code>long</code> primitives. They were used to represent IDs, which were originating from a 3rd party text file. Someone must have loved huge numbers, so they chose an ID format that didn’t fit into an <code>int</code>.</p>
-<p>Well, while being huge, the IDs were at least always positive. So I was confident that some data massage would allow me to squeeze them into primitive <code>int</code> values eventually. It took me by surprise that Java 8 actually supports unsigned primitives out of the box. Guess we all missed that while wrapping our heads around lambdas and streams, right?</p>
-<p>Here’s how it works:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> UnsignedIntTest {
-
-    <span class="fu">@Test</span>
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">roundTrip</span>() {
-
-        <span class="co">// compile error: 2^32 - 1 is too large for an int</span>
-        <span class="co">// int intValue = 4294967295;</span>
-
-        <span class="dt">long</span> longValue = (<span class="dt">long</span>) Math.<span class="fu">pow</span>(<span class="dv">2</span>, <span class="dv">32</span>) - <span class="dv">1</span>;
-        String longValueAsString = String.<span class="fu">valueOf</span>(longValue);
-
-        <span class="dt">int</span> unsignedInt = Integer.<span class="fu">parseUnsignedInt</span>(longValueAsString);
-
-        <span class="dt">long</span> result = Integer.<span class="fu">toUnsignedLong</span>(unsignedInt);
-
-        <span class="fu">assertEquals</span>(longValue, result);
-
-    }
-
-}</code></pre></div>
-
-<hr />
-
-<div class="info">
-    March 22, 2015
-</div>
-<h1>JavaFX 3D Line</h1>
-<p>I have no experience in 3D programming whatsoever. Last week, I took my first steps in JavaFX 3D, but hit a wall when I wanted to draw a line between two points: There is no <code>Line</code> shape! The only out-of-the-box <code>Shape3D</code> classes are <code>Box</code>, <code>Cylinder</code>, <code>Sphere</code>, and <code>MeshView</code> – wow…</p>
-<p>Well, it shouldn’t be too difficult to connect the points with a slender cylinder, right?</p>
-<p>I was wrong, it took me an <em>embarrassingly</em> long time to get the trigonometry right :-)</p>
-<p>Here’s my magic crutch:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Cylinder <span class="fu">createConnection</span>(Point3D origin, Point3D target) {
-    Point3D yAxis = <span class="kw">new</span> <span class="fu">Point3D</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>);
-    Point3D diff = target.<span class="fu">subtract</span>(origin);
-    <span class="dt">double</span> height = diff.<span class="fu">magnitude</span>();
-
-    Point3D mid = target.<span class="fu">midpoint</span>(origin);
-    Translate moveToMidpoint = <span class="kw">new</span> <span class="fu">Translate</span>(mid.<span class="fu">getX</span>(), mid.<span class="fu">getY</span>(), mid.<span class="fu">getZ</span>());
-
-    Point3D axisOfRotation = diff.<span class="fu">crossProduct</span>(yAxis);
-    <span class="dt">double</span> angle = Math.<span class="fu">acos</span>(diff.<span class="fu">normalize</span>().<span class="fu">dotProduct</span>(yAxis));
-    Rotate rotateAroundCenter = <span class="kw">new</span> <span class="fu">Rotate</span>(-Math.<span class="fu">toDegrees</span>(angle), axisOfRotation);
-
-    Cylinder line = <span class="kw">new</span> <span class="fu">Cylinder</span>(<span class="dv">1</span>, height);
-
-    line.<span class="fu">getTransforms</span>().<span class="fu">addAll</span>(moveToMidpoint, rotateAroundCenter);
-
-    <span class="kw">return</span> line;
-}</code></pre></div>
-<p>To illustrate what’s going on, I created a 2D representation of all individual steps, starting off with the creation of the cylinder. By default, its center is placed at the origin:</p>
-<p><img src="/images/cylinder-1.png" width="150px" /></p>
-<p>The <code>moveToMidpoint</code> transformation moves its center to the final location (the yellow midpoint in the above image):</p>
-<p><img src="/images/cylinder-2.png" width="150px" /></p>
-<p>And finally, the <code>rotateAroundCenter</code> transformation corrects the cylinder’s direction:</p>
-<p><img src="/images/cylinder-3.png" width="150px" /></p>
-<p>Obviously, the tricky part is finding the proper axis and angle of rotation. Both are calculated relative to the <code>yAxis</code> because of the cylinder’s initial direction. The <code>axisOfRotation</code> must be perpendicular to the plane defined by the <code>yAxis</code> and the <code>diff</code> vector. To find such a perpendicular vector, we can (by definition) calculate the <a href="http://en.wikipedia.org/wiki/Cross_product">cross product</a> of the two vectors. In the 2D case, the result is equivalent to the z-axis, but in 3D it may be tilted.</p>
-<p>The angle is calculated based on the <a href="http://en.wikipedia.org/wiki/Dot_product">dot product</a> (aka scalar product) of the two vectors, which is defined by</p>
-<p><code>A • B = |A| |B| cos(alpha)</code></p>
-<p>If <code>A</code> and <code>B</code> are both unit vectors, this becomes</p>
-<p><code>A • B = cos(alpha)</code></p>
-<p>which we can resolve to</p>
-<p><code>alpha = acos(A • B)</code></p>
-<p>That’s it!</p>
-
-<hr />
-
-<a class="index-footer" href="/archive.html">Older Posts &raquo; Archive</a>
 
 </div>
 <div class="container footer">
