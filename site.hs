@@ -6,7 +6,7 @@ import           Hakyll
 main :: IO ()
 main = hakyll $ do
 
-    match ("favicon.png" .||. "images/**" .||. "js/**" .||. "simon/**" .||. "hotwire/**") $ do
+    match ("CNAME" .||. "favicon.png" .||. "images/**" .||. "js/**" .||. "simon/**" .||. "hotwire/**") $ do
         route   idRoute
         compile copyFileCompiler
 
