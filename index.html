@@ -36,6 +36,22 @@
 <div class="container content">
     
 <div class="info">
+    July 25, 2015
+</div>
+<h1>Mac OSX Tips & Tricks #8: Finding Files via Terminal</h1>
+<p>This is how you recursively search all <code>notes.txt</code> files in your home directory (<code>~</code>) for the text snippet <code>foo</code> (from an OSX terminal):</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mdfind</span> -name notes.txt -onlyin ~ -0 <span class="kw">|</span> <span class="kw">xargs</span> -0 grep -i <span class="st">&quot;foo&quot;</span></code></pre></div>
+<p>This has at least 3 advantages over the traditional <code>find/grep</code> combo:</p>
+<ul>
+<li><code>mdfind</code> is the terminal version of Spotlight: It is blazingly fast because it uses an index</li>
+<li><code>mdfind</code> does not lead to “Permission denied” noise</li>
+<li>The <code>-0</code> flag works around spaces in file/folder names</li>
+</ul>
+<p>Happy searching!</p>
+
+<hr />
+
+<div class="info">
     May 29, 2015
 </div>
 <h1>Partial Function Application in Haskell</h1>
@@ -93,49 +109,6 @@ tenGreaterThan <span class="dv">42</span> <span class="co">-- also still False</
     }
 
 }</code></pre></div>
-
-<hr />
-
-<div class="info">
-    March 22, 2015
-</div>
-<h1>JavaFX 3D Line</h1>
-<p>I have no experience in 3D programming whatsoever. Last week, I took my first steps in JavaFX 3D, but hit a wall when I wanted to draw a line between two points: There is no <code>Line</code> shape! The only out-of-the-box <code>Shape3D</code> classes are <code>Box</code>, <code>Cylinder</code>, <code>Sphere</code>, and <code>MeshView</code> – wow…</p>
-<p>Well, it shouldn’t be too difficult to connect the points with a slender cylinder, right?</p>
-<p>I was wrong, it took me an <em>embarrassingly</em> long time to get the trigonometry right :-)</p>
-<p>Here’s my magic crutch:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> Cylinder <span class="fu">createConnection</span>(Point3D origin, Point3D target) {
-    Point3D yAxis = <span class="kw">new</span> <span class="fu">Point3D</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>);
-    Point3D diff = target.<span class="fu">subtract</span>(origin);
-    <span class="dt">double</span> height = diff.<span class="fu">magnitude</span>();
-
-    Point3D mid = target.<span class="fu">midpoint</span>(origin);
-    Translate moveToMidpoint = <span class="kw">new</span> <span class="fu">Translate</span>(mid.<span class="fu">getX</span>(), mid.<span class="fu">getY</span>(), mid.<span class="fu">getZ</span>());
-
-    Point3D axisOfRotation = diff.<span class="fu">crossProduct</span>(yAxis);
-    <span class="dt">double</span> angle = Math.<span class="fu">acos</span>(diff.<span class="fu">normalize</span>().<span class="fu">dotProduct</span>(yAxis));
-    Rotate rotateAroundCenter = <span class="kw">new</span> <span class="fu">Rotate</span>(-Math.<span class="fu">toDegrees</span>(angle), axisOfRotation);
-
-    Cylinder line = <span class="kw">new</span> <span class="fu">Cylinder</span>(<span class="dv">1</span>, height);
-
-    line.<span class="fu">getTransforms</span>().<span class="fu">addAll</span>(moveToMidpoint, rotateAroundCenter);
-
-    <span class="kw">return</span> line;
-}</code></pre></div>
-<p>To illustrate what’s going on, I created a 2D representation of all individual steps, starting off with the creation of the cylinder. By default, its center is placed at the origin:</p>
-<p><img src="/images/cylinder-1.png" width="150px" /></p>
-<p>The <code>moveToMidpoint</code> transformation moves its center to the final location (the yellow midpoint in the above image):</p>
-<p><img src="/images/cylinder-2.png" width="150px" /></p>
-<p>And finally, the <code>rotateAroundCenter</code> transformation corrects the cylinder’s direction:</p>
-<p><img src="/images/cylinder-3.png" width="150px" /></p>
-<p>Obviously, the tricky part is finding the proper axis and angle of rotation. Both are calculated relative to the <code>yAxis</code> because of the cylinder’s initial direction. The <code>axisOfRotation</code> must be perpendicular to the plane defined by the <code>yAxis</code> and the <code>diff</code> vector. To find such a perpendicular vector, we can (by definition) calculate the <a href="http://en.wikipedia.org/wiki/Cross_product">cross product</a> of the two vectors. In the 2D case, the result is equivalent to the z-axis, but in 3D it may be tilted.</p>
-<p>The angle is calculated based on the <a href="http://en.wikipedia.org/wiki/Dot_product">dot product</a> (aka scalar product) of the two vectors, which is defined by</p>
-<p><code>A • B = |A| |B| cos(alpha)</code></p>
-<p>If <code>A</code> and <code>B</code> are both unit vectors, this becomes</p>
-<p><code>A • B = cos(alpha)</code></p>
-<p>which we can resolve to</p>
-<p><code>alpha = acos(A • B)</code></p>
-<p>That’s it!</p>
 
 <hr />
 
