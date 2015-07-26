@@ -41,7 +41,7 @@
 <h1>Mac OSX Tips & Tricks #8: Finding Files via Terminal</h1>
 <p>This is how you recursively search all <code>notes.txt</code> files in your home directory (<code>~</code>) for the text snippet <code>foo</code> (from an OSX terminal):</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mdfind</span> -name notes.txt -onlyin ~ -0 <span class="kw">|</span> <span class="kw">xargs</span> -0 grep -i <span class="st">&quot;foo&quot;</span></code></pre></div>
-<p>This has at least 3 advantages over the traditional <code>find/grep</code> combo:</p>
+<p>It has at least 3 advantages over the traditional <code>find/grep</code> combo:</p>
 <ul>
 <li><code>mdfind</code> is the terminal version of Spotlight: It is blazingly fast because it uses an index</li>
 <li><code>mdfind</code> does not lead to “Permission denied” noise</li>
