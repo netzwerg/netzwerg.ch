@@ -9,7 +9,7 @@ for the text snippet `foo` (from an OSX terminal):
 mdfind -name notes.txt -onlyin ~ -0 | xargs -0 grep -i "foo"
 ```
 
-This has at least 3 advantages over the traditional `find/grep` combo:
+It has at least 3 advantages over the traditional `find/grep` combo:
 
 * `mdfind` is the terminal version of Spotlight: It is blazingly fast because it uses an
 index
