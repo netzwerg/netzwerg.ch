@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Fachhochschule Nordwestschweiz</title>
+        <script type="text/javascript" src="elm.js"></script>
+
+    </head>
+
+    <body>
+        <audio id="audio" src="piano.ogg" preload="auto"></audio>
+    </body>
+
+    <script type="text/javascript">
+        var app = Elm.fullscreen(Elm.Main, {});
+        app.ports.playAudio.subscribe(playAudio)
+        var audio = document.getElementById('audio')
+        function playAudio() {
+            audio.pause();
+            audio.currentTime = 0
+            audio.play();
+        }
+    </script>
+
+</html>
