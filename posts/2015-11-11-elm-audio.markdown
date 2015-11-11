@@ -48,18 +48,19 @@ function playAudio() {
 }
 ```
 
-Finally, we need to wire our JS function to our Elm `isAnyKeyDown` signal. This is where Elm ports come in:
+Finally, we need to wire our JS function to our Elm signal. This is where Elm ports come in:
 
 ```elm
 port playAudio : Signal ()
 port playAudio =
-  Signal.map (\_ -> ()) isAnyKeyDown
+  Signal.map (\_ -> ()) (Signal.filter identity False isAnyKeyDown)
 ```
 
-Since our JS function doesn't need any parameters, we're mapping the boolean values of our `isAnyKeyDown` signal
-to the `()` unit type here.
+There are two things to note here: First, we're filtering our `isAnyKeyDown` to no longer contain key release events.
+Second, we're mapping our signal of boolean values to a signal of unit types `()` to match the signature of our
+parameter-less JS function.
 
-So all there is left, is to actually trigger our JS callback whenever Elm sends an event:
+All there is left, is to actually trigger the JS callback whenever Elm sends an event:
 
 ```javascript
     var app = Elm.fullscreen(Elm.Main, {});
