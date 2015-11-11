@@ -4245,6 +4245,10 @@ Elm.Main.make = function (_elm) {
       return $Basics.not($Set.isEmpty(keys));
    },
    $Keyboard.keysDown);
+   var isAnyKeyPressed = A3($Signal.filter,
+   $Basics.identity,
+   false,
+   isAnyKeyDown);
    var playAudio = Elm.Native.Port.make(_elm).outboundSignal("playAudio",
    function (v) {
       return [];
@@ -4255,12 +4259,13 @@ Elm.Main.make = function (_elm) {
          return {ctor: "_Tuple0"};
       }();
    },
-   isAnyKeyDown));
+   isAnyKeyPressed));
    var main = A2($Signal.map,
    view,
    isAnyKeyDown);
    _elm.Main.values = {_op: _op
                       ,isAnyKeyDown: isAnyKeyDown
+                      ,isAnyKeyPressed: isAnyKeyPressed
                       ,view: view
                       ,main: main};
    return _elm.Main.values;
