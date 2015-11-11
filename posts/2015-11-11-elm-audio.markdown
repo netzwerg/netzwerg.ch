@@ -4,7 +4,8 @@ date: 2015-11-11 06:30
 ---
 In preparation for a [MaKey-MaKey](http://makeymakey.com/)-workshop, I needed a simple HTML page which plays a sound
 whenever any key is pressed. I am using all sorts of excuses to write Elm lately, so here's how I ended up triggering
-the audio clip (full sources on [GitHub](https://github.com/netzwerg/elm-playground/tree/master/audio)).
+the audio clip (full sources on [GitHub](https://github.com/netzwerg/elm-playground/tree/master/audio), deployed
+version [here](http://netzwerg.ch/audio)).
 
 First, we need a signal that indicates whether any key is currently down:
 
@@ -66,5 +67,3 @@ All there is left, is to actually trigger the JS callback whenever Elm sends an 
     var app = Elm.fullscreen(Elm.Main, {});
     app.ports.playAudio.subscribe(playAudio);
 ```
-
-A deployed version of this simple example can be found [here](http://netzwerg.ch/audio).
