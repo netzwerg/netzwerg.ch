@@ -1,0 +1,69 @@
+---
+title: Play Audio via Elm
+date: 2015-11-11 06:30
+---
+In preparation for a [MaKey-MaKey](http://makeymakey.com/)-workshop, I needed a simple HTML page which plays a sound
+whenever any key is pressed. I am using all sorts of excuses to write Elm lately, so here's how I ended up triggering
+the audio clip (full sources on [GitHub](https://github.com/netzwerg/elm-playground/tree/master/audio)).
+
+First, we need a signal that indicates whether any key is currently down:
+
+```elm
+isAnyKeyDown : Signal Bool
+isAnyKeyDown =
+  Signal.map (\keys -> not (Set.isEmpty keys)) Keyboard.keysDown
+```
+
+For debugging, let's visualize our events by displaying a small note image:
+
+```elm
+view : Bool -> Html
+view isAnyKeyDown =
+  if | isAnyKeyDown -> img [ src "note.png" ] []
+     | otherwise -> div [] []
+
+main : Signal Html
+main =
+  Signal.map view isAnyKeyDown
+```
+
+Next, we need to actually play the audio. Elm itself does not support this out-of-the-box, but triggering it via HTML5
+and JavaScript is quite straight forward:
+
+```html
+<body>
+    <audio id="audio" src="piano.ogg" preload="auto"></audio>
+</body>
+```
+
+```javascript
+var audio = document.getElementById('audio')
+function playAudio() {
+    // reset if already running
+    audio.pause();
+    audio.currentTime = 0;
+
+    // go!
+    audio.play();
+}
+```
+
+Finally, we need to wire our JS function to our Elm `isAnyKeyDown` signal. This is where Elm ports come in:
+
+```elm
+port playAudio : Signal ()
+port playAudio =
+  Signal.map (\_ -> ()) isAnyKeyDown
+```
+
+Since our JS function doesn't need any parameters, we're mapping the boolean values of our `isAnyKeyDown` signal
+to the `()` unit type here.
+
+So all there is left, is to actually trigger our JS callback whenever Elm sends an event:
+
+```javascript
+    var app = Elm.fullscreen(Elm.Main, {});
+    app.ports.playAudio.subscribe(playAudio);
+```
+
+A deployed version of this simple example can be found [here](http://netzwerg.ch/audio).
