@@ -38,7 +38,7 @@
     November 11, 2015
 </div>
 <h1>Play Audio via Elm</h1>
-<p>In preparation for a <a href="http://makeymakey.com/">MaKey-MaKey</a>-workshop, I needed a simple HTML page which plays a sound whenever any key is pressed. I am using all sorts of excuses to write Elm lately, so here’s how I ended up triggering the audio clip (full sources on <a href="https://github.com/netzwerg/elm-playground/tree/master/audio">GitHub</a>).</p>
+<p>In preparation for a <a href="http://makeymakey.com/">MaKey-MaKey</a>-workshop, I needed a simple HTML page which plays a sound whenever any key is pressed. I am using all sorts of excuses to write Elm lately, so here’s how I ended up triggering the audio clip (full sources on <a href="https://github.com/netzwerg/elm-playground/tree/master/audio">GitHub</a>, deployed version <a href="http://netzwerg.ch/audio">here</a>).</p>
 <p>First, we need a signal that indicates whether any key is currently down:</p>
 <pre class="elm"><code>isAnyKeyDown : Signal Bool
 isAnyKeyDown =
@@ -73,7 +73,6 @@ port playAudio =
 <p>All there is left, is to actually trigger the JS callback whenever Elm sends an event:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">    <span class="kw">var</span> app = <span class="ot">Elm</span>.<span class="fu">fullscreen</span>(<span class="ot">Elm</span>.<span class="fu">Main</span>, {});
     <span class="ot">app</span>.<span class="ot">ports</span>.<span class="ot">playAudio</span>.<span class="fu">subscribe</span>(playAudio);</code></pre></div>
-<p>A deployed version of this simple example can be found <a href="http://netzwerg.ch/audio">here</a>.</p>
 
 </div>
 <div class="container footer">
