@@ -65,12 +65,12 @@ main =
     <span class="co">// go!</span>
     <span class="ot">audio</span>.<span class="fu">play</span>();
 }</code></pre></div>
-<p>Finally, we need to wire our JS function to our Elm <code>isAnyKeyDown</code> signal. This is where Elm ports come in:</p>
+<p>Finally, we need to wire our JS function to our Elm signal. This is where Elm ports come in:</p>
 <pre class="elm"><code>port playAudio : Signal ()
 port playAudio =
-  Signal.map (\_ -&gt; ()) isAnyKeyDown</code></pre>
-<p>Since our JS function doesn’t need any parameters, we’re mapping the boolean values of our <code>isAnyKeyDown</code> signal to the <code>()</code> unit type here.</p>
-<p>So all there is left, is to actually trigger our JS callback whenever Elm sends an event:</p>
+  Signal.map (\_ -&gt; ()) (Signal.filter identity False isAnyKeyDown)</code></pre>
+<p>There are two things to note here: First, we’re filtering our <code>isAnyKeyDown</code> to no longer contain key release events. Second, we’re mapping our signal of boolean values to a signal of unit types <code>()</code> to match the signature of our parameter-less JS function.</p>
+<p>All there is left, is to actually trigger the JS callback whenever Elm sends an event:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">    <span class="kw">var</span> app = <span class="ot">Elm</span>.<span class="fu">fullscreen</span>(<span class="ot">Elm</span>.<span class="fu">Main</span>, {});
     <span class="ot">app</span>.<span class="ot">ports</span>.<span class="ot">playAudio</span>.<span class="fu">subscribe</span>(playAudio);</code></pre></div>
 <p>A deployed version of this simple example can be found <a href="http://netzwerg.ch/audio">here</a>.</p>
