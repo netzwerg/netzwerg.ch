@@ -1,0 +1,23 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: x-large;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+p {
+    margin-top: 20px;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+#links {
+    margin-top: 20px;
+}
