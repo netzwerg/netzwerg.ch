@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rahel Lüthy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+    <link title="timeline-styles" rel="stylesheet"
+          href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web:400,300,700">
+
+    <style>
+        * {
+            font-family: "Titillium Web", sans-serif;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .box {
+            margin-top: 30px;
+            padding: 50px;
+            background-color: white;
+            border: 3px solid grey;
+        }
+
+        .well {
+            background-color: white;
+            border: 3px solid grey;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        h1, h2 {
+            font-weight: 700;
+        }
+
+        a * {
+            text-decoration: none;
+        }
+
+        a:hover, a:visited, a:link, a:active {
+            color: rgb(51, 51, 51);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: white;
+        }
+
+        .about {
+            font-size: 3vmin;
+            font-weight: 300;
+            background-color: lightblue;
+        }
+
+        .gui {
+            background-color: #e7c547;
+        }
+
+        .api {
+            background-color: #2aa198;
+        }
+
+        .teaching {
+            background-color: #6c71c4;
+        }
+
+        .vision {
+            background-color: #d33682;
+        }
+
+        .tl-timeline h1, .tl-timeline h2, .tl-timeline h3, .tl-timeline h4, .tl-timeline h5, .tl-timeline h6 {
+            color: rgb(51, 51, 51);
+        }
+        .tl-attribution {
+            visibility: hidden;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well box about">
+                <h1>Rahel Lüthy</h1>
+                <p>Software developer with 20 years of experience in crafting applications.
+                    Critical thinker & passionate geek who gets things done.
+                    Teacher and mentor, with a flair to explain complex ideas in simple words.
+                </p>
+                <p>
+                    A dog, two kids, three karate belts, four bicycles, and five guitars help keeping the balance.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well box">
+                <h1>Curriculum Vitae</h1>
+                <div id='timeline-embed' style="width: 100%; height: 700px">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 ">
+            <a href="">
+                <div class="well box gui">
+                    <h1>Graphical User Interfaces (GUIs)</h1>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-6">
+            <a href="">
+                <div class="well box api">
+                    <h1>Application Programmer Interfaces (APIs)</h1>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="">
+                <div class="well box teaching">
+                    <h1>Teaching</h1>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-6">
+            <a href="">
+                <div class="well box vision">
+                    <h1>Vision</h1>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well box about">
+                <h1>Further Information</h1>
+                <h2>Contact</h2>
+                In der Gasse 1, 4431 Bennwil<br/>+41 79 744 5319<br/>rahel.luethy@gmail.com
+                <h2>References</h2>
+                Prof. Dr. Dominique Brodbeck, FHNW, +41 61 467 46 97 (current colleague)<br/>
+                Dr. Adrian Honegger, Head of IT, Basler Versicherung, +41 58 285 88 94 (former manager/mentor)<br/>
+                Dr. Bernd Kappler, Head of Screener Development, Genedata AG, +41 61 511 8456 (former manager)<br/>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+<script type="text/javascript">
+    var timelineJson = {
+        "events": [
+            {
+                "group": "Personal",
+                "start_date": {
+                    "year": "1975",
+                    "month": "08",
+                    "day": "26"
+                },
+                "text": {
+                    "headline": "Birth",
+                    "text": "<p>Born in Wettingen (Swiss citizen)</p>"
+                }
+            },
+            {
+                "group": "Personal",
+                "start_date": {
+                    "year": "1996",
+                    "month": "02",
+                    "day": "14"
+                },
+                "text": {
+                    "headline": "&hearts;",
+                    "text": "Falling in love with future husband Jonas Bieri"
+                }
+            },
+            {
+                "group": "Personal",
+                "start_date": {
+                    "year": "2006",
+                    "month": "01",
+                    "day": "08"
+                },
+                "text": {
+                    "headline": "Daughter",
+                    "text": "Birth of daughter Filipa"
+                }
+            },
+            {
+                "group": "Personal",
+                "start_date": {
+                    "year": "2006",
+                    "month": "09",
+                    "day": "03"
+                },
+                "text": {
+                    "headline": "Wedding"
+                }
+            },
+            {
+                "group": "Personal",
+                "start_date": {
+                    "year": "2008",
+                    "month": "03",
+                    "day": "14"
+                },
+                "text": {
+                    "headline": "Son",
+                    "text": "Birth of son Juan"
+                }
+            },
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "1996"
+                },
+                "end_date": {
+                    "year": "2001"
+                },
+                "text": {
+                    "headline": "University Of Basel",
+                    "text": "<p>MSc Evolutionary & Population Biology<br/>" +
+                    "Computer Science, Statistics, Mathematics (Elective)<br/>" +
+                    "Neurobiology, Developmental Biology, Systems Ecology (Minor)</p>"
+                }
+            },
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "2001"
+                },
+                "text": {
+                    "headline": "SCJP",
+                    "text": "<h3>Sun/Oracle</h3><p>Certified Java Programmer for the Java 2 Platform</p>"
+                }
+            },
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "2003"
+                },
+                "text": {
+                    "headline": "SCJD",
+                    "text": "<h3>Sun/Oracle</h3><p>Certified Java Developer for the Java 2 Platform</p>"
+                }
+            }
+            ,
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "2005"
+                },
+                "text": {
+                    "headline": "BECH",
+                    "text": "<h3>University of Cambridge</h3><p>Business English Certificate Higher</p>"
+                }
+            }
+            ,
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "2012"
+                },
+                "text": {
+                    "headline": "FP in Scala",
+                    "text": "<h3>EPFL (Coursera MOOC)</h3><p>Functional Programming Principles in Scala</p>"
+                }
+            }
+            ,
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "2013"
+                },
+                "text": {
+                    "headline": "RP in Scala",
+                    "text": "<h3>EPFL (Coursera MOOC)</h3><p>Principles of Reactive Programming in Scala</p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "1999"
+                },
+                "end_date": {
+                    "year": "2001"
+                },
+                "text": {
+                    "headline": "itsystems AG",
+                    "text": "<h3>Software Developer</h3><p>Development of a support ticket system</p><em>Java, Microsoft SQL Server</em></p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "2001"
+                },
+                "end_date": {
+                    "year": "2003"
+                },
+                "text": {
+                    "headline": "Liebhart Systems / Aseantic Liebhart",
+                    "text": "<h3>Software Developer</h3><p>Development of a data transformation engine for a life insurance business</p>" +
+                    "<em>Java, Ant, XML/XSLT, Velocity, CVS, Oracle</em></p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "2003"
+                },
+                "end_date": {
+                    "year": "2011"
+                },
+                "text": {
+                    "headline": "Genedata AG",
+                    "text": "<h3>Senior Software Developer</h3><p>Development of an application suite for interactive visualization of scientific big data.</p>" +
+                    "<em>Java, Swing, XML/JAXB, Subversion, Python, PostgreSQL</em></p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "2011",
+                    "month": "12"
+                },
+                "end_date": {
+                    "year": "2012",
+                    "month": "09"
+                },
+                "text": {
+                    "headline": "Edorasware AG",
+                    "text": "<h3>Senior Software Developer</h3><p>Development of a software suite for business process management.</p>" +
+                    "<em>Java, Spring, AngularJS, Activiti, Gradle, Subversion</em></p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "2013",
+                    "month": "02"
+                },
+                "end_date": {
+                    "year": "2014",
+                    "month": "08"
+                },
+                "text": {
+                    "headline": "Basler Versicherung AG",
+                    "text": "<h3>Senior Software Developer</h3><p>Development and maintenance of various insurance products. Teaching of in­house Git workshops.</p>" +
+                    "<em>JEE, GWT, AngularJS, Maven, Git</em></p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "2014",
+                    "month": "09"
+                },
+                "display_date": "Sept 2014 - Today",
+                "text": {
+                    "headline": "FHNW IMA",
+                    "text": "Institute for Medical and Analytical Technologies, HLS<h4>Software Developer / Research Associate</h4>" +
+                    "<p>Development of interactive data visualization applications.<br/>" +
+                    "Teaching of 'Programming II' module.</p>" +
+                    "<em>JavaFX, D3.js, Scala.js, Gradle, Git</em></p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "2016",
+                    "month": "08"
+                },
+                "end_date": {
+                    "year": "2040"
+                },
+                "display_date": "2016",
+                "text": {
+                    "headline": "FHNW i4Ds",
+                    "text": "<h3>Preferred Future</h3>Professor for Human Computer Interaction"
+                }
+            }
+        ]
+    };
+    var options = {
+        start_at_end: true,
+        scale_factor: 0.6,
+        initial_zoom: 1,
+        timenav_height: 400
+    };
+    window.timeline = new TL.Timeline('timeline-embed', timelineJson, options);
+</script>
+</body>
+</html>
