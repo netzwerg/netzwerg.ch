@@ -11,11 +11,11 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet"/>
     <link title="timeline-styles" rel="stylesheet"
           href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web:400,300,700">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300' rel='stylesheet' type='text/css'>
 
     <style>
         * {
-            font-family: "Titillium Web", sans-serif;
+            font-family: "Source Sans Pro", sans-serif;
         }
 
         body {
@@ -36,6 +36,14 @@
             box-shadow: none;
         }
 
+        h1 {
+            font-size: x-large;
+        }
+
+        h2 {
+            font-size: large;
+        }
+
         h1, h2 {
             font-weight: 700;
         }
@@ -44,19 +52,28 @@
             text-decoration: none;
         }
 
-        a:hover, a:visited, a:link, a:active {
-            color: rgb(51, 51, 51);
-            text-decoration: none;
-        }
-
-        a:hover {
+        .about a:hover, .about a:visited, .about a:link, .about a:active {
             color: white;
+            text-decoration: none;
         }
 
         .about {
             font-size: 3vmin;
             font-weight: 300;
             background-color: lightblue;
+        }
+
+        .cv a:hover, .cv a:visited, .cv a:link, .cv a:active {
+            color: rgb(51, 51, 51);
+        }
+
+        .topic a:link {
+            color: rgb(51, 51, 51);
+        }
+
+        .topic a:hover, .topic a:visited, .topic a:active {
+            color: white;
+            text-decoration: none;
         }
 
         .gui {
@@ -78,7 +95,12 @@
         .tl-timeline h1, .tl-timeline h2, .tl-timeline h3, .tl-timeline h4, .tl-timeline h5, .tl-timeline h6 {
             color: rgb(51, 51, 51);
         }
+
         .tl-attribution {
+            visibility: hidden;
+        }
+
+        .tl-menubar {
             visibility: hidden;
         }
 
@@ -95,14 +117,18 @@
                     Teacher and mentor, with a flair to explain complex ideas in simple words.
                 </p>
                 <p>
-                    A dog, two kids, three karate belts, four bicycles, and five guitars help keeping the balance.
+                    Currently working at FHNW Muttenz, in the <a href="http://blogs.fhnw.ch/biomedinf/">Biomedical Informatics Group</a>.
+                </p>
+                <p>
+                    A family, two photo cameras, three karate belts, four bicycles, and five guitars help keeping the
+                    balance.
                 </p>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <div class="well box">
+            <div class="well box cv">
                 <h1>Curriculum Vitae</h1>
                 <div id='timeline-embed' style="width: 100%; height: 700px">
                 </div>
@@ -110,15 +136,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 ">
-            <a href="">
+        <div class="col-lg-6  topic">
+            <a href="gui.html">
                 <div class="well box gui">
                     <h1>Graphical User Interfaces (GUIs)</h1>
                 </div>
             </a>
         </div>
-        <div class="col-lg-6">
-            <a href="">
+        <div class="col-lg-6 topic">
+            <a href="api.html">
                 <div class="well box api">
                     <h1>Application Programmer Interfaces (APIs)</h1>
                 </div>
@@ -126,15 +152,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
-            <a href="">
+        <div class="col-lg-6 topic">
+            <a href="teaching.html">
                 <div class="well box teaching">
                     <h1>Teaching</h1>
                 </div>
             </a>
         </div>
-        <div class="col-lg-6">
-            <a href="">
+        <div class="col-lg-6 topic">
+            <a href="vision.html">
                 <div class="well box vision">
                     <h1>Vision</h1>
                 </div>
@@ -149,6 +175,7 @@
                 In der Gasse 1, 4431 Bennwil<br/>+41 79 744 5319<br/>rahel.luethy@gmail.com
                 <h2>References</h2>
                 Prof. Dr. Dominique Brodbeck, FHNW, +41 61 467 46 97 (current colleague)<br/>
+                Prof. Markus Degen, FHNW, +41 61 467 46 98 (current colleague)<br/>
                 Dr. Adrian Honegger, Head of IT, Basler Versicherung, +41 58 285 88 94 (former manager/mentor)<br/>
                 Dr. Bernd Kappler, Head of Screener Development, Genedata AG, +41 61 511 8456 (former manager)<br/>
             </div>
@@ -219,15 +246,45 @@
                     "headline": "Son",
                     "text": "Birth of son Juan"
                 }
+            }
+            ,
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "1980"
+                },
+                "end_date": {
+                    "year": "1991"
+                },
+                "text": {
+                    "headline": "Primary School",
+                    "text": "Kindergarten & Primarschule Zofingen"
+                }
+            }
+            ,
+            {
+                "group": "Education",
+                "start_date": {
+                    "year": "1991"
+                },
+                "end_date": {
+                    "year": "1995"
+                },
+                "text": {
+                    "headline": "Kantonsschule",
+                    "text": "<p>Matura Typus C<br/>Kantonsschule Zofingen</p>"
+                }
             },
             {
                 "group": "Education",
                 "start_date": {
-                    "year": "1996"
+                    "year": "1995",
+                    "month": "09"
                 },
                 "end_date": {
                     "year": "2001"
                 },
+                "display_date": "1995-2001",
                 "text": {
                     "headline": "University Of Basel",
                     "text": "<p>MSc Evolutionary & Population Biology<br/>" +
@@ -286,6 +343,20 @@
                 "text": {
                     "headline": "RP in Scala",
                     "text": "<h3>EPFL (Coursera MOOC)</h3><p>Principles of Reactive Programming in Scala</p>"
+                }
+            }
+            ,
+            {
+                "group": "Employment",
+                "start_date": {
+                    "year": "1995"
+                },
+                "end_date": {
+                    "year": "2001"
+                },
+                "text": {
+                    "headline": "Tele M1",
+                    "text": "<h3>Video Journalist</h3>"
                 }
             }
             ,
@@ -373,13 +444,13 @@
                     "year": "2014",
                     "month": "09"
                 },
-                "display_date": "Sept 2014 - Today",
+                "display_date": "Sept 2014 - Current",
                 "text": {
                     "headline": "FHNW IMA",
-                    "text": "Institute for Medical and Analytical Technologies, HLS<h4>Software Developer / Research Associate</h4>" +
+                    "text": "Institute for Medical and Analytical Technologies, HLS<br/><a href='http://blogs.fhnw.ch/biomedinf/'>Biomedical Informatics Group</a><h4>Software Developer / Research Associate</h4>" +
                     "<p>Development of interactive data visualization applications.<br/>" +
                     "Teaching of 'Programming II' module.</p>" +
-                    "<em>JavaFX, D3.js, Scala.js, Gradle, Git</em></p>"
+                    "<em>Java, Scala, D3.js, Gradle, Git</em></p>"
                 }
             }
             ,
@@ -404,7 +475,7 @@
         start_at_end: true,
         scale_factor: 0.6,
         initial_zoom: 1,
-        timenav_height: 400
+        timenav_height: 320
     };
     window.timeline = new TL.Timeline('timeline-embed', timelineJson, options);
 </script>

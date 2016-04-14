@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rahel Lüthy | GUIs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300' rel='stylesheet' type='text/css'>
+
+    <style>
+        * {
+            font-family: "Source Sans Pro", sans-serif;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .box {
+            margin-top: 30px;
+            padding: 50px;
+            background-color: white;
+            border: 3px solid grey;
+        }
+
+        .well {
+            background-color: white;
+            border: 3px solid grey;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        h1, h2 {
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: x-large;
+        }
+
+        h2 {
+            font-size: large;
+        }
+
+        a * {
+            text-decoration: none;
+        }
+
+        a:hover, a:visited, a:link, a:active {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: white;
+        }
+
+        .gui {
+            font-size: 3vmin;
+            background-color: #e7c547;
+        }
+
+        .project {
+            padding-top: 10px;
+            padding-left: 0;
+            margin-bottom: 30px;
+        }
+
+        .project-box {
+            padding-top: 10px;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .project-box img {
+            margin-left: 0;
+            margin-top: 20px;
+            padding-left: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well box gui">
+                <h1>Graphical User Interfaces (GUIs)</h1>
+                <blockquote>
+                    <p>
+                        It seems that perfection is attained not when there is nothing more to add, but when there is
+                        nothing more to remove.
+                    </p>
+                    <footer><cite title="Antoine de Saint Exupéry"><a
+                            href="https://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry">Antoine de Saint
+                        Exupéry</a></cite>
+                    </footer>
+                </blockquote>
+                <p>
+                    This famous quote is especially true for graphical user interfaces (GUIs). Ever since I started
+                    programming, I always had a passion for GUIs. While computers give super powers to programmers, <b>GUIs
+                    make super powers accessible to non-programmers</b>.
+                </p>
+                <p>
+                    As a scientist, I am particularly interested in visualizing big, complex data. Extracting meaningful
+                    information and making it accessible to humans is very challenging and extremely rewarding.
+                </p>
+                <p>
+                    While I love the sheer unlimited possibilities of <b>fat clients</b>, the ubiquitous availability of
+                    browsers makes <b>web applications</b> a good choice, too. On a technical level, the latest
+                    trends of transpiling high-level languages such as <b>Elm</b> or <b>Scala</b> to Javascript, makes
+                    the
+                    browser a truly attractive target platform.
+                </p>
+                <h2>Selected Applications</h2>
+
+                <div class="container project">
+                    <div class="row col-lg-12">
+                        <b>Green Radiology</b> &mdash; <em>FHNW & University Hospital Basel</em>
+                    </div>
+                    <div class="row col-lg-12 project-box">
+                        <a href="img/screener.png"><img src="img/screener.png" class="col-xs-2"/></a>
+                        <p class="col-lg-8">Green Radiology is a JavaFX time series investigation tool. It allows to
+                            analyze the carbon footprint of large-scale radiology devices (MRI, CT), and
+                            can be used for any kind of sequentially measured data. Tailor-made optimizations allow
+                            loading huge data volumes, while still offering responsive user interactions and a small
+                            memory footprint.<br/><b>Contribution</b>: I implemented the majority of the
+                            graphical user interface as well as the core data models (see <a href="api.html">APIs</a>).
+                        </p>
+                    </div>
+                </div>
+                <div class="container project">
+                    <div class="row col-lg-12">
+                        <b>xPlan</b> &mdash; <em>FHNW & University Hospitals Bern/Basel/Zürich</em><br/>
+                    </div>
+                    <div class="row col-lg-12 project-box">
+                        <a href="img/screener.png"><img src="img/screener.png" class="col-xs-2"/></a>
+                        <p class="col-lg-8"><a href="http://blogs.fhnw.ch/biomedinf/research/xplan/">xPlan</a> is a
+                            JavaFX application for hospital infrastructure planning and
+                            process optimization.<br/><b>Contribution</b>: I implemented a 3D patient transfer view,
+                            which allows interactive tracking of patient flows through hospital buildings.
+                        </p>
+                    </div>
+                </div>
+                <div class="container project">
+                    <div class="row col-lg-12">
+                        <b>Genedata Screener</b> &mdash; <em>Genedata AG</em>
+                    </div>
+                    <div class="row col-lg-12 project-box">
+                        <a href="img/screener.png"><img src="img/screener.png" class="col-xs-2"/></a>
+                        <p class="col-lg-8"><a href="https://www.genedata.com/products/screener/">Genedata Screener</a>
+                            is a comprehensive software solution that captures,
+                            analyzes, and manages all types of screening data. The product suite has a track record
+                            of 13 major releases and is used by big pharma companies throughout the world (Amgen,
+                            AstraZeneca, Bayer, Novartis, Pfizer).<br/><b>Contribution</b>: I was a long-term member of
+                            Screener's core development team, responsible for the design, architecture, implementation &
+                            maintenance of all application components (Java front- & back-end, Python service APIs).
+                        </p>
+                    </div>
+                </div>
+                <div class="container project">
+                    <div class="row col-lg-12">
+                        <b>Edoras One</b> &mdash; <em>Edorasware AG</em>
+                    </div>
+                    <div class="row col-lg-12 project-box">
+                        <a href="img/edoras.png"><img src="img/edoras.png" class="col-xs-2"/></a>
+                        <p class="col-lg-8">
+                            <a href="http://www.edorasware.com/edoras/one.html">Edoras One</a> is a
+                            case and business process management suite based on the
+                            <a href="http://activiti.org/">Activiti BPM Platform</a>.<br/><b>Contribution</b>: I was a
+                            member of Edorasware's core development team, responsible for the design, architecture
+                            & implementation of the complete software suite (Angular web-client, REST API, embeddable
+                            Java process engine).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>
