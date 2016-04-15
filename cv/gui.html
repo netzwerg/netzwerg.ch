@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="robots" content="noindex, nofollow">
     <meta charset="utf-8">
     <title>Rahel Lüthy | GUIs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,48 +11,11 @@
 
     <link href="../css/bootstrap.min.css" rel="stylesheet"/>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet"/>
 
     <style>
-        * {
-            font-family: "Source Sans Pro", sans-serif;
-        }
-
-        body {
-            background-color: black;
-        }
-
-        .box {
-            margin-top: 30px;
-            padding: 50px;
-            background-color: white;
-            border: 3px solid grey;
-        }
-
-        .well {
-            background-color: white;
-            border: 3px solid grey;
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        h1, h2 {
-            font-weight: 700;
-        }
-
-        h1 {
-            font-size: x-large;
-        }
-
-        h2 {
-            font-size: large;
-        }
-
-        a * {
-            text-decoration: none;
-        }
-
         a:hover, a:visited, a:link, a:active {
-            color: white;
+            color: antiquewhite;
             text-decoration: none;
         }
 
@@ -60,7 +24,7 @@
         }
 
         .gui {
-            font-size: 3vmin;
+            font-size: 150%;
             background-color: #e7c547;
         }
 
@@ -79,6 +43,7 @@
         .project-box img {
             margin-left: 0;
             margin-top: 20px;
+            margin-bottom: 20px;
             padding-left: 0;
         }
 
@@ -102,8 +67,8 @@
                 </blockquote>
                 <p>
                     This famous quote is especially true for graphical user interfaces (GUIs). Ever since I started
-                    programming, I always had a passion for GUIs. While computers give super powers to programmers, <b>GUIs
-                    make super powers accessible to non-programmers</b>.
+                    programming, I always had a passion for GUIs and taming complexity. While computers give super
+                    powers to programmers, <b>GUIs give super powers to non-programmers</b>.
                 </p>
                 <p>
                     As a scientist, I am particularly interested in visualizing big, complex data. Extracting meaningful
@@ -112,37 +77,45 @@
                 <p>
                     While I love the sheer unlimited possibilities of <b>fat clients</b>, the ubiquitous availability of
                     browsers makes <b>web applications</b> a good choice, too. On a technical level, the latest
-                    trends of transpiling high-level languages such as <b>Elm</b> or <b>Scala</b> to Javascript, makes
-                    the
-                    browser a truly attractive target platform.
+                    trend of transpiling high-level languages such as <b>Elm</b> or <b>Scala</b> to Javascript makes
+                    the browser a truly attractive target platform.
+                </p>
+                <p>
+                    In addition to my background in creating scientific fat clients, I keep building websites for
+                    friends & family. This allows me to hone my skills and keep up with latest trends. I am thrilled
+                    how libraries like <a href="https://d3js.org">d3.js</a> take my graphical abilities to a whole new level.
                 </p>
                 <h2>Selected Applications</h2>
 
                 <div class="container project">
                     <div class="row col-lg-12">
-                        <b>Green Radiology</b> &mdash; <em>FHNW & University Hospital Basel</em>
-                    </div>
-                    <div class="row col-lg-12 project-box">
-                        <a href="img/screener.png"><img src="img/screener.png" class="col-xs-2"/></a>
-                        <p class="col-lg-8">Green Radiology is a JavaFX time series investigation tool. It allows to
-                            analyze the carbon footprint of large-scale radiology devices (MRI, CT), and
-                            can be used for any kind of sequentially measured data. Tailor-made optimizations allow
-                            loading huge data volumes, while still offering responsive user interactions and a small
-                            memory footprint.<br/><b>Contribution</b>: I implemented the majority of the
-                            graphical user interface as well as the core data models (see <a href="api.html">APIs</a>).
-                        </p>
-                    </div>
-                </div>
-                <div class="container project">
-                    <div class="row col-lg-12">
                         <b>xPlan</b> &mdash; <em>FHNW & University Hospitals Bern/Basel/Zürich</em><br/>
                     </div>
                     <div class="row col-lg-12 project-box">
-                        <a href="img/screener.png"><img src="img/screener.png" class="col-xs-2"/></a>
-                        <p class="col-lg-8"><a href="http://blogs.fhnw.ch/biomedinf/research/xplan/">xPlan</a> is a
+                        <a href="img/xplan.png"><img src="img/xplan.png" class="col-xs-10 col-md-2"/></a>
+                        <p class="col-xs-10 col-md-8"><a href="http://blogs.fhnw.ch/biomedinf/research/xplan/">xPlan</a> is a
                             JavaFX application for hospital infrastructure planning and
-                            process optimization.<br/><b>Contribution</b>: I implemented a 3D patient transfer view,
-                            which allows interactive tracking of patient flows through hospital buildings.
+                            process optimization. Data from various hospital information systems was collected, enriched
+                            with topographical and organizational data, and integrated into a coherent data store. xPlan
+                            offers various interactive views onto this data store.<br/><b>Contribution</b>: I implemented an
+                            interactive 3D view, which allows tracking and quantification of patient flows through the hospital
+                            buildings.
+                        </p>
+                    </div>
+                </div>
+                <div class="container project" id="greenrad">
+                    <div class="row col-lg-12">
+                        <b>Green Radiology</b> &mdash; <em>FHNW & University Hospital Basel</em>
+                    </div>
+                    <div class="row col-lg-12 project-box">
+                        <a href="img/greenrad.png"><img src="img/greenrad.png" class="col-xs-10 col-md-2"/></a>
+                        <p class="col-xs-10 col-md-8">Green Radiology is a JavaFX time series investigation tool which
+                            allows analyzing the carbon footprint of large-scale radiology devices (MRI, CT). It can be
+                            used for any kind of sequentially measured data. Tailor-made optimizations allow
+                            loading huge data volumes, while still offering responsive user interactions and a small
+                            memory footprint.<br/><b>Contribution</b>: I implemented the majority of the
+                            graphical user interface as well as the data models. The core data structures are based on
+                            my open-source <a href="api.html#paleo">paleo</a> library.
                         </p>
                     </div>
                 </div>
@@ -151,8 +124,8 @@
                         <b>Genedata Screener</b> &mdash; <em>Genedata AG</em>
                     </div>
                     <div class="row col-lg-12 project-box">
-                        <a href="img/screener.png"><img src="img/screener.png" class="col-xs-2"/></a>
-                        <p class="col-lg-8"><a href="https://www.genedata.com/products/screener/">Genedata Screener</a>
+                        <a href="img/screener.png"><img src="img/screener.png" class="col-xs-10 col-md-2"/></a>
+                        <p class="col-xs-10 col-md-8"><a href="https://www.genedata.com/products/screener/">Genedata Screener</a>
                             is a comprehensive software solution that captures,
                             analyzes, and manages all types of screening data. The product suite has a track record
                             of 13 major releases and is used by big pharma companies throughout the world (Amgen,
@@ -167,8 +140,8 @@
                         <b>Edoras One</b> &mdash; <em>Edorasware AG</em>
                     </div>
                     <div class="row col-lg-12 project-box">
-                        <a href="img/edoras.png"><img src="img/edoras.png" class="col-xs-2"/></a>
-                        <p class="col-lg-8">
+                        <a href="img/edoras.png"><img src="img/edoras.png" class="col-xs-10 col-md-2"/></a>
+                        <p class="col-xs-10 col-md-8">
                             <a href="http://www.edorasware.com/edoras/one.html">Edoras One</a> is a
                             case and business process management suite based on the
                             <a href="http://activiti.org/">Activiti BPM Platform</a>.<br/><b>Contribution</b>: I was a
@@ -184,5 +157,15 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-708448-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
 </body>
 </html>

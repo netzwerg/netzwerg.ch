@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="robots" content="noindex, nofollow">
     <meta charset="utf-8">
     <title>Rahel Lüthy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,45 +13,9 @@
     <link title="timeline-styles" rel="stylesheet"
           href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet"/>
 
     <style>
-        * {
-            font-family: "Source Sans Pro", sans-serif;
-        }
-
-        body {
-            background-color: black;
-        }
-
-        .box {
-            margin-top: 30px;
-            padding: 50px;
-            background-color: white;
-            border: 3px solid grey;
-        }
-
-        .well {
-            background-color: white;
-            border: 3px solid grey;
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        h1 {
-            font-size: x-large;
-        }
-
-        h2 {
-            font-size: large;
-        }
-
-        h1, h2 {
-            font-weight: 700;
-        }
-
-        a * {
-            text-decoration: none;
-        }
 
         .about a:hover, .about a:visited, .about a:link, .about a:active {
             color: white;
@@ -58,8 +23,7 @@
         }
 
         .about {
-            font-size: 3vmin;
-            font-weight: 300;
+            font-size: 150%;
             background-color: lightblue;
         }
 
@@ -74,6 +38,10 @@
         .topic a:hover, .topic a:visited, .topic a:active {
             color: white;
             text-decoration: none;
+        }
+
+        .about h2, .gui h2, .api h2, .teaching h2, .vision h2 {
+            font-size: x-large;
         }
 
         .gui {
@@ -104,6 +72,18 @@
             visibility: hidden;
         }
 
+        .portrait h1 {
+            padding-bottom: 20px;
+        }
+
+        .portrait-text {
+            padding-top: 20px;
+        }
+
+        .portrait img {
+            padding-left: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -111,10 +91,13 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="well box about">
+                <div class="row portrait">
                 <h1>Rahel Lüthy</h1>
+                <img id="portrait" src="img/rahel.jpg" class="col-lg-2 col-sm-6 col-xs-12"/>
+                <div class="col-lg-10 col-sm-6 col-xs-12 portrait-text">
                 <p>Software developer with 20 years of experience in crafting applications.
-                    Critical thinker & passionate geek who gets things done.
-                    Teacher and mentor, with a flair to explain complex ideas in simple words.
+                    Critical thinker and passionate geek who gets things done.
+                    Teacher and mentor, with a flair for explaining complex ideas in simple words.
                 </p>
                 <p>
                     Currently working at FHNW Muttenz, in the <a href="http://blogs.fhnw.ch/biomedinf/">Biomedical Informatics Group</a>.
@@ -123,6 +106,8 @@
                     A family, two photo cameras, three karate belts, four bicycles, and five guitars help keeping the
                     balance.
                 </p>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -139,14 +124,14 @@
         <div class="col-lg-6  topic">
             <a href="gui.html">
                 <div class="well box gui">
-                    <h1>Graphical User Interfaces (GUIs)</h1>
+                    <h2>Graphical User Interfaces (GUIs)</h2>
                 </div>
             </a>
         </div>
         <div class="col-lg-6 topic">
             <a href="api.html">
                 <div class="well box api">
-                    <h1>Application Programmer Interfaces (APIs)</h1>
+                    <h2>Application Programmer Interfaces (APIs)</h2>
                 </div>
             </a>
         </div>
@@ -155,14 +140,14 @@
         <div class="col-lg-6 topic">
             <a href="teaching.html">
                 <div class="well box teaching">
-                    <h1>Teaching</h1>
+                    <h2>Teaching</h2>
                 </div>
             </a>
         </div>
         <div class="col-lg-6 topic">
             <a href="vision.html">
                 <div class="well box vision">
-                    <h1>Vision</h1>
+                    <h2>Interests & Vision</h2>
                 </div>
             </a>
         </div>
@@ -174,9 +159,9 @@
                 <h2>Contact</h2>
                 In der Gasse 1, 4431 Bennwil<br/>+41 79 744 5319<br/>rahel.luethy@gmail.com
                 <h2>References</h2>
-                Prof. Dr. Dominique Brodbeck, FHNW, +41 61 467 46 97 (current colleague)<br/>
-                Prof. Markus Degen, FHNW, +41 61 467 46 98 (current colleague)<br/>
-                Dr. Adrian Honegger, Head of IT, Basler Versicherung, +41 58 285 88 94 (former manager/mentor)<br/>
+                Prof. Dr. Dominique Brodbeck, FHNW, +41 61 467 4697 (current colleague)<br/>
+                Prof. Markus Degen, FHNW, +41 61 467 4698 (current colleague)<br/>
+                Dr. Adrian Honegger, Head of IT, Basler Versicherungen, +41 58 285 8894 (former manager/mentor)<br/>
                 Dr. Bernd Kappler, Head of Screener Development, Genedata AG, +41 61 511 8456 (former manager)<br/>
             </div>
         </div>
@@ -209,7 +194,7 @@
                 },
                 "text": {
                     "headline": "&hearts;",
-                    "text": "Falling in love with future husband Jonas Bieri"
+                    "text": "Meeting future husband Jonas Bieri"
                 }
             },
             {
@@ -232,7 +217,8 @@
                     "day": "03"
                 },
                 "text": {
-                    "headline": "Wedding"
+                    "headline": "Wedding",
+                    "text": "Getting married to Jonas Bieri"
                 }
             },
             {
@@ -432,9 +418,9 @@
                     "month": "08"
                 },
                 "text": {
-                    "headline": "Basler Versicherung AG",
+                    "headline": "Basler Versicherungen AG",
                     "text": "<h3>Senior Software Developer</h3><p>Development and maintenance of various insurance products. Teaching of in­house Git workshops.</p>" +
-                    "<em>JEE, GWT, AngularJS, Maven, Git</em></p>"
+                    "<em>JEE, GWT, AngularJS, Activiti, Maven, Git</em></p>"
                 }
             }
             ,
@@ -450,7 +436,7 @@
                     "text": "Institute for Medical and Analytical Technologies, HLS<br/><a href='http://blogs.fhnw.ch/biomedinf/'>Biomedical Informatics Group</a><h4>Software Developer / Research Associate</h4>" +
                     "<p>Development of interactive data visualization applications.<br/>" +
                     "Teaching of 'Programming II' module.</p>" +
-                    "<em>Java, Scala, D3.js, Gradle, Git</em></p>"
+                    "<em>Java, Scala, D3.js, Activiti, Gradle, Git</em></p>"
                 }
             }
             ,
@@ -478,6 +464,16 @@
         timenav_height: 320
     };
     window.timeline = new TL.Timeline('timeline-embed', timelineJson, options);
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-708448-1', 'auto');
+    ga('send', 'pageview');
+
 </script>
 </body>
 </html>

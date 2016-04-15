@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="robots" content="noindex, nofollow">
     <meta charset="utf-8">
     <title>Rahel Lüthy | APIs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
 
     <link href="../css/bootstrap.min.css" rel="stylesheet"/>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet"/>
 
     <style>
         * {
@@ -34,14 +36,6 @@
             box-shadow: none;
         }
 
-        h1 {
-            font-size: x-large;
-        }
-
-        h2 {
-            font-size: large;
-        }
-
         h1, h2 {
             font-weight: 700;
         }
@@ -60,7 +54,7 @@
         }
 
         .api {
-            font-size: 3vmin;
+            font-size: 150%;
             background-color: #2aa198;
         }
 
@@ -111,27 +105,38 @@
                 </p>
                 <p>I contributed an optimized
                     search algorithm for one of Javaslang's core data structures (see <a
-                            href="https://github.com/javaslang/javaslang/pull/1088">PR</a>).</p>
+                            href="https://github.com/javaslang/javaslang/pull/1088">pull request</a>).</p>
                 <a href="https://github.com/netzwerg/gradle-release-plugin"><b>Gradle Release Plugin</b></a> &mdash;
                 <em>Owner/Maintainer</em>
                 <p> Gradle is a popular build tool. Out-of-the-box, it is missing the functionality to create
-                    semantically versioned releases in an automated fashion. My project provides this missing
-                    functionality in the form of a plugin. Since its publication in Dec 2015, the plugin has been
-                    downloaded almost 10k times.
+                    semantically versioned releases in an automated fashion. My Gradle Release Plugin provides this
+                    missing functionality. Since its publication in Dec 2015, the plugin has been downloaded almost 10k
+                    times.
                 </p>
-                <a href="https://github.com/netzwerg/paleo"><b>Paleo Data Frames</b></a> &mdash;
+                <a id="paleo" href="https://github.com/netzwerg/paleo"><b>Paleo Data Frames</b></a> &mdash;
                 <em>Owner/Maintainer</em>
                 <p>The concept of a data frame comes from the world of statistical software. My paleo library brings
                     this
                     powerful concept to the Java ecosystem. Paleo offers a fully type-safe, programmer-friendly
-                    API, while offering a very small memory footprint.</p>
-                <p>The paleo library represents the foundation
-                    of our current big data visualization projects(see <a href="gui.html">GUIs</a>).</p>
+                    API, while exhibiting a very small memory footprint.</p>
+                <p>The paleo library represents the foundation of our current big data visualization projects
+                    (see <a href="gui.html#greenrad">GUIs</a>).</p>
             </div>
         </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-708448-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
 </body>
 </html>

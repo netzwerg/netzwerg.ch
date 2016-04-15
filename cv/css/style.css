@@ -1,0 +1,35 @@
+* {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 300;
+}
+
+body {
+    background-color: black;
+}
+
+.box {
+    margin-top: 30px;
+    padding: 50px;
+    background-color: white;
+    border: 3px solid grey;
+}
+
+.well {
+    background-color: white;
+    border: 3px solid grey;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+h1, h2 {
+    font-weight: 700;
+}
+
+a * {
+    text-decoration: none;
+
+}
+
+a:target {
+    outline: none;
+}
