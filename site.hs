@@ -10,6 +10,7 @@ main = hakyll $ do
            "favicon.png" .||.
            "images/**" .||.
            "js/**" .||.
+           "cv/**" .||.
            "simon/**" .||.
            "hotwire/**" .||.
            "fhnw/**" .||.
