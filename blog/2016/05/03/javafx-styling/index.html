@@ -34,8 +34,7 @@
     </nav>
 </div>
 <div class="container content">
-    
-<div class="info">
+    <div class="info">
     May  3, 2016
 </div>
 <h1>Programmatic JavaFX Styling</h1>
@@ -60,68 +59,6 @@ chart.<span class="fu">setStyle</span>(
 <p>Instead, the <code>lookup</code> method can be used to navigate the CSS hierarchy:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">chart.<span class="fu">lookup</span>(<span class="st">&quot;.chart-plot-background&quot;</span>).<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: transparent&quot;</span>);</code></pre></div>
 <p>In case you were wondering why you would ever want to have a transparent chart background: The <code>ScatterChart</code> component does not support line connections. Using a <code>StackPane</code> to layer a <code>ScatterChart</code> and a <code>LineChart</code> can serve as a simple workaround. The chart in the top layer must then have a transparent background.</p>
-
-<hr />
-
-<div class="info">
-    November 11, 2015
-</div>
-<h1>Play Audio via Elm</h1>
-<p>In preparation for a <a href="http://makeymakey.com/">MaKey-MaKey</a>-workshop, I needed a simple HTML page which plays a sound whenever any key is pressed. I am using all sorts of excuses to write Elm lately, so here’s how I ended up triggering the audio clip (full sources on <a href="https://github.com/netzwerg/elm-playground/tree/master/audio">GitHub</a>, deployed version <a href="http://netzwerg.ch/audio">here</a>).</p>
-<p>First, we need a signal that indicates whether any key is currently down:</p>
-<pre class="elm"><code>isAnyKeyDown : Signal Bool
-isAnyKeyDown =
-  Signal.map (\keys -&gt; not (Set.isEmpty keys)) Keyboard.keysDown</code></pre>
-<p>For debugging, let’s visualize our events by displaying a small note image:</p>
-<pre class="elm"><code>view : Bool -&gt; Html
-view isAnyKeyDown =
-  if | isAnyKeyDown -&gt; img [ src &quot;note.png&quot; ] []
-     | otherwise -&gt; div [] []
-
-main : Signal Html
-main =
-  Signal.map view isAnyKeyDown</code></pre>
-<p>Next, we need to actually play the audio. Elm itself does not support this out-of-the-box, but triggering it via HTML5 and JavaScript is quite straight forward:</p>
-<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;body&gt;</span>
-    <span class="kw">&lt;audio</span><span class="ot"> id=</span><span class="st">&quot;audio&quot;</span><span class="ot"> src=</span><span class="st">&quot;piano.ogg&quot;</span><span class="ot"> preload=</span><span class="st">&quot;auto&quot;</span><span class="kw">&gt;&lt;/audio&gt;</span>
-<span class="kw">&lt;/body&gt;</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> audio = <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">'audio'</span>)
-<span class="kw">function</span> <span class="fu">playAudio</span>() {
-    <span class="co">// reset if already running</span>
-    <span class="ot">audio</span>.<span class="fu">pause</span>();
-    <span class="ot">audio</span>.<span class="fu">currentTime</span> = <span class="dv">0</span>;
-
-    <span class="co">// go!</span>
-    <span class="ot">audio</span>.<span class="fu">play</span>();
-}</code></pre></div>
-<p>Finally, we need to wire our JS function to our Elm signal. This is where Elm ports come in:</p>
-<pre class="elm"><code>port playAudio : Signal ()
-port playAudio =
-  Signal.map (\_ -&gt; ()) (Signal.filter identity False isAnyKeyDown)</code></pre>
-<p>There are two things to note here: First, we’re filtering our <code>isAnyKeyDown</code> to no longer contain key release events. Second, we’re mapping our signal of boolean values to a signal of unit types <code>()</code> to match the signature of our parameter-less JS function.</p>
-<p>All there is left, is to actually trigger the JS callback whenever Elm sends an event:</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">    <span class="kw">var</span> app = <span class="ot">Elm</span>.<span class="fu">fullscreen</span>(<span class="ot">Elm</span>.<span class="fu">Main</span>, {});
-    <span class="ot">app</span>.<span class="ot">ports</span>.<span class="ot">playAudio</span>.<span class="fu">subscribe</span>(playAudio);</code></pre></div>
-
-<hr />
-
-<div class="info">
-    July 25, 2015
-</div>
-<h1>Mac OSX Tips & Tricks #8: Finding Files via Terminal</h1>
-<p>This is how you recursively search all <code>notes.txt</code> files in your home directory (<code>~</code>) for the text snippet <code>foo</code> (from an OSX terminal):</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mdfind</span> -name notes.txt -onlyin ~ -0 <span class="kw">|</span> <span class="kw">xargs</span> -0 grep -i <span class="st">&quot;foo&quot;</span></code></pre></div>
-<p>It has at least 3 advantages over the traditional <code>find/grep</code> combo:</p>
-<ul>
-<li><code>mdfind</code> is the terminal version of Spotlight: It is blazingly fast because it uses an index</li>
-<li><code>mdfind</code> does not lead to “Permission denied” noise</li>
-<li>The <code>-0</code> flag works around spaces in file/folder names</li>
-</ul>
-<p>Happy searching!</p>
-
-<hr />
-
-<a class="index-footer" href="/archive.html">Older Posts &raquo; Archive</a>
 
 </div>
 <div class="container footer">
