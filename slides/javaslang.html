@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>Javaslang</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js/css/theme/solarized.css" id="theme" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" /><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script><!-- Customizes slide appearance -->
+<style>
+
+    .reveal .slides {
+        text-align: left;
+    }
+
+    .reveal .slides section > * {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .reveal p {
+        line-height: 1;
+    }
+
+    .reveal pre {
+        width: 100%;
+        margin: auto;
+    }
+
+    .reveal section img {
+        border: none;
+        box-shadow: none;
+    }
+
+    .smaller div, .smaller ul, .smaller p {
+        font-size: 0.8em;
+    }
+
+    .small-table td p {
+        margin: 0;
+        font-size: small;
+    }
+
+    .ulist p {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .limegreen {
+        color: limegreen;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .white {
+        color: white;
+    }
+
+    .solarized-blue {
+        color: #78bae6;
+    }
+
+    .solarized-violet {
+        color: #6c71c4;
+    }
+
+    .solarized-green {
+        color: #859900;
+    }
+
+
+</style></head><body><div class="reveal"><div class="slides"><section><h1>Javaslang</h1><div class="paragraph"><p>A Functional Library for Java 8+
+<br />
+<br />
+Rahel Lüthy – <a href="http://twitter.com/netzwerg999">@netzwerg999</a><br />
+May 2016</p></div><p><small></small></p></section>
+<section id="javaslang"><h2>Javaslang</h2><div class="ulist"><ul><li><p>Immutable collections</p></li><li><p>Functional control structures</p></li></ul></div></section>
+<section id="why"><h2>Why?</h2><div class="paragraph"><p>Fundamental nonsense at the heart of programming:
+<br />
+<br /></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">x = x + 1</code></pre></div></div>
+<div class="paragraph"><p><br />
+But it&#8217;s an assignment, I hear you say – well&#8230;&#8203;</p></div></section>
+<section id="math-functions-vs-java-methods"><h2>Math Functions vs. Java Methods</h2><div class="paragraph"><p>Math</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">y = sin(x)</code></pre></div></div>
+<div class="paragraph"><p><br />
+Java</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; doSomething(List&lt;String&gt; list)</code></pre></div></div></section>
+<section id="math-functions"><h2>Math Functions</h2><div class="paragraph"><p><br /></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">y = sin(x)</code></pre></div></div>
+<div class="paragraph"><p><br /></p></div>
+<div class="ulist"><ul><li><p>1 input &#8594; 1 output</p></li><li><p>same input &#8594; same output</p></li><li><p>referential transparency</p></li></ul></div></section>
+<section id="data-in-data-out"><h2>Data In – Data Out</h2><div class="ulist"><ul><li><p>Known as <strong>pure</strong> or <strong>side-effect-free</strong></p></li><li><p>Easy to understand</p></li><li><p>Easy to write</p></li><li><p>Easy to test</p></li><li><p>Function chaining: Programs as data pipelines</p></li></ul></div></section>
+<section id="java-methods"><h2>Java Methods</h2><div class="paragraph"><p><br /></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; doSomething(List&lt;String&gt; list)</code></pre></div></div>
+<div class="paragraph"><p><br /></p></div>
+<div class="ulist"><ul><li><p>3 potential inputs</p></li><li><p>5 potential outputs</p></li></ul></div></section>
+<section id="java-methods-2"><h2>Java Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; doSomething(List&lt;String&gt; list) {
+    if (this.state.isEmpty() || list.isEmpty()) {
+        throw new IllegalStateException("Ouch...");
+    }
+
+    list.add(this.state.get(0));
+    list.add(CONSTANT);
+
+    this.moreState.addAll(list);
+    OtherClass.mutableStaticField = list;
+
+    return new ArrayList&lt;String&gt;(list);
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>3 potential inputs</p></li><li><p>5 potential outputs</p></li></ul></div></section>
+<section id="garbage-in-garbage-out"><h2>Garbage In – Garbage Out</h2><div class="ulist smaller"><ul><li><p>3 potential inputs</p><div class="ulist"><ul><li><p>parameters</p></li><li><p>instance state</p></li><li><p>global state</p></li></ul></div></li><li><p>5 potential outputs</p><div class="ulist"><ul><li><p>return value</p></li><li><p>mutable instance state</p></li><li><p>mutable global state</p></li><li><p>mutable parameters</p></li><li><p>exceptions</p></li></ul></div></li></ul></div></section>
+<section id="why-is-this-bad"><h2>Why Is This Bad?</h2><div class="ulist"><ul><li><p>Many possible interactions</p></li><li><p>Hard to write, read &amp; test</p></li><li><p>Hard to re-use</p></li><li><p>Shared mutable state is evil
+<br />
+<br /></p></li></ul></div>
+<div class="imageblock thumb" style=""><div class="content"><img src="./images/tweet-d6.png" alt="tweet d6" width="70%" /></div></div></section>
+<section id="we-can-do-better"><h2>We Can Do Better!</h2><div class="ulist smaller"><ul><li><p><strong>1</strong> potential input</p><div class="ulist"><ul><li><p><span class="icon limegreen"><i class="fa fa-check"></i></span> parameters</p></li><li><p><span class="icon red"><i class="fa fa-times"></i></span> instance state – static methods, pass as param</p></li><li><p><span class="icon red"><i class="fa fa-times"></i></span> global state - pass as param</p></li></ul></div></li><li><p><strong>1</strong> potential output</p><div class="ulist"><ul><li><p><span class="icon limegreen"><i class="fa fa-check"></i></span> return value</p></li><li><p><span class="icon red"><i class="fa fa-times"></i></span> mutable instance state - immutability</p></li><li><p><span class="icon red"><i class="fa fa-times"></i></span> mutable global state - immutability</p></li><li><p><span class="icon red"><i class="fa fa-times"></i></span> mutable parameters - immutability</p></li><li><p><span class="icon red"><i class="fa fa-times"></i></span> exceptions - pass as return value</p></li></ul></div></li></ul></div></section>
+<section id="immutability"><h2>Immutability</h2><div class="ulist"><ul><li><p>No side effects</p></li><li><p>Fewer possible interactions</p></li><li><p>Sharing becomes safe</p></li><li><p>Deep-copying becomes unnecessary</p></li><li><p><code>==</code> implies <code>equals</code></p></li></ul></div></section>
+<section id="functional-programming"><h2>Functional Programming</h2><div class="paragraph"><p>A simple mental model:</p></div>
+<div class="ulist"><ul><li><p>Your brain can focus on the scope of one method</p></li><li><p>You can be sure that nothing else is relevant</p></li></ul></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="paragraph"><p>We need immutable collections and functional control structures</p></div></section>
+<section id="immutable-collections"><h2>Immutable Collections</h2><div class="paragraph"><p>Java only offers pseudo-immutability:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; list = Arrays.asList("hello", "runtime-errors");
+List&lt;String&gt; unmodifiableList = Collections.unmodifiableList(list);
+unmodifiableList.add("boom"); // UnsupportedOperationException</code></pre></div></div>
+<div class="paragraph"><p>Javaslang offers truly immutable collections:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; l = List.of("immutability");
+List&lt;String&gt; newCopy = l.prepend("hello");</code></pre></div></div></section>
+<section id="overview"><h2>Overview</h2><div class="imageblock" style=""><div class="content"><img src="./images/javaslang-overview.png" alt="javaslang overview" /></div></div></section>
+<section id="simplicity-1-2"><h2>Simplicity 1/2</h2><div class="paragraph"><p>Java:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; words = Arrays.asList("hello", "world").stream().
+                filter(s -&gt; s.startsWith("h")).collect(Collectors.toList());</code></pre></div></div>
+<div class="paragraph"><p>Javaslang:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; words = List.of("hello", "world").filter(s -&gt; s.startsWith("h"));</code></pre></div></div></section>
+<section id="simplicity-2-2"><h2>Simplicity 2/2</h2><div class="paragraph"><p>Java needs dirty tricks for basic functionality:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;() {
+    {
+        put("Java", 8);
+        put("Javaslang", 2);
+    }
+};</code></pre></div></div>
+<div class="paragraph"><p>Javaslang:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;String, Integer&gt; map = HashMap.ofEntries(
+        Tuple.of("Java", 8),
+        Tuple.of("Javaslang", 2)
+);</code></pre></div></div></section>
+<section id="coherence"><h2>Coherence</h2><div class="paragraph"><p>Java 8 introduced <code>Optional</code> but does not make use of it:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Integer value = map.get("whatever"); // maybe null</code></pre></div></div>
+<div class="paragraph"><p>Javaslang:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Option&lt;Integer&gt; optionalValue = map.get("whatever");</code></pre></div></div></section>
+<section id="better-streaming"><h2>Better Streaming</h2><div class="paragraph"><p>Java streams are just fancy iterators, they can only be used once:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;Integer&gt; stream = Stream.of(1, 2, 3);
+List&lt;Integer&gt; squares = stream.map(i -&gt; i * i).collect(Collectors.toList());
+Stream&lt;Integer&gt; timesTen = stream.map(i -&gt; i * 10);
+// IllegalStateException: stream has already been operated upon or closed</code></pre></div></div>
+<div class="paragraph"><p>Javaslang streams are true collections:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;Integer&gt; numbers = Stream.of(1, 2, 3);
+Stream&lt;Integer&gt; squares = numbers.map(i -&gt; i * i); // 1, 4, 9
+Stream&lt;Integer&gt; timesTen = numbers.map(i -&gt; i * 10); // 10, 20, 30</code></pre></div></div></section>
+<section id="tuples-zipping"><h2>Tuples / Zipping</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Tuple2&lt;String, Integer&gt; pair = Tuple.of("java", 8);
+String first = pair._1; // "java"
+Integer second = pair._2; // 8
+
+List&lt;String&gt; words = List.of("hello", "java");
+List&lt;Tuple2&lt;String, Long&gt;&gt; wordsWithIndex = words.zipWithIndex();
+
+List&lt;Integer&gt; numbers = List.of(42, 8);
+List&lt;Tuple2&lt;String, Integer&gt;&gt; wordsWithNumbers = words.zip(numbers);</code></pre></div></div></section>
+<section id="functional-values"><h2>Functional Values</h2><div class="ulist"><ul><li><p><strong>Option</strong>: Express absence vs. presence</p></li><li><p><strong>Future</strong>: Express pending vs. completed</p></li><li><p><strong>Try</strong>: Express failure vs. success</p></li><li><p><strong>Lazy</strong>: Express uninitialized vs. initialized</p></li><li><p><strong>Validation</strong>: Express invalid vs. valid</p></li></ul></div>
+<div class="paragraph"><p>All of them are monadic containers which implement a common <code>Value</code> interface</p></div></section>
+<section id="resources"><h2>Resources</h2><div class="imageblock" style=""><div class="content"><img src="./images/tweet-mittie.png" alt="tweet mittie" /></div></div>
+<div class="ulist"><ul><li><p><a href="http://javaslang.io">Javaslang</a></p></li><li><p><a href="http://blog.jenkster.com/2015/12/what-is-functional-programming.html">Kris Jenkins: What Is Functional Programming?</a></p></li></ul></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'solarized',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'linear',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>

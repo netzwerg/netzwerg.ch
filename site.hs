@@ -15,6 +15,7 @@ main = hakyll $ do
            "hotwire/**" .||.
            "fhnw/**" .||.
            "hausteil/**" .||.
+           "slides/**" .||.
            "audio/**" ) $ do
         route   idRoute
         compile copyFileCompiler
