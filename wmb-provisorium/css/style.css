@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+}
+
+h4 {
+    padding-top: 20px;
+}
+
+h5 {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-size: medium;
+    font-weight: 300;
+}
+
+.stripes {
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.content {
+    background-color: white;
+    font-family: 'Karla', sans-serif;
+    font-weight: 400;
+    height: 20%;
+    padding: 20px;
+}
+
+.doris {
+    padding-top: 100px;
+    position: relative;
+    text-align: right;
+}
+
+.willi {
+    padding-top: 5px;
+}
+
+.nav {
+    position: relative;
+    text-align: right;
+}
+
+.back {
+    position: relative;
+    text-align: right;
+}
+
+b {
+    font-weight: 700;
+}
+
+a * {
+    text-decoration: none;
+}
+
+a:hover, a:visited, a:link, a:active {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: grey;
+}
