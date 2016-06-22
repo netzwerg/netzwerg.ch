@@ -3,7 +3,7 @@ comments: true
 date: 2007-10-31 21:00:00
 layout: post
 slug: simple-jaxb
-title: Simple JAXB
+title: "Simple JAXB"
 wordpress_id: 142
 ---
 

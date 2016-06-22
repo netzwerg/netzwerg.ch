@@ -1,5 +1,5 @@
 ---
-title: Java 8 Unsigned Int
+title: "Java 8 Unsigned Int"
 date: 2015-05-13 06:30
 ---
 When I recently profiled one of our applications, it turned out that a lot of memory was wasted on a huge number of

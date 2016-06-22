@@ -3,7 +3,7 @@ comments: true
 date: 2012-11-05 09:41:55
 layout: post
 slug: scala-gems-6-giter8
-title: Scala Gems #6: Giter8
+title: "Scala Gems #6: Giter8"
 wordpress_id: 427
 ---
 When building Scala projects, your best bets are to either use the official [sbt](http://www.scala-sbt.org/), the

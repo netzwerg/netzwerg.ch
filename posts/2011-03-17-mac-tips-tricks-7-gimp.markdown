@@ -3,7 +3,7 @@ comments: true
 date: 2011-03-17 07:27:00
 layout: post
 slug: mac-tips-tricks-7-gimp
-title: Mac Tips & Tricks #7: GIMP
+title: "Mac Tips & Tricks #7: GIMP"
 wordpress_id: 189
 ---
 Unless you are a proud owner of a Photoshop license (or a not-so-proud owner of a PS crack), [GIMP](http://www.gimp.org/) is probably your best bet when it comes to professional image editing software. It works on all platforms, the OS X version can be downloaded [here](http://gimp.lisanet.de/Website/Download.html).

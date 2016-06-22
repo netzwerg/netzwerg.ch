@@ -1,6 +1,6 @@
 ---
 layout: post
-title: JavaFX 3D Line
+title: "JavaFX 3D Line"
 date: 2015-03-22 08:26:59 +0100
 comments: false
 ---

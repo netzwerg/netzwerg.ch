@@ -3,7 +3,7 @@ comments: true
 date: 2011-12-10 14:45:50
 layout: post
 slug: the-setup
-title: The Setup
+title: "The Setup"
 wordpress_id: 296
 ---
 I started my new job at [edorasware](http://edorasware.com) last week, with a

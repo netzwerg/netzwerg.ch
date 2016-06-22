@@ -3,7 +3,7 @@ comments: true
 date: 2012-02-19 14:24:50
 layout: post
 slug: mac-tips-tricks-8-changing-application-icons
-title: Mac Tips & Tricks #8: Changing application icons
+title: "Mac Tips & Tricks #8: Changing application icons"
 wordpress_id: 317
 ---
 There are many reasons why you might want to change an application's icon. In my case, I wanted to be able to

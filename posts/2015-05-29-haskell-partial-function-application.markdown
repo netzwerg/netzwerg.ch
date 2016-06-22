@@ -1,5 +1,5 @@
 ---
-title: Partial Function Application in Haskell
+title: "Partial Function Application in Haskell"
 date: 2015-05-29 14:30
 ---
 [Learning myself a Haskell should be for great good](http://learnyouahaskell.com/), so grasping the basics is essential.

@@ -1,5 +1,5 @@
 ---
-title: Mac OSX Tips & Tricks #8: Finding Files via Terminal
+title: "Mac OSX Tips & Tricks #8: Finding Files via Terminal"
 date: 2015-05-29 14:30
 ---
 This is how you recursively search all `notes.txt` files in your home directory (`~`)

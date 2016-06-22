@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Guava Lazy Init
+title: "Guava Lazy Init"
 date: 2013-11-30 07:17
 comments: true
 ---

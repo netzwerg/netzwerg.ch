@@ -3,7 +3,7 @@ comments: true
 date: 2010-11-16 07:30:00
 layout: post
 slug: mac-tips-tricks-3-terminal
-title: Mac Tips & Tricks #3: Terminal
+title: "Mac Tips & Tricks #3: Terminal"
 wordpress_id: 183
 ---
 

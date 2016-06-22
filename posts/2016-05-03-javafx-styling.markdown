@@ -1,5 +1,5 @@
 ---
-title: Programmatic JavaFX Styling
+title: "Programmatic JavaFX Styling"
 date: 2016-05-03 08:45
 ---
 JavaFX components can be styled via CSS.

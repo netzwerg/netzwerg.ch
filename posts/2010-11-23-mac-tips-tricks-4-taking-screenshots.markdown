@@ -3,7 +3,7 @@ comments: true
 date: 2010-11-23 13:42:00
 layout: post
 slug: mac-tips-tricks-4-taking-screenshots
-title: Mac Tips & Tricks #4: Taking Screenshots
+title: "Mac Tips & Tricks #4: Taking Screenshots"
 wordpress_id: 184
 ---
 

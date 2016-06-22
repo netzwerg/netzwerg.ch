@@ -3,7 +3,7 @@ comments: true
 date: 2010-11-03 06:55:00
 layout: post
 slug: mac-tips-tricks-2-keyboard-navigation
-title: Mac Tips & Tricks #2: Keyboard Navigation
+title: "Mac Tips & Tricks #2: Keyboard Navigation"
 wordpress_id: 181
 ---
 

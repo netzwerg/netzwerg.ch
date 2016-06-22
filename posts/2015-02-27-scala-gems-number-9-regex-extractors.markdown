@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Scala Gems #9: Regex Extractors
+title: "Scala Gems #9: Regex Extractors"
 date: 2015-02-27 16:33:55 +0100
 comments: false
 ---

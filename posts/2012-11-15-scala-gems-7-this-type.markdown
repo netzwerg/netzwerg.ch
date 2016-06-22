@@ -3,7 +3,7 @@ comments: true
 date: 2012-11-15 10:07:02
 layout: post
 slug: scala-gems-7-this-type
-title: Scala Gems #7: this.type
+title: "Scala Gems #7: this.type"
 wordpress_id: 450
 ---
 Suppose you have a simple class hierarchy with an API optimized for method chaining:

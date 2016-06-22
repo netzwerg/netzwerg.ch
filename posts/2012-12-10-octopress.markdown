@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Octopress
+title: "Octopress"
 date: 2012-12-10 15:58
 comments: true
 ---

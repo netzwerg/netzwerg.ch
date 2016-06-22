@@ -1,5 +1,5 @@
 ---
-title: Covariance in Java and Scala
+title: "Covariance in Java and Scala"
 date: 2016-06-22 08:45
 ---
 While there are tons of articles explaining the concept of covariance in Java, this post attempts to highlight

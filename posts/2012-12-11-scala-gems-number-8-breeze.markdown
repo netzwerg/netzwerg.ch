@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Scala Gems #8: Breeze
+title: "Scala Gems #8: Breeze"
 date: 2012-12-11 14:11
 comments: true
 ---

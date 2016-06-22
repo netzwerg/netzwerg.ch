@@ -3,7 +3,7 @@ comments: true
 date: 2012-09-28 11:29:10
 layout: post
 slug: scala-gems-5-fp-principles-coursera
-title: Scala Gems #5: FP @ Coursera
+title: "Scala Gems #5: FP @ Coursera"
 wordpress_id: 337
 ---
 Along with more than 40k others, I am in the second week of Odersky's free online course titled _"Functional Programming

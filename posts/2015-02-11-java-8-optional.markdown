@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java 8 Optional
+title: "Java 8 Optional"
 date: 2015-02-11 06:30
 comments: false
 ---

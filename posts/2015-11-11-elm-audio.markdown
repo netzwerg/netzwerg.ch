@@ -1,5 +1,5 @@
 ---
-title: Play Audio via Elm
+title: "Play Audio via Elm"
 date: 2015-11-11 06:30
 ---
 In preparation for a [MaKey-MaKey](http://makeymakey.com/)-workshop, I needed a simple HTML page which plays a sound

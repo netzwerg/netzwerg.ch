@@ -3,7 +3,7 @@ comments: true
 date: 2010-12-22 07:32:00
 layout: post
 slug: mac-tips-tricks-5-textmate
-title: Mac Tips & Tricks #5: TextMate
+title: "Mac Tips & Tricks #5: TextMate"
 wordpress_id: 185
 ---
 

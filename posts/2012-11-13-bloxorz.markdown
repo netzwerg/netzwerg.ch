@@ -3,7 +3,7 @@ comments: true
 date: 2012-11-13 12:24:51
 layout: post
 slug: bloxorz
-title: Bloxorz
+title: "Bloxorz"
 wordpress_id: 438
 ---
 Unfortunately, the [Scala course at Coursera](http://class.coursera.org/progfun-2012-001) is over. It was really an 

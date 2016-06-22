@@ -3,7 +3,7 @@ comments: true
 date: 2011-01-27 12:24:00
 layout: post
 slug: mac-tips-tricks-6-applescript
-title: Mac Tips & Tricks #6: AppleScript
+title: "Mac Tips & Tricks #6: AppleScript"
 wordpress_id: 186
 ---
 <blockquote>

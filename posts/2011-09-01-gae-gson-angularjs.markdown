@@ -3,7 +3,7 @@ comments: true
 date: 2011-09-01 20:51:03
 layout: post
 slug: gae-gson-angularjs
-title: GAE + Gson + AngularJS
+title: "GAE + Gson + AngularJS"
 wordpress_id: 259
 ---
 I have been playing with [AngularJS](http://angularjs.org) lately. It is a JavaScript library with the following tag line:

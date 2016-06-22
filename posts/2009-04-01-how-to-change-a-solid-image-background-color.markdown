@@ -3,7 +3,7 @@ comments: true
 date: 2009-04-01 06:55:00
 layout: post
 slug: how-to-change-a-solid-image-background-color
-title: How to change a solid image background color
+title: "How to change a solid image background color"
 wordpress_id: 161
 ---
 

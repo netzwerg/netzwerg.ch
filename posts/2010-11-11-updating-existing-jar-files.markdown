@@ -3,7 +3,7 @@ comments: true
 date: 2010-11-11 08:01:00
 layout: post
 slug: updating-existing-jar-files
-title: Updating existing JAR files
+title: "Updating existing JAR files"
 wordpress_id: 182
 ---
 

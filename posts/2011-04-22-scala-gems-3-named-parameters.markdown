@@ -3,7 +3,7 @@ comments: true
 date: 2011-04-22 20:21:00
 layout: post
 slug: scala-gems-3-named-parameters
-title: Scala Gems #3: Named Parameters
+title: "Scala Gems #3: Named Parameters"
 wordpress_id: 192
 ---
 Just a quick one this time (it's easter holiday and the weather is simply too beautiful to waste time in front of a computer). Anyway, have a look at this constructor call:

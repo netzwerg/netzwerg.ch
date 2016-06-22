@@ -3,7 +3,7 @@ comments: true
 date: 2007-06-20 14:54:00
 layout: post
 slug: threads-and-swing
-title: Threads and Swing
+title: "Threads and Swing"
 wordpress_id: 137
 ---
 
