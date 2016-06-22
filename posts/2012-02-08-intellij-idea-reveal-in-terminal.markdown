@@ -3,7 +3,7 @@ comments: true
 date: 2012-02-08 19:51:26
 layout: post
 slug: intellij-idea-reveal-in-terminal
-title: IntelliJ IDEA: Reveal in Terminal
+title: IntelliJ IDEA':' Reveal in Terminal
 wordpress_id: 307
 ---
 IntelliJ IDEA ships with a very handy _Reveal in Finder_ action, but unfortunately,

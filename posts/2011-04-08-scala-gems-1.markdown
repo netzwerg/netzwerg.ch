@@ -3,7 +3,7 @@ comments: true
 date: 2011-04-08 07:01:00
 layout: post
 slug: scala-gems-1
-title: Scala Gems: #1
+title: Scala Gems':' #1
 wordpress_id: 190
 ---
 This article finally did it: ["Guardian.co.uk Switching from Java to Scala"](http://www.infoq.com/articles/guardian_scala) -- it made me jump head first into the Scala newbie pool. Of course I wanted to learn Scala for quite some time already, but I somehow never managed to get my act together.

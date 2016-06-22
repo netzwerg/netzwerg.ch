@@ -3,7 +3,7 @@ comments: true
 date: 2010-09-16 12:01:00
 layout: post
 slug: java-on-the-mac-tips-tricks-1
-title: Java on the Mac: Tips & Tricks #1
+title: Java on the Mac':' Tips & Tricks #1
 wordpress_id: 180
 ---
 
