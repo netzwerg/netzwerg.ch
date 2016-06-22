@@ -56,23 +56,23 @@ main =
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;audio</span><span class="ot"> id=</span><span class="st">&quot;audio&quot;</span><span class="ot"> src=</span><span class="st">&quot;piano.ogg&quot;</span><span class="ot"> preload=</span><span class="st">&quot;auto&quot;</span><span class="kw">&gt;&lt;/audio&gt;</span>
 <span class="kw">&lt;/body&gt;</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> audio = <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">'audio'</span>)
-<span class="kw">function</span> <span class="fu">playAudio</span>() {
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> audio <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">'audio'</span>)
+<span class="kw">function</span> <span class="at">playAudio</span>() <span class="op">{</span>
     <span class="co">// reset if already running</span>
-    <span class="ot">audio</span>.<span class="fu">pause</span>();
-    <span class="ot">audio</span>.<span class="fu">currentTime</span> = <span class="dv">0</span>;
+    <span class="va">audio</span>.<span class="at">pause</span>()<span class="op">;</span>
+    <span class="va">audio</span>.<span class="at">currentTime</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
 
     <span class="co">// go!</span>
-    <span class="ot">audio</span>.<span class="fu">play</span>();
-}</code></pre></div>
+    <span class="va">audio</span>.<span class="at">play</span>()<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
 <p>Finally, we need to wire our JS function to our Elm signal. This is where Elm ports come in:</p>
 <pre class="elm"><code>port playAudio : Signal ()
 port playAudio =
   Signal.map (\_ -&gt; ()) (Signal.filter identity False isAnyKeyDown)</code></pre>
 <p>There are two things to note here: First, we’re filtering our <code>isAnyKeyDown</code> to no longer contain key release events. Second, we’re mapping our signal of boolean values to a signal of unit types <code>()</code> to match the signature of our parameter-less JS function.</p>
 <p>All there is left, is to actually trigger the JS callback whenever Elm sends an event:</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">    <span class="kw">var</span> app = <span class="ot">Elm</span>.<span class="fu">fullscreen</span>(<span class="ot">Elm</span>.<span class="fu">Main</span>, {});
-    <span class="ot">app</span>.<span class="ot">ports</span>.<span class="ot">playAudio</span>.<span class="fu">subscribe</span>(playAudio);</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">    <span class="kw">var</span> app <span class="op">=</span> <span class="va">Elm</span>.<span class="at">fullscreen</span>(<span class="va">Elm</span>.<span class="at">Main</span><span class="op">,</span> <span class="op">{}</span>)<span class="op">;</span>
+    <span class="va">app</span>.<span class="va">ports</span>.<span class="va">playAudio</span>.<span class="at">subscribe</span>(playAudio)<span class="op">;</span></code></pre></div>
 
 </div>
 <div class="container footer">
