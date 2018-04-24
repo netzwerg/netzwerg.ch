@@ -146,7 +146,7 @@ class App extends React.Component&lt;object, State&gt; {
 <p>Situation recap:</p>
 <p><strong>What we have</strong> (and want to keep): <em>Simple components with 0-based coordinate systems</em></p>
 <p><strong>What we want</strong>: <em>Animations across component boundaries</em></p>
-<p>There’s no easy fix, but we know that animations are simple as long as they are happening on a <strong>common coordinate system</strong>. Thus the idea is simple: We keep using 0-based components, but switch to a common coordinate system while performing an animation. One very suitable common coordinate system is the view port coordinate system of our SVG’s root node.</p>
+<p>There’s no easy fix, but we know that animations are simple as long as they are happening on a <strong>common coordinate system</strong>. Thus the idea is straightforward: We keep using 0-based components, but switch to a common coordinate system while performing an animation. One very suitable common coordinate system is the view port coordinate system of our SVG’s root node.</p>
 <p>Here’s the rough recipe:</p>
 <ul>
 <li>Calculate the circle’s global coordinates (relative to the svg view port)</li>
