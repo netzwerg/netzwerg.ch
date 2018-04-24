@@ -14,3 +14,11 @@ cabal run rebuild
 cabal run watch
 ```
 Preview at [http://localhost:8000](http://localhost:8000)
+
+## Deployment
+
+```
+cabal run rebuild
+git co master
+cp -a _site/. .
+```
