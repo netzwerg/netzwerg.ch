@@ -40,25 +40,25 @@
 <h1>Partial Function Application in Haskell</h1>
 <p><a href="http://learnyouahaskell.com/">Learning myself a Haskell should be for great good</a>, so grasping the basics is essential. I am forcing myself to go slowly, taking baby steps in the REPL.</p>
 <p>Today, I came across this really simple example:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">map (<span class="fu">&gt;</span><span class="dv">10</span>) [<span class="dv">1</span>,<span class="dv">42</span>,<span class="dv">99</span>]</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1">map (<span class="fu">&gt;</span><span class="dv">10</span>) [<span class="dv">1</span>,<span class="dv">42</span>,<span class="dv">99</span>]</a></code></pre></div>
 <p>Figuring out that this will give <code>[False,True,True]</code> is not exactly rocket science, but what exactly <strong>is</strong> this <code>(&gt;10)</code> term? Given that we’re talking about Haskell, it <strong>must</strong> be a function, right? Also, inferring from the types involved, it must be a function that accepts a <code>Num</code> and returns a <code>Bool</code>. But how does this come about?</p>
 <p>Back to more basics – here’s another simple function:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">greaterThan ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-greaterThan x y <span class="fu">=</span> x <span class="fu">&gt;</span> y
-
-greaterThan <span class="dv">10</span> <span class="dv">42</span> <span class="co">-- False</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ot">greaterThan ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">greaterThan x y <span class="fu">=</span> x <span class="fu">&gt;</span> y</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">greaterThan <span class="dv">10</span> <span class="dv">42</span> <span class="co">-- False</span></a></code></pre></div>
 <p>Confusingly, the type signature does not distinguish between parameters and the return type. This has been my most important Haskell epiphany yet: <strong>Every function in Haskell actually only takes one parameter</strong></p>
 <p><img src="/images/sink.jpg" style="padding-top:30;padding-bottom:30;" /></p>
 <p>Calling <code>greaterThan 10 42</code> just <em>looks</em> as if we were passing two parameters, but we’re actually calling the function with one parameter, getting a function from <code>Int -&gt; Bool</code> in return, and then immediately calling this function with the second parameter to get the result. Let’s make this explicit by breaking the call down to the individual steps:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">tenGreaterThan <span class="fu">=</span> greaterThan <span class="dv">10</span> <span class="co">-- returns a function with Int -&gt; Bool signature</span>
-tenGreaterThan <span class="dv">42</span> <span class="co">-- returns the final result (still False)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1">tenGreaterThan <span class="fu">=</span> greaterThan <span class="dv">10</span> <span class="co">-- returns a function with Int -&gt; Bool signature</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">tenGreaterThan <span class="dv">42</span> <span class="co">-- returns the final result (still False)</span></a></code></pre></div>
 <p>Now back to the <code>(&gt;10)</code> term: Pretty much everything in Haskell is a function, so <code>&gt;</code> is a function, too. It is usually called with infix notation, e.g. <code>10 &gt; 42</code>, but it can actually be converted to a postfix function by putting it in parenthesis:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">(<span class="fu">&gt;</span>) <span class="dv">10</span> <span class="dv">42</span> <span class="co">-- still False</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1">(<span class="fu">&gt;</span>) <span class="dv">10</span> <span class="dv">42</span> <span class="co">-- still False</span></a></code></pre></div>
 <p>Obviously, we can also partially apply here:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">tenGreaterThan <span class="fu">=</span> (<span class="fu">&gt;</span>) <span class="dv">10</span>
-tenGreaterThan <span class="dv">42</span> <span class="co">-- also still False</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1">tenGreaterThan <span class="fu">=</span> (<span class="fu">&gt;</span>) <span class="dv">10</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">tenGreaterThan <span class="dv">42</span> <span class="co">-- also still False</span></a></code></pre></div>
 <p>Back to our initial example – here it is again:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">map (<span class="fu">&gt;</span><span class="dv">10</span>) [<span class="dv">1</span>,<span class="dv">42</span>,<span class="dv">99</span>] <span class="co">-- [False,True,True]</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1">map (<span class="fu">&gt;</span><span class="dv">10</span>) [<span class="dv">1</span>,<span class="dv">42</span>,<span class="dv">99</span>] <span class="co">-- [False,True,True]</span></a></code></pre></div>
 <p>Applying <code>(&gt;10)</code> to 42 correctly gives <code>True</code>, but applying <code>(&gt;)10</code> to 42 did give <code>False</code> in the example before, right? Things that make you go hmmmm…</p>
 <p>Turns out the parenthesis are <strong>really</strong> crucial here! In Haskell there is a syntax called <a href="https://wiki.haskell.org/Section_of_an_infix_operator">sectioning</a>, which is special for partial application on infix operators. The term <code>(&gt;10)</code> corresponds to a <em>right section</em>, which is equivalent to <code>flip (&gt;) 10</code>. No wonder the semantics seemed flipped!</p>
 <p>Long story short: While it is quite intuitive that the <code>(&gt;10)</code> corresponds to a <code>\x -&gt; x &gt; 10</code> in the initial map example, the magic happens through Haskell’s special sectioning syntax.</p>

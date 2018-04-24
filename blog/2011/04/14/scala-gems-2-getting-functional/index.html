@@ -39,14 +39,14 @@
 </div>
 <h1>Scala Gems #2: Getting Functional</h1>
 <p>As promised, here is the second post in my haphazardly thrown together Scala series. Over the past few days I have read some chapters in Odersky’s <a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a>, and most importantly, I have written my first ~100 lines of code (a basic Minesweeper app with a simple Swing UI). It’s been a lot of fun, and I am still very enthusiastic about many new concepts &amp; constructs. When coding, the biggest challenge is to not fall back to imperative Java style, but really use the functional concepts wherever applicable. I am probably still not radical enough, but for the time being, here is my take on revealing non-mined cells:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> reveal = {
-  <span class="kw">if</span> (revealed == <span class="kw">false</span>) {
-    revealed = <span class="kw">true</span>
-    <span class="kw">if</span> (adjacentMineCount == <span class="dv">0</span>) {
-      adjacentCells.<span class="fu">foreach</span> (cell =&gt; cell.<span class="fu">reveal</span>)
-    }
-  }
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">def</span> reveal = {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">if</span> (revealed == <span class="kw">false</span>) {</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    revealed = <span class="kw">true</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">if</span> (adjacentMineCount == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">      adjacentCells.<span class="fu">foreach</span> (cell =&gt; cell.<span class="fu">reveal</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    }</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  }</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">}</a></code></pre></div>
 <p>In summary: 1 usage of <code>=&gt;</code> (and even a recursion ;-)).</p>
 
 </div>

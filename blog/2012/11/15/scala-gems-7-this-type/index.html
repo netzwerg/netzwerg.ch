@@ -39,69 +39,69 @@
 </div>
 <h1>Scala Gems #7: this.type</h1>
 <p>Suppose you have a simple class hierarchy with an API optimized for method chaining:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Carnivore {
-
-  <span class="kw">def</span> eat: Carnivore = {
-    <span class="fu">println</span>(<span class="st">&quot;eating meat, yummy!&quot;</span>)
-    <span class="kw">this</span>
-  }
-
-}
-
-<span class="kw">class</span> Dog <span class="kw">extends</span> Carnivore {
-
-  <span class="kw">def</span> bark: Dog = {
-    <span class="fu">println</span>(<span class="st">&quot;wuff!&quot;</span>)
-    <span class="kw">this</span>
-  }
-  
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">abstract</span> <span class="kw">class</span> Carnivore {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">def</span> eat: Carnivore = {</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="fu">println</span>(<span class="st">&quot;eating meat, yummy!&quot;</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">this</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">class</span> Dog <span class="kw">extends</span> Carnivore {</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="kw">def</span> bark: Dog = {</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    <span class="fu">println</span>(<span class="st">&quot;wuff!&quot;</span>)</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="kw">this</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">  </a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">}</a></code></pre></div>
 <p>For obvious reasons, the compiler will only allow to chain methods in a certain order:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> dog = <span class="kw">new</span> <span class="fu">Dog</span>()
-<span class="co">// compiles ok</span>
-dog.<span class="fu">bark</span>.<span class="fu">eat</span>
-<span class="co">// does not compile ('eat' returns a Carnivore, which cannot bark)</span>
-dog.<span class="fu">eat</span>.<span class="fu">bark</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">val</span> dog = <span class="kw">new</span> <span class="fu">Dog</span>()</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">// compiles ok</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">dog.<span class="fu">bark</span>.<span class="fu">eat</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">// does not compile ('eat' returns a Carnivore, which cannot bark)</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">dog.<span class="fu">eat</span>.<span class="fu">bark</span></a></code></pre></div>
 <p>In the Java world, possible work-arounds involve generics. Either via overriding, or with a self-reference trick. Here’s how it would look in Scala:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Carnivore[T] {
-
-  <span class="kw">def</span> eat: T = {
-    <span class="fu">println</span>(<span class="st">&quot;eating meat, yummy!&quot;</span>)
-    self
-  }
-  
-  <span class="kw">abstract</span> <span class="kw">def</span> self: T
-
-}
-
-<span class="kw">class</span> Dog <span class="kw">extends</span> Carnivore[Dog] {
-
-  <span class="kw">def</span> bark: Dog = {
-    <span class="fu">println</span>(<span class="st">&quot;wuff!&quot;</span>)
-    <span class="kw">this</span>
-  }
-  
-  <span class="kw">def</span> self = <span class="kw">this</span>
-
-}</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">abstract</span> <span class="kw">class</span> Carnivore[T] {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="kw">def</span> eat: T = {</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="fu">println</span>(<span class="st">&quot;eating meat, yummy!&quot;</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    self</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">  <span class="kw">abstract</span> <span class="kw">def</span> self: T</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw">class</span> Dog <span class="kw">extends</span> Carnivore[Dog] {</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">  <span class="kw">def</span> bark: Dog = {</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    <span class="fu">println</span>(<span class="st">&quot;wuff!&quot;</span>)</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">    <span class="kw">this</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">  }</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">  </a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">  <span class="kw">def</span> self = <span class="kw">this</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">}</a></code></pre></div>
 <p>While this works just fine, it involves quite some clutter. And Scala can actually do better! A powerful (but yet not very well-known) construct can solve the problem: <strong><code>this.type</code></strong></p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">abstract</span> <span class="kw">class</span> Carnivore {
-
-  <span class="kw">def</span> eat: <span class="kw">this</span>.<span class="fu">type</span> = {
-    <span class="fu">println</span>(<span class="st">&quot;eating meat, yummy!&quot;</span>)
-    <span class="kw">this</span>
-  }
-
-}
-
-<span class="kw">class</span> Dog <span class="kw">extends</span> Carnivore {
-
-  <span class="kw">def</span> bark: Dog = {
-    <span class="fu">println</span>(<span class="st">&quot;wuff!&quot;</span>)
-    <span class="kw">this</span>
-  }
-
-}</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">abstract</span> <span class="kw">class</span> Carnivore {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw">def</span> eat: <span class="kw">this</span>.<span class="fu">type</span> = {</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="fu">println</span>(<span class="st">&quot;eating meat, yummy!&quot;</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="kw">this</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="kw">class</span> Dog <span class="kw">extends</span> Carnivore {</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">  <span class="kw">def</span> bark: Dog = {</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">    <span class="fu">println</span>(<span class="st">&quot;wuff!&quot;</span>)</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">    <span class="kw">this</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">}</a></code></pre></div>
 <p>And now go spread the word!</p>
 
 </div>

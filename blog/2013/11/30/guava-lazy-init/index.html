@@ -39,11 +39,11 @@
 </div>
 <h1>Guava Lazy Init</h1>
 <p>Note to self: How to lazily initialize a value with Java/Guava</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">private</span> <span class="dt">final</span> Supplier&lt;Integer&gt; lazyValue = Suppliers.<span class="fu">memoize</span>(<span class="kw">new</span> Supplier&lt;Integer&gt;() { 
-  <span class="kw">public</span> Integer <span class="fu">get</span>() {
-    <span class="kw">return</span> <span class="dv">42</span>;
-  };
-});</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">private</span> <span class="dt">final</span> Supplier&lt;<span class="bu">Integer</span>&gt; lazyValue = Suppliers.<span class="fu">memoize</span>(<span class="kw">new</span> Supplier&lt;<span class="bu">Integer</span>&gt;() { </a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">public</span> <span class="bu">Integer</span> <span class="fu">get</span>() {</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">return</span> <span class="dv">42</span>;</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  };</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">});</a></code></pre></div>
 
 </div>
 <div class="container footer">

@@ -36,43 +36,211 @@
 <div class="container content">
     
 <div class="info">
+    April 24, 2018
+</div>
+<h1>Position animations across SVG groups</h1>
+<p>Animated transitions between UI states can greatly enhance the usability of applications because they reduce the likelihood of <a href="https://en.wikipedia.org/wiki/Change_blindness">change blindness</a>.</p>
+<p>In a typical web application, UI state is represented by the DOM. Instead of switching from one DOM state to the next instantaneously, animations smoothly transition DOM element properties over time.</p>
+<p>On a technical level, a multitude of libraries provide abstractions to create animated transitions with minimal effort.</p>
+This is how an animation of an SVG circle would look like with D3.js (notice the “Rerun” button which appears once you hover the right pane):<br />
+ 
+<p data-height="265" data-theme-id="0" data-slug-hash="JvXobe" data-default-tab="js,result" data-user="netzwerg" data-embed-version="2" data-pen-title="D3.js Animation" class="codepen">
+See the Pen <a href="https://codepen.io/netzwerg/pen/JvXobe/">D3.js Animation</a> by Rahel Lüthy (<a href="https://codepen.io/netzwerg"><span class="citation" data-cites="netzwerg">@netzwerg</span></a>) on <a href="https://codepen.io">CodePen</a>.
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<p><br />
+ </p>
+<p>D3.js is interpolating the circle’s <code>cx</code> attribute from <code>10</code> to <code>190</code> pixels over the course of a second.</p>
+<p>Well, this is a simple example because the SVG scene graph is simple – it just contains one circle. Unfortunately, SVG scene graphs tend to get very complex in real applications. One way to tame this complexity, is by breaking applications into components, each responsible for rendering a sub-graph of the final SVG.</p>
+<h2 id="components-ftw">Components FTW</h2>
+<p>Component-based libraries like React come in handy here: Each component is responsible for rendering a small, human-digestible SVG chunk.</p>
+<p>Here’s a React component which renders a box with a circle at its center:</p>
+<p><img src="/images/box-static-circle.png" width="25%" style="padding: 20 0 20 0;" /></p>
+<pre class="typescript"><code>const Box = ({width, height}: BoxProps) =&gt; {
+    return (
+        &lt;g&gt;
+            &lt;rect width={width} height={height}/&gt;
+            &lt;circle cx={width / 2} cy={height / 2}/&gt;
+        &lt;/g&gt;
+    );
+};</code></pre>
+<p>Using simple composition, we can then stack two boxes on top of each other:</p>
+<p><img src="/images/boxes-static-circle.png" width="25%" style="padding: 20 0 20 0;" /></p>
+<pre class="typescript"><code>&lt;g&gt;
+    &lt;Box width={width} height={height / 2} /&gt;
+&lt;/g&gt;
+&lt;g transform={`translate(0,${height / 2})`}&gt;
+    &lt;Box width={width} height={height / 2} /&gt;
+&lt;/g&gt;</code></pre>
+<p>Note how the second box gets moved to the bottom by translating its container group by <code>height/2</code>.</p>
+<p>To make things a bit more interesting, let’s make the circle alternate between boxes at a fixed interval:</p>
+<p><img src="/images/boxes-jumping-circle.gif" width="25%" style="padding: 20 0 20 0;" /></p>
+<pre class="typescript"><code>type State = {
+    readonly box: 'UPPER' | 'LOWER';
+};
+
+class App extends React.Component&lt;object, State&gt; {
+
+    private readonly circleId = 'circleId';
+    private timer: Timer;
+
+    constructor(props: object) {
+        super(props);
+        this.state = {box: 'UPPER'};
+    }
+
+    componentDidMount() {
+        this.timer = setInterval(() =&gt; this.switchBox(), 1000);
+    }
+
+    switchBox() {
+        this.setState(prevState =&gt; ({box: prevState.box === 'UPPER' ? 'LOWER' : 'UPPER'}));
+    }
+
+    render() {
+
+        const viewBox = {width: 100, height: 100};
+        const margin = {top: 10, right: 10, bottom: 10, left: 10};
+        const width = viewBox.width - margin.left - margin.right;
+        const height = viewBox.height - margin.top - margin.bottom;
+
+        return (
+            &lt;div className=&quot;App&quot;&gt;
+                &lt;svg viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}&gt;
+                    &lt;g transform={`translate(${margin.left}, ${margin.top})`}&gt;
+                        &lt;g&gt;
+                            &lt;Box
+                                circleId={this.circleId}
+                                showCircle={this.state.box === 'UPPER'}
+                                width={width}
+                                height={height / 2}
+                            /&gt;
+                        &lt;/g&gt;
+                        &lt;g transform={`translate(0,${height / 2})`}&gt;
+                            &lt;Box
+                                circleId={this.circleId}
+                                showCircle={this.state.box === 'LOWER'}
+                                width={width}
+                                height={height / 2}
+                            /&gt;
+                        &lt;/g&gt;
+                    &lt;/g&gt;
+                &lt;/svg&gt;
+            &lt;/div&gt;
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+
+}</code></pre>
+<p><em>Complete code on <a href="https://github.com/netzwerg/react-animation-demo">GitHub</a></em></p>
+<h2 id="smoothly-moving-circles">Smoothly Moving Circles</h2>
+<p>Blinking UIs are almost never a good idea, so back to animations! Smoothly moving the circle between boxes looks way better:</p>
+<p><img src="/images/boxes-animated-circle.gif" width="25%" style="padding: 20 0 20 0;" /></p>
+<p>We already know how to animate a circle’s position with D3.js, so <strong>this should be simple, right</strong>?</p>
+<p>Well… the circle’s y-coordinate in the upper box is <code>height/2</code>, and its coordinate in the lower box is <code>height/2</code>, too! So how are we supposed to animate between these identical states?!</p>
+<p>I vividly remember my own confusion when I first encountered this problem in one of our research projects.</p>
+<p>The complexity is caused by the fact that our components all use their own, 0-based coordinate system. But that’s exactly what made the components simple in the first place, so we don’t want to give this up!</p>
+<h2 id="animations-across-component-boundaries">Animations Across Component Boundaries</h2>
+<p>Situation recap:</p>
+<p><strong>What we have</strong> (and want to keep): <em>Simple components with 0-based coordinate systems</em></p>
+<p><strong>What we want</strong>: <em>Animations across component boundaries</em></p>
+<p>There’s no easy fix, but we know that animations are simple as long as they are happening on a <strong>common coordinate system</strong>. Thus the idea is simple: We keep using 0-based components, but switch to a common coordinate system while performing an animation. One very suitable common coordinate system is the view port coordinate system of our SVG’s root node.</p>
+<p>Here’s the rough recipe:</p>
+<ul>
+<li>Calculate the circle’s global coordinates (relative to the svg view port)</li>
+<li>Create a dedicated clone of the circle to be used for the animation</li>
+<li>Attach the clone to the SVG root element</li>
+<li>Hide the original circle during the course of the animation (so only the clone is visible)</li>
+<li><strong>Animate!</strong></li>
+<li>Detach the clone once the animation is done</li>
+<li>Un-hide the original circle at the final state</li>
+</ul>
+<p>And in code (remember, the complete project is on <a href="https://github.com/netzwerg/react-animation-demo">GitHub</a>):</p>
+<pre class="typescript"><code>const circle = this.svgRoot.getElementById(this.circleId) as SVGCircleElement;
+
+if (circle) {
+
+    // (0) Calculate current coordinates relative to global view port
+    const currentCoordinates = this.getCoordinates(this.svgRoot, circle);
+
+    const previousCoordinates = this.coordinateCache || currentCoordinates;
+
+    this.coordinateCache = currentCoordinates;
+
+    const easingFunction = currentCoordinates.cy &gt; previousCoordinates.cy ? easeBounceOut : easeCubicInOut;
+
+    // (1) This clone will be used for the animation
+    const animatedCircle = circle.cloneNode(true) as SVGCircleElement;
+
+    // (2) Attach to root element (animated x/y coordinates are in the system of the global view port)
+    this.svgRoot.appendChild(animatedCircle);
+
+    // (3) The DOM already contains the circle at the new position -&gt; hide it until the animation is over
+    select(circle)
+        .attr('visibility', 'hidden');
+
+    // (4) The actual animation
+    select(animatedCircle)
+        .attr('visibility', 'visible')
+        .attr('cx', previousCoordinates.cx)
+        .attr('cy', previousCoordinates.cy)
+        .transition()
+        .duration(1000)
+        .ease(easingFunction)
+        .attr('cx', currentCoordinates.cx)
+        .attr('cy', currentCoordinates.cy)
+        .remove() // (5) Detach the animated circle once we're done
+        .on('end', () =&gt; { // (6) Un-hide new state (already properly placed in the DOM)
+            select(circle)
+                .attr('visibility', 'visible');
+        });
+
+}</code></pre>
+<p>Phew, some things are harder than they should be – let me know if there’s a simpler way!</p>
+
+<hr />
+
+<div class="info">
     June 22, 2016
 </div>
 <h1>Covariance in Java and Scala</h1>
 <p>While there are tons of articles explaining the concept of covariance in Java, this post attempts to highlight how and why Java and Scala differ when it comes to collection type safety.</p>
 <h2 id="java-arrays">Java Arrays</h2>
 <p>Let’s start with Java arrays. They are covariant, meaning that an array of type <code>S[]</code> is a subtype of an array of type <code>T[]</code> if <code>S</code> is a subtype of <code>T</code>:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Cat[] cats = { <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>) };
-Animal[] animals = cats;</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">Cat[] cats = { <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>) };</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">Animal[] animals = cats;</a></code></pre></div>
 <p>Things are simple and life is good. The fact that arrays are covariant makes code re-use possible. Utility methods inside <code>java.util.Arrays</code> are perfect examples, e.g.:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">binarySearch</span>(Object[] a, Object key) {
-  <span class="co">// ...</span>
-}
-<span class="fu">binarySearch</span>(<span class="kw">new</span> Integer[]{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>}, <span class="dv">2</span>); <span class="co">// VALID</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">binarySearch</span>(<span class="bu">Object</span>[] a, <span class="bu">Object</span> key) {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="fu">binarySearch</span>(<span class="kw">new</span> <span class="bu">Integer</span>[]{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>}, <span class="dv">2</span>); <span class="co">// VALID</span></a></code></pre></div>
 <p>As usual, everything falls apart because of mutability. Java arrays are mutable, making it possible to store the wrong type of object into an array without the compiler being able to tell:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Cat[] cats = { <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>) };
-Animal[] animals = cats;
-animals[<span class="dv">0</span>] = <span class="kw">new</span> <span class="fu">Dog</span>(<span class="st">&quot;Max&quot;</span>); <span class="co">// FAILS AT RUNTIME</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">Cat[] cats = { <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>) };</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">Animal[] animals = cats;</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">animals[<span class="dv">0</span>] = <span class="kw">new</span> <span class="fu">Dog</span>(<span class="st">&quot;Max&quot;</span>); <span class="co">// FAILS AT RUNTIME</span></a></code></pre></div>
 <p>Ouch, heap pollution – an <code>ArrayStoreException</code> is thrown at runtime! People obsessed with types tend to call this <em>unsound</em>.</p>
 <h2 id="java-generics">Java Generics</h2>
 <p>With Java 5 came generics, which allow “a type or method to operate on objects of various types while providing compile-time type safety.” (<a href="http://docs.oracle.com/javase/1.5.0/docs/guide/language/">Oracle Java 1.5 Docs</a>). Let me repeat that: Generics were introduced to improve <em>type safety</em>. It was thus not an option to accept the same unsound array behavior. Because Java collections are mutable, the only option was to make a <code>List&lt;T&gt;</code> invariant:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">List&lt;Cat&gt; cats = Arrays.<span class="fu">asList</span>(<span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>));
-List&lt;Animal&gt; animals = cats; <span class="co">// DOES NOT COMPILE</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="bu">List</span>&lt;Cat&gt; cats = <span class="bu">Arrays</span>.<span class="fu">asList</span>(<span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>));</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="bu">List</span>&lt;Animal&gt; animals = cats; <span class="co">// DOES NOT COMPILE</span></a></code></pre></div>
 <p>Even though <code>Cat</code> is a subtype of <code>Animal</code>, <code>List&lt;Cat&gt;</code> is <em>not</em> a subtype of <code>List&lt;Animal&gt;</code>. This is not very intuitive, but it is necessary to prevent heap pollution at runtime.</p>
 <p>Obviously, we still want to write re-usable utility code. <a href="http://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html">Wildcards</a> are making that possible. Methods inside <code>java.util.Collections</code> are good examples, e.g.:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">static</span> &lt;T&gt; <span class="dt">int</span> <span class="fu">binarySearch</span>(List&lt;? <span class="kw">extends</span> Comparable&lt;? <span class="kw">super</span> T&gt;&gt; list, T key) {
-  <span class="co">// ...</span>
-}</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">public</span> <span class="dt">static</span> &lt;T&gt; <span class="dt">int</span> <span class="fu">binarySearch</span>(<span class="bu">List</span>&lt;? <span class="kw">extends</span> <span class="bu">Comparable</span>&lt;? <span class="kw">super</span> T&gt;&gt; list, T key) {</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">}</a></code></pre></div>
 <p>In Java, you thus get better compile-time safety when using generified collections than when using raw arrays.</p>
 <h2 id="scala-arrays">Scala Arrays</h2>
 <p>In Scala, things are a lot different. <code>Array[T]</code> is Scala’s representation for Java’s <code>T[]</code>. Like in Java, a Scala <code>Array</code> is mutable. But in contrast to Java, Scala cares a lot more about compile-time type safety. The only way to prevent unsound heap pollution is to make <code>Array[T]</code> invariant:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> cats: Array[Cat] = Array(<span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>))
-<span class="kw">val</span> animals: Array[Animal] = cats <span class="co">// DOES NOT COMPILE</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">val</span> cats: Array[Cat] = Array(<span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>))</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">val</span> animals: Array[Animal] = cats <span class="co">// DOES NOT COMPILE</span></a></code></pre></div>
 <p>Scala arrays are thus safer to use than Java arrays.</p>
 <h2 id="scala-list">Scala List</h2>
 <p>Things are even better for Scala <code>List</code>, which is immutable. It is thus perfectly safe to make <code>List[+T]</code> covariant (notice the little <code>+</code>). There’s just no way to ever sneak in an object, let alone sneaking in an object with the wrong type:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> cats: List[Cat] = List(<span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>))
-<span class="kw">val</span> animals: List[Animal] = cats <span class="co">// VALID</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">val</span> cats: List[Cat] = List(<span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>))</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">val</span> animals: List[Animal] = cats <span class="co">// VALID</span></a></code></pre></div>
 <p>In other words: In Scala, <code>List[S]</code> is a subtype of <code>List[T]</code> if <code>S</code> is a subtype of <code>T</code>.</p>
 
 <hr />
@@ -82,68 +250,26 @@ List&lt;Animal&gt; animals = cats; <span class="co">// DOES NOT COMPILE</span></
 </div>
 <h1>Programmatic JavaFX Styling</h1>
 <p>JavaFX components can be styled via CSS. This is great, but sometimes wiring up a separate CSS file to set a simple background color is a bit over the top. That’s where the <code>setStyle</code> method comes in handy:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Label label = <span class="kw">new</span> Label(<span class="st">&quot;Hello&quot;</span>);
-label.<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: deeppink&quot;</span>);</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">Label</span> label = <span class="kw">new</span> <span class="bu">Label</span>(<span class="st">&quot;Hello&quot;</span>);</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">label.<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: deeppink&quot;</span>);</a></code></pre></div>
 <p>CSS classes are used to style more advanced components. A <code>ScatterChart</code>’s plot background can e.g. be styled via the <code>chart-plot-background</code> class. This is how the styling would look like in a CSS file:</p>
-<div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.chart-plot-background</span> <span class="kw">{</span>
-    <span class="kw">-fx-background-color:</span> <span class="dt">transparent</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">.chart-plot-background</span> {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    -fx-background-color: <span class="dv">transparent</span>;</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">}</a></code></pre></div>
 <p>Unfortunately, we cannot simply cram the same CSS into the <code>setStyle</code> method:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">NumberAxis xAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();
-NumberAxis yAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();
-ScatterChart&lt;Number, Number&gt; chart = <span class="kw">new</span> ScatterChart&lt;&gt;(xAxis, yAxis);
-
-<span class="co">// DOES NOT COMPILE</span>
-chart.<span class="fu">setStyle</span>(
-        <span class="st">&quot;.chart-plot-background {</span><span class="ch">\n</span><span class="st">&quot;</span> +
-        <span class="st">&quot;    -fx-background-color: transparent;</span><span class="ch">\n</span><span class="st">&quot;</span> +
-        <span class="st">&quot;}&quot;</span>
-);</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">NumberAxis xAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">NumberAxis yAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">ScatterChart&lt;<span class="bu">Number</span>, <span class="bu">Number</span>&gt; chart = <span class="kw">new</span> ScatterChart&lt;&gt;(xAxis, yAxis);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">// DOES NOT COMPILE</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">chart.<span class="fu">setStyle</span>(</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">        <span class="st">&quot;.chart-plot-background {</span><span class="sc">\n</span><span class="st">&quot;</span> +</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">        <span class="st">&quot;    -fx-background-color: transparent;</span><span class="sc">\n</span><span class="st">&quot;</span> +</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">        <span class="st">&quot;}&quot;</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">);</a></code></pre></div>
 <p>Instead, the <code>lookup</code> method can be used to navigate the CSS hierarchy:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">chart.<span class="fu">lookup</span>(<span class="st">&quot;.chart-plot-background&quot;</span>).<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: transparent&quot;</span>);</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1">chart.<span class="fu">lookup</span>(<span class="st">&quot;.chart-plot-background&quot;</span>).<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: transparent&quot;</span>);</a></code></pre></div>
 <p>In case you were wondering why you would ever want to have a transparent chart background: The <code>ScatterChart</code> component does not support line connections. Using a <code>StackPane</code> to layer a <code>ScatterChart</code> and a <code>LineChart</code> can serve as a simple workaround. The chart in the top layer must then have a transparent background.</p>
-
-<hr />
-
-<div class="info">
-    November 11, 2015
-</div>
-<h1>Play Audio via Elm</h1>
-<p>In preparation for a <a href="http://makeymakey.com/">MaKey-MaKey</a>-workshop, I needed a simple HTML page which plays a sound whenever any key is pressed. I am using all sorts of excuses to write Elm lately, so here’s how I ended up triggering the audio clip (full sources on <a href="https://github.com/netzwerg/elm-playground/tree/master/audio">GitHub</a>, deployed version <a href="http://netzwerg.ch/audio">here</a>).</p>
-<p>First, we need a signal that indicates whether any key is currently down:</p>
-<pre class="elm"><code>isAnyKeyDown : Signal Bool
-isAnyKeyDown =
-  Signal.map (\keys -&gt; not (Set.isEmpty keys)) Keyboard.keysDown</code></pre>
-<p>For debugging, let’s visualize our events by displaying a small note image:</p>
-<pre class="elm"><code>view : Bool -&gt; Html
-view isAnyKeyDown =
-  if | isAnyKeyDown -&gt; img [ src &quot;note.png&quot; ] []
-     | otherwise -&gt; div [] []
-
-main : Signal Html
-main =
-  Signal.map view isAnyKeyDown</code></pre>
-<p>Next, we need to actually play the audio. Elm itself does not support this out-of-the-box, but triggering it via HTML5 and JavaScript is quite straight forward:</p>
-<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;body&gt;</span>
-    <span class="kw">&lt;audio</span><span class="ot"> id=</span><span class="st">&quot;audio&quot;</span><span class="ot"> src=</span><span class="st">&quot;piano.ogg&quot;</span><span class="ot"> preload=</span><span class="st">&quot;auto&quot;</span><span class="kw">&gt;&lt;/audio&gt;</span>
-<span class="kw">&lt;/body&gt;</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> audio <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">'audio'</span>)
-<span class="kw">function</span> <span class="at">playAudio</span>() <span class="op">{</span>
-    <span class="co">// reset if already running</span>
-    <span class="va">audio</span>.<span class="at">pause</span>()<span class="op">;</span>
-    <span class="va">audio</span>.<span class="at">currentTime</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
-
-    <span class="co">// go!</span>
-    <span class="va">audio</span>.<span class="at">play</span>()<span class="op">;</span>
-<span class="op">}</span></code></pre></div>
-<p>Finally, we need to wire our JS function to our Elm signal. This is where Elm ports come in:</p>
-<pre class="elm"><code>port playAudio : Signal ()
-port playAudio =
-  Signal.map (\_ -&gt; ()) (Signal.filter identity False isAnyKeyDown)</code></pre>
-<p>There are two things to note here: First, we’re filtering our <code>isAnyKeyDown</code> to no longer contain key release events. Second, we’re mapping our signal of boolean values to a signal of unit types <code>()</code> to match the signature of our parameter-less JS function.</p>
-<p>All there is left, is to actually trigger the JS callback whenever Elm sends an event:</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">    <span class="kw">var</span> app <span class="op">=</span> <span class="va">Elm</span>.<span class="at">fullscreen</span>(<span class="va">Elm</span>.<span class="at">Main</span><span class="op">,</span> <span class="op">{}</span>)<span class="op">;</span>
-    <span class="va">app</span>.<span class="va">ports</span>.<span class="va">playAudio</span>.<span class="at">subscribe</span>(playAudio)<span class="op">;</span></code></pre></div>
 
 <hr />
 

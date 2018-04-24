@@ -39,25 +39,25 @@
 </div>
 <h1>Programmatic JavaFX Styling</h1>
 <p>JavaFX components can be styled via CSS. This is great, but sometimes wiring up a separate CSS file to set a simple background color is a bit over the top. That’s where the <code>setStyle</code> method comes in handy:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Label label = <span class="kw">new</span> Label(<span class="st">&quot;Hello&quot;</span>);
-label.<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: deeppink&quot;</span>);</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">Label</span> label = <span class="kw">new</span> <span class="bu">Label</span>(<span class="st">&quot;Hello&quot;</span>);</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">label.<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: deeppink&quot;</span>);</a></code></pre></div>
 <p>CSS classes are used to style more advanced components. A <code>ScatterChart</code>’s plot background can e.g. be styled via the <code>chart-plot-background</code> class. This is how the styling would look like in a CSS file:</p>
-<div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.chart-plot-background</span> <span class="kw">{</span>
-    <span class="kw">-fx-background-color:</span> <span class="dt">transparent</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">.chart-plot-background</span> {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    -fx-background-color: <span class="dv">transparent</span>;</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">}</a></code></pre></div>
 <p>Unfortunately, we cannot simply cram the same CSS into the <code>setStyle</code> method:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">NumberAxis xAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();
-NumberAxis yAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();
-ScatterChart&lt;Number, Number&gt; chart = <span class="kw">new</span> ScatterChart&lt;&gt;(xAxis, yAxis);
-
-<span class="co">// DOES NOT COMPILE</span>
-chart.<span class="fu">setStyle</span>(
-        <span class="st">&quot;.chart-plot-background {</span><span class="ch">\n</span><span class="st">&quot;</span> +
-        <span class="st">&quot;    -fx-background-color: transparent;</span><span class="ch">\n</span><span class="st">&quot;</span> +
-        <span class="st">&quot;}&quot;</span>
-);</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">NumberAxis xAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">NumberAxis yAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">ScatterChart&lt;<span class="bu">Number</span>, <span class="bu">Number</span>&gt; chart = <span class="kw">new</span> ScatterChart&lt;&gt;(xAxis, yAxis);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">// DOES NOT COMPILE</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">chart.<span class="fu">setStyle</span>(</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">        <span class="st">&quot;.chart-plot-background {</span><span class="sc">\n</span><span class="st">&quot;</span> +</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">        <span class="st">&quot;    -fx-background-color: transparent;</span><span class="sc">\n</span><span class="st">&quot;</span> +</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">        <span class="st">&quot;}&quot;</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">);</a></code></pre></div>
 <p>Instead, the <code>lookup</code> method can be used to navigate the CSS hierarchy:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">chart.<span class="fu">lookup</span>(<span class="st">&quot;.chart-plot-background&quot;</span>).<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: transparent&quot;</span>);</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1">chart.<span class="fu">lookup</span>(<span class="st">&quot;.chart-plot-background&quot;</span>).<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: transparent&quot;</span>);</a></code></pre></div>
 <p>In case you were wondering why you would ever want to have a transparent chart background: The <code>ScatterChart</code> component does not support line connections. Using a <code>StackPane</code> to layer a <code>ScatterChart</code> and a <code>LineChart</code> can serve as a simple workaround. The chart in the top layer must then have a transparent background.</p>
 
 </div>
