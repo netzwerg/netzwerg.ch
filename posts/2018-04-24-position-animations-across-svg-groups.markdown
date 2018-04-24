@@ -152,7 +152,7 @@ Situation recap:
 **What we want**: _Animations across component boundaries_
 
 There's no easy fix, but we know that animations are simple as long as they are happening on a **common coordinate system**.
-Thus the idea is simple: We keep using 0-based components, but switch to a common coordinate system while performing an animation.
+Thus the idea is straightforward: We keep using 0-based components, but switch to a common coordinate system while performing an animation.
 One very suitable common coordinate system is the view port coordinate system of our SVG's root node.
 
 Here's the rough recipe:
