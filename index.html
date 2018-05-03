@@ -36,6 +36,45 @@
 <div class="container content">
     
 <div class="info">
+    May  3, 2018
+</div>
+<h1>GitHub Pages Custom Domains Via HTTPS</h1>
+<p>Two days ago, GitHub <a href="https://blog.github.com/2018-05-01-github-pages-custom-domains-https/">announced</a> the support of HTTPS for custom domains. In addition to this blog, I maintain a few websites for <a href="https://physiomovimento.ch/">friends</a> and <a href="https://psychotherapie-bieri.ch/">family</a>, all configured through <code>A</code> records – time for migration!</p>
+<p>Officially, the migration is a simple matter of toggling the “Enforce HTTPS” button, but the button was disabled for all of my sites. The explanation wasn’t particularly encouraging: <em>Unavailable for your site because your domain is not properly configured to support HTTPS</em>.</p>
+<p>Well, time for RTFM (not my favorite hobby).</p>
+<p>These are the steps that finally worked for me:</p>
+<h2 id="https-migration-steps">HTTPS Migration Steps</h2>
+<h3 id="step-0-mixed-content-prevention">Step 0: Mixed Content Prevention</h3>
+<p>First things first: Prepare your site’s content. Ensure that all your assets (links to CSS, JS, etc.) are loaded via HTTPS. Otherwise browsers might block your “Mixed Content”.</p>
+<h3 id="step-1-dns-a-record-migration">Step 1: DNS A-Record Migration</h3>
+<p>On your provider’s website, change all <code>A</code> records to point to the following four new IPs:<br />
+ </p>
+<p><del><code>192.30.252.153</code></del></p>
+<p><del><code>192.30.252.154</code></del></p>
+<p><code>185.199.108.153</code></p>
+<p><code>185.199.109.153</code></p>
+<p><code>185.199.110.153</code></p>
+<p><code>185.199.111.153</code><br />
+ </p>
+<p>This change might take a few hours to become effective (depending on the TTL). Use <code>dig</code> to check whether the new DNS configuration is ready:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">dig</span> netzwerg.ch +noall +answer</a></code></pre></div>
+<p>It should look like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1">; <span class="op">&lt;&lt;&gt;&gt;</span> <span class="ex">DiG</span> 9.10.6 <span class="op">&lt;&lt;&gt;&gt;</span> netzwerg.ch +noall +answer</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">;; <span class="ex">global</span> options: +cmd</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.110.153</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.111.153</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.108.153</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.109.153</a></code></pre></div>
+<h3 id="step-2-trigger-certificate-generation">Step 2: Trigger Certificate Generation</h3>
+<p>In order for GitHub to detect that your site is now ready for migration, you apparently need to trigger a detection script. Any change to your repository’s <code>CNAME</code> file will do, so e.g. make a minor change and revert it, or make a harmless whitespace edit. As a result, GitHub will now generate the certificates necessary for HTTPS.</p>
+<h3 id="step-3-wait-for-certificate-availability">Step 3: Wait For Certificate Availability</h3>
+<p>Now the “Enforce HTTPS” button will still be disabled, but the explanation will be much more encouraging: <em>Not yet available for your site because the certificate has not finished being issued</em>. More patience required, we’re getting there…</p>
+<h3 id="step-4-enforce-https">Step 4: Enforce HTTPS</h3>
+<p>It might take a few hours, but as soon as this message is gone, you can access your site via HTTPS. Check that everything still works (particularly your new HTTPS asset links). Once you’re happy, toggle the “Enforce HTTPS” switch – Voilà!</p>
+
+<hr />
+
+<div class="info">
     April 24, 2018
 </div>
 <h1>Position animations across SVG groups</h1>
@@ -242,34 +281,6 @@ if (circle) {
 <div class="sourceCode" id="cb7"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">val</span> cats: List[Cat] = List(<span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>))</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">val</span> animals: List[Animal] = cats <span class="co">// VALID</span></a></code></pre></div>
 <p>In other words: In Scala, <code>List[S]</code> is a subtype of <code>List[T]</code> if <code>S</code> is a subtype of <code>T</code>.</p>
-
-<hr />
-
-<div class="info">
-    May  3, 2016
-</div>
-<h1>Programmatic JavaFX Styling</h1>
-<p>JavaFX components can be styled via CSS. This is great, but sometimes wiring up a separate CSS file to set a simple background color is a bit over the top. That’s where the <code>setStyle</code> method comes in handy:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">Label</span> label = <span class="kw">new</span> <span class="bu">Label</span>(<span class="st">&quot;Hello&quot;</span>);</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">label.<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: deeppink&quot;</span>);</a></code></pre></div>
-<p>CSS classes are used to style more advanced components. A <code>ScatterChart</code>’s plot background can e.g. be styled via the <code>chart-plot-background</code> class. This is how the styling would look like in a CSS file:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">.chart-plot-background</span> {</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    -fx-background-color: <span class="dv">transparent</span>;</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">}</a></code></pre></div>
-<p>Unfortunately, we cannot simply cram the same CSS into the <code>setStyle</code> method:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">NumberAxis xAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">NumberAxis yAxis = <span class="kw">new</span> <span class="fu">NumberAxis</span>();</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">ScatterChart&lt;<span class="bu">Number</span>, <span class="bu">Number</span>&gt; chart = <span class="kw">new</span> ScatterChart&lt;&gt;(xAxis, yAxis);</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">// DOES NOT COMPILE</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">chart.<span class="fu">setStyle</span>(</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">        <span class="st">&quot;.chart-plot-background {</span><span class="sc">\n</span><span class="st">&quot;</span> +</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">        <span class="st">&quot;    -fx-background-color: transparent;</span><span class="sc">\n</span><span class="st">&quot;</span> +</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">        <span class="st">&quot;}&quot;</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">);</a></code></pre></div>
-<p>Instead, the <code>lookup</code> method can be used to navigate the CSS hierarchy:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1">chart.<span class="fu">lookup</span>(<span class="st">&quot;.chart-plot-background&quot;</span>).<span class="fu">setStyle</span>(<span class="st">&quot;-fx-background-color: transparent&quot;</span>);</a></code></pre></div>
-<p>In case you were wondering why you would ever want to have a transparent chart background: The <code>ScatterChart</code> component does not support line connections. Using a <code>StackPane</code> to layer a <code>ScatterChart</code> and a <code>LineChart</code> can serve as a simple workaround. The chart in the top layer must then have a transparent background.</p>
 
 <hr />
 
