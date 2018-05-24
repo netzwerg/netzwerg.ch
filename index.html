@@ -36,6 +36,71 @@
 <div class="container content">
     
 <div class="info">
+    May 24, 2018
+</div>
+<h1>React SVG Tooltips</h1>
+<p>SVG has built-in support for tooltips through its <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title"><code>&lt;title&gt;</code></a> element. However, the rendered text looks very basic and cannot easily by styled:</p>
+<p><img src="../images/svg-built-in-tooltip.png" /></p>
+<p>Tooltips are an important design element when designing information-heavy, visual applications. They allow keeping the user interface clean, providing information only when needed. As Shneiderman (1996) put it in his famous <strong>visual information-seeking mantra</strong>:<br />
+<br />
+Overview first, zoom and filter, then details-on-demand<br />
+Overview first, zoom and filter, then details-on-demand<br />
+Overview first, zoom and filter, then details-on-demand<br />
+<br />
+Tooltips cover the <strong>details-on-demand</strong> aspect. However, in order to provide such details in an appealing way, built-in SVG tooltips are often not sufficient.</p>
+<h2 id="svg-tooltips">SVG Tooltips</h2>
+<p>There’s actually a pretty good technology out there to design appealing graphical UI elements: SVG! It is way superior to textual <code>&lt;title&gt;</code> elements.</p>
+<p>In an ideal SVG world, tooltips would:</p>
+<ol type="1">
+<li>Be specific to an element<br />
+</li>
+<li>Be visible on demand (mouse hovering)<br />
+</li>
+<li>Support fully customizable SVG contents<br />
+</li>
+<li>Appear always on top</li>
+</ol>
+<p><strong>Good News</strong>: If you’re using React, I have got you covered! Meet <a href="https://www.npmjs.com/package/react-svg-tooltip">react-svg-tooltip</a>, my npm package that addresses all your tooltip needs.</p>
+<h2 id="intro-to-react-svg-tooltip">Intro to react-svg-tooltip</h2>
+<p>The library offers a <code>Tooltip</code> component which can be embedded in any SVG element hierarchy:</p>
+<pre class="jsx"><code>import * as React from 'react';
+import { Tooltip } from 'react-svg-tooltip';
+
+const App = () =&gt; {
+
+    const circleRef = React.createRef&lt;SVGCircleElement&gt;();
+
+    return (
+        &lt;div className='App'&gt;
+            &lt;svg viewBox='0 0 100 100'&gt;
+                &lt;circle ref={circleRef} cx={50} cy={50} r={10} fill='steelblue'/&gt;
+                &lt;Tooltip for={circleRef}&gt;
+                    &lt;rect x={2} y={2} width={10} height={5} rx={.5} ry={.5} fill='black'/&gt;
+                    &lt;text x={5} y={5} fontSize={2} fill='white'&gt;Yay!&lt;/text&gt;
+                &lt;/Tooltip&gt;
+            &lt;/svg&gt;
+        &lt;/div&gt;
+    );
+};
+
+export default App;</code></pre>
+<p><a href="https://codesandbox.io/s/pk7p4y9v3q"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit pk7p4y9v3q" /></a></p>
+<p><img src="../images/react-svg-tooltip.png" /></p>
+<p>The component covers all requirements listed above:</p>
+<ol type="1">
+<li>Its <code>for</code> property accepts a reference to an element which serves as the mouse trigger<br />
+</li>
+<li>All mouse listener handling is happening behind the scenes<br />
+</li>
+<li>Arbitrary SVG can be used as tooltip contents. In fact, the library itself does not provide an actual tooltip. Instead, it gives you a 0-based coordinate system, so you can place your favorite SVG elements in whichever style suits your needs.<br />
+</li>
+<li>Contents are attached to the root <code>svg</code> element (using a <a href="https://reactjs.org/docs/portals.html">React portal</a> behind the scenes). Thereby your tooltip will always be rendered last, i.e. always on top.</li>
+</ol>
+<p>As usual, all <a href="https://github.com/netzwerg/react-svg-tooltip">code is on GitHub</a>, feedback is very welcome, and PRs are highly appreciated!</p>
+
+<hr />
+
+<div class="info">
     May  3, 2018
 </div>
 <h1>GitHub Pages Custom Domains Via HTTPS</h1>
@@ -239,48 +304,6 @@ if (circle) {
 
 }</code></pre>
 <p>Phew, some things are harder than they should be – let me know if there’s a simpler way!</p>
-
-<hr />
-
-<div class="info">
-    June 22, 2016
-</div>
-<h1>Covariance in Java and Scala</h1>
-<p>While there are tons of articles explaining the concept of covariance in Java, this post attempts to highlight how and why Java and Scala differ when it comes to collection type safety.</p>
-<h2 id="java-arrays">Java Arrays</h2>
-<p>Let’s start with Java arrays. They are covariant, meaning that an array of type <code>S[]</code> is a subtype of an array of type <code>T[]</code> if <code>S</code> is a subtype of <code>T</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">Cat[] cats = { <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>) };</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">Animal[] animals = cats;</a></code></pre></div>
-<p>Things are simple and life is good. The fact that arrays are covariant makes code re-use possible. Utility methods inside <code>java.util.Arrays</code> are perfect examples, e.g.:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">binarySearch</span>(<span class="bu">Object</span>[] a, <span class="bu">Object</span> key) {</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="co">// ...</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="fu">binarySearch</span>(<span class="kw">new</span> <span class="bu">Integer</span>[]{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>}, <span class="dv">2</span>); <span class="co">// VALID</span></a></code></pre></div>
-<p>As usual, everything falls apart because of mutability. Java arrays are mutable, making it possible to store the wrong type of object into an array without the compiler being able to tell:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">Cat[] cats = { <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>) };</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">Animal[] animals = cats;</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">animals[<span class="dv">0</span>] = <span class="kw">new</span> <span class="fu">Dog</span>(<span class="st">&quot;Max&quot;</span>); <span class="co">// FAILS AT RUNTIME</span></a></code></pre></div>
-<p>Ouch, heap pollution – an <code>ArrayStoreException</code> is thrown at runtime! People obsessed with types tend to call this <em>unsound</em>.</p>
-<h2 id="java-generics">Java Generics</h2>
-<p>With Java 5 came generics, which allow “a type or method to operate on objects of various types while providing compile-time type safety.” (<a href="http://docs.oracle.com/javase/1.5.0/docs/guide/language/">Oracle Java 1.5 Docs</a>). Let me repeat that: Generics were introduced to improve <em>type safety</em>. It was thus not an option to accept the same unsound array behavior. Because Java collections are mutable, the only option was to make a <code>List&lt;T&gt;</code> invariant:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="bu">List</span>&lt;Cat&gt; cats = <span class="bu">Arrays</span>.<span class="fu">asList</span>(<span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="kw">new</span> <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>));</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="bu">List</span>&lt;Animal&gt; animals = cats; <span class="co">// DOES NOT COMPILE</span></a></code></pre></div>
-<p>Even though <code>Cat</code> is a subtype of <code>Animal</code>, <code>List&lt;Cat&gt;</code> is <em>not</em> a subtype of <code>List&lt;Animal&gt;</code>. This is not very intuitive, but it is necessary to prevent heap pollution at runtime.</p>
-<p>Obviously, we still want to write re-usable utility code. <a href="http://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html">Wildcards</a> are making that possible. Methods inside <code>java.util.Collections</code> are good examples, e.g.:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">public</span> <span class="dt">static</span> &lt;T&gt; <span class="dt">int</span> <span class="fu">binarySearch</span>(<span class="bu">List</span>&lt;? <span class="kw">extends</span> <span class="bu">Comparable</span>&lt;? <span class="kw">super</span> T&gt;&gt; list, T key) {</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="co">// ...</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">}</a></code></pre></div>
-<p>In Java, you thus get better compile-time safety when using generified collections than when using raw arrays.</p>
-<h2 id="scala-arrays">Scala Arrays</h2>
-<p>In Scala, things are a lot different. <code>Array[T]</code> is Scala’s representation for Java’s <code>T[]</code>. Like in Java, a Scala <code>Array</code> is mutable. But in contrast to Java, Scala cares a lot more about compile-time type safety. The only way to prevent unsound heap pollution is to make <code>Array[T]</code> invariant:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">val</span> cats: Array[Cat] = Array(<span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>))</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">val</span> animals: Array[Animal] = cats <span class="co">// DOES NOT COMPILE</span></a></code></pre></div>
-<p>Scala arrays are thus safer to use than Java arrays.</p>
-<h2 id="scala-list">Scala List</h2>
-<p>Things are even better for Scala <code>List</code>, which is immutable. It is thus perfectly safe to make <code>List[+T]</code> covariant (notice the little <code>+</code>). There’s just no way to ever sneak in an object, let alone sneaking in an object with the wrong type:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">val</span> cats: List[Cat] = List(<span class="fu">Cat</span>(<span class="st">&quot;Gizmo&quot;</span>), <span class="fu">Cat</span>(<span class="st">&quot;Bella&quot;</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">val</span> animals: List[Animal] = cats <span class="co">// VALID</span></a></code></pre></div>
-<p>In other words: In Scala, <code>List[S]</code> is a subtype of <code>List[T]</code> if <code>S</code> is a subtype of <code>T</code>.</p>
 
 <hr />
 
