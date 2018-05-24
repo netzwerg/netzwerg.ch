@@ -8,7 +8,7 @@ However, the rendered text looks very basic and cannot easily by styled:
 ![](/images/svg-built-in-tooltip.png)
 
 
-Tooltips are an important design element when designing information-heavy, visual applications.
+Tooltips are an important design element when creating information-heavy, visual applications.
 They allow keeping the user interface clean, providing information only when needed.
 As Shneiderman (1996) put it in his famous **visual information-seeking mantra**:
 \
@@ -23,7 +23,7 @@ However, in order to provide such details in an appealing way, built-in SVG tool
 ## SVG Tooltips
 
 There's actually a pretty good technology out there to design appealing graphical UI elements: SVG!
-It is way superior to textual `<title>` elements.
+It is way superior to simple text boxes.
 
 In an ideal SVG world, tooltips would:
 
@@ -33,7 +33,7 @@ In an ideal SVG world, tooltips would:
 (4) Appear always on top
 
 **Good News**: If you're using React, I have got you covered!
-Meet [react-svg-tooltip](https://www.npmjs.com/package/react-svg-tooltip), my npm package that addresses all your tooltip needs.
+Meet [react-svg-tooltip](https://www.npmjs.com/package/react-svg-tooltip), my npm package that addresses all SVG tooltip needs.
 
 ## Intro to react-svg-tooltip
 
