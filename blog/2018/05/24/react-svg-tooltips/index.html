@@ -40,7 +40,7 @@
 <h1>React SVG Tooltips</h1>
 <p>SVG has built-in support for tooltips through its <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title"><code>&lt;title&gt;</code></a> element. However, the rendered text looks very basic and cannot easily by styled:</p>
 <p><img src="/images/svg-built-in-tooltip.png" /></p>
-<p>Tooltips are an important design element when designing information-heavy, visual applications. They allow keeping the user interface clean, providing information only when needed. As Shneiderman (1996) put it in his famous <strong>visual information-seeking mantra</strong>:<br />
+<p>Tooltips are an important design element when creating information-heavy, visual applications. They allow keeping the user interface clean, providing information only when needed. As Shneiderman (1996) put it in his famous <strong>visual information-seeking mantra</strong>:<br />
 <br />
 Overview first, zoom and filter, then details-on-demand<br />
 Overview first, zoom and filter, then details-on-demand<br />
@@ -48,7 +48,7 @@ Overview first, zoom and filter, then details-on-demand<br />
 <br />
 Tooltips cover the <strong>details-on-demand</strong> aspect. However, in order to provide such details in an appealing way, built-in SVG tooltips are often not sufficient.</p>
 <h2 id="svg-tooltips">SVG Tooltips</h2>
-<p>There’s actually a pretty good technology out there to design appealing graphical UI elements: SVG! It is way superior to textual <code>&lt;title&gt;</code> elements.</p>
+<p>There’s actually a pretty good technology out there to design appealing graphical UI elements: SVG! It is way superior to simple text boxes.</p>
 <p>In an ideal SVG world, tooltips would:</p>
 <ol type="1">
 <li>Be specific to an element<br />
@@ -59,7 +59,7 @@ Tooltips cover the <strong>details-on-demand</strong> aspect. However, in order 
 </li>
 <li>Appear always on top</li>
 </ol>
-<p><strong>Good News</strong>: If you’re using React, I have got you covered! Meet <a href="https://www.npmjs.com/package/react-svg-tooltip">react-svg-tooltip</a>, my npm package that addresses all your tooltip needs.</p>
+<p><strong>Good News</strong>: If you’re using React, I have got you covered! Meet <a href="https://www.npmjs.com/package/react-svg-tooltip">react-svg-tooltip</a>, my npm package that addresses all SVG tooltip needs.</p>
 <h2 id="intro-to-react-svg-tooltip">Intro to react-svg-tooltip</h2>
 <p>The library offers a <code>Tooltip</code> component which can be embedded in any SVG element hierarchy:</p>
 <pre class="jsx"><code>import * as React from 'react';
