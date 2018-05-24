@@ -5,7 +5,7 @@ date: 2018-05-24 09:39
 SVG has built-in support for tooltips through its [`<title>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title) element.
 However, the rendered text looks very basic and cannot easily by styled:
 
-![](../images/svg-built-in-tooltip.png)
+![](/images/svg-built-in-tooltip.png)
 
 
 Tooltips are an important design element when designing information-heavy, visual applications.
@@ -64,7 +64,7 @@ export default App;
 ```
 [![Edit pk7p4y9v3q](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/pk7p4y9v3q)
 
-![](../images/react-svg-tooltip.png)
+![](/images/react-svg-tooltip.png)
 
 The component covers all requirements listed above:
 
