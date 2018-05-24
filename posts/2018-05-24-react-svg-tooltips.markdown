@@ -10,7 +10,7 @@ However, the rendered text looks very basic and cannot easily by styled:
 
 Tooltips are an important design element when creating information-heavy, visual applications.
 They allow keeping the user interface clean, providing information only when needed.
-As Shneiderman (1996) put it in his famous **visual information-seeking mantra**:
+As [Shneiderman (1996)](https://www.cs.umd.edu/~ben/papers/Shneiderman1996eyes.pdf) put it in his famous **visual information-seeking mantra**:
 \
 \
 Overview first, zoom and filter, then details-on-demand\
