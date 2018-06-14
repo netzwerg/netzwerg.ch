@@ -8,6 +8,7 @@ main = hakyll $ do
 
     match ("CNAME" .||.
            "favicon.png" .||.
+           "google*.html" .||.
            "images/**" .||.
            "js/**" .||.
            "cv/**" .||.
