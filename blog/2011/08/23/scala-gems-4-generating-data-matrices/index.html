@@ -39,9 +39,9 @@
 </div>
 <h1>Scala Gems #4: Generating Data Matrices</h1>
 <p>Generating matrix-shaped test data is easy in any spreadsheet application: Enter a few cell values and use the fill handle to complete all others. But firing up a spreadsheet somehow feels lame. This Scala three-liner can do the same:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">println</span>(Array.<span class="fu">fill</span>(<span class="dv">7</span>, <span class="dv">3</span>)(<span class="st">&quot;X&quot;</span>).<span class="fu">map</span>(</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  _.<span class="fu">mkString</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)).<span class="fu">mkString</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">println</span>(Array.<span class="fu">fill</span>(<span class="dv">7</span>, <span class="dv">3</span>)(<span class="st">&quot;X&quot;</span>).<span class="fu">map</span>(</a>
+<a class="sourceLine" id="cb1-2" title="2">  _.<span class="fu">mkString</span>(<span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)).<span class="fu">mkString</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3">)</a></code></pre></div>
 <p>Is it readable? No. Is it handy? Yes!</p>
 
 </div>

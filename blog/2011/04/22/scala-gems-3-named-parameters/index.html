@@ -39,11 +39,11 @@
 </div>
 <h1>Scala Gems #3: Named Parameters</h1>
 <p>Just a quick one this time (it’s easter holiday and the weather is simply too beautiful to waste time in front of a computer). Anyway, have a look at this constructor call:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">MigrosEgg</span>(GREEN, BLUE)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">MigrosEgg</span>(GREEN, BLUE)</a></code></pre></div>
 <p>Unless you’re Swiss and just know that I’m referring to the “Extra” variant, wouldn’t it be a lot less ambiguous to write</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">val</span> aMigrosEgg = <span class="fu">MigrosEgg</span>(dotColor = GREEN, bgColor = BLUE)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">val</span> aMigrosEgg = <span class="fu">MigrosEgg</span>(dotColor = GREEN, bgColor = BLUE)</a></code></pre></div>
 <p>As of Scala 2.8 you can name your arguments. You can also leave out those which have default values, shuffle their order – or you can simply have another one of those little suckers:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">val</span> notAMigrosEgg = aMigrosEgg.<span class="fu">copy</span>(dotColor = PINK)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">val</span> notAMigrosEgg = aMigrosEgg.<span class="fu">copy</span>(dotColor = PINK)</a></code></pre></div>
 <p>Happy easter everyone!</p>
 
 </div>

@@ -49,26 +49,26 @@ I don’t like types because I think they proof my program correct […] but bec
 </blockquote>
 <p>Coming back to Scala: It seems to combine the best of all worlds – strictly typed, functional &amp; object-oriented, radically concise, and just close enough to the Java world for old-timers to transition gradually ;-)</p>
 <p>To keep my new Scala heart beating, I will start posting weekly Scala gems. Let me start with the example given in the above interview – just to illustrate what “no boilerplate” and “concise” really mean. In Java:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">public</span> <span class="kw">class</span> HowdyClass {</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">private</span> <span class="bu">String</span> name;</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">public</span> <span class="fu">HowdyClass</span>(<span class="bu">String</span> name) {</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="kw">this</span>.<span class="fu">name</span> = name;</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    }</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">sayHowdy</span>() {</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">        <span class="kw">return</span> <span class="st">&quot;Howdy &quot;</span> + name;</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    }</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">public</span> <span class="kw">class</span> HowdyClass {</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">private</span> <span class="bu">String</span> name;</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">    <span class="kw">public</span> <span class="fu">HowdyClass</span>(<span class="bu">String</span> name) {</a>
+<a class="sourceLine" id="cb1-6" title="6">        <span class="kw">this</span>.<span class="fu">name</span> = name;</a>
+<a class="sourceLine" id="cb1-7" title="7">    }</a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">sayHowdy</span>() {</a>
+<a class="sourceLine" id="cb1-11" title="11">        <span class="kw">return</span> <span class="st">&quot;Howdy &quot;</span> + name;</a>
+<a class="sourceLine" id="cb1-12" title="12">    }</a>
+<a class="sourceLine" id="cb1-13" title="13">}</a></code></pre></div>
 <p>and in Scala:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span> <span class="fu">HowdyClass</span>(name: String) {</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="kw">def</span> sayHowdy = <span class="st">&quot;Howdy &quot;</span> + name</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">class</span> <span class="fu">HowdyClass</span>(name: String) {</a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="kw">def</span> sayHowdy = <span class="st">&quot;Howdy &quot;</span> + name</a>
+<a class="sourceLine" id="cb2-3" title="3">}</a></code></pre></div>
 <p>The following example is my personal highlight after roughly two hours of playing around with the interpreter: Initializing a two-dimensional grid with indexed cells:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">class</span> <span class="fu">Cell</span>(x: Int, y: Int)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">Seq.<span class="fu">tabulate</span>(<span class="dv">3</span>, <span class="dv">9</span>)(<span class="kw">new</span> <span class="fu">Cell</span>(_, _))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">class</span> <span class="fu">Cell</span>(x: Int, y: Int)</a>
+<a class="sourceLine" id="cb3-2" title="2">Seq.<span class="fu">tabulate</span>(<span class="dv">3</span>, <span class="dv">9</span>)(<span class="kw">new</span> <span class="fu">Cell</span>(_, _))</a></code></pre></div>
 <p>This is actually almost too concise (or at least as a functional noob it took me quite some time to understand it). Here’s a verbose equivalent which is a bit more self explanatory: <code>scala Seq.tabulate(3, 9)((x: Int, y: Int) =&gt; new Cell(x, y))</code>And now <a href="http://www.scala-lang.org/">go get it</a> and have a lot of fun!</p>
 
 </div>

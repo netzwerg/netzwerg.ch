@@ -40,51 +40,51 @@
 <h1>Java 8 Optional</h1>
 <p><a href="http://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>, inventor of the <code>null</code> reference, apologetically called it “the billion dollar mistake”.</p>
 <p>The problem with <code>null</code> is not that it was invented back in 1965, but that we are still struggling with it 50 years later. Any Java developer has probably seen and written code like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">String</span> result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="bu">String</span> value;</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">if</span> (result != <span class="kw">null</span>) {</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    value = result.<span class="fu">trim</span>();</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">} <span class="kw">else</span> {</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" title="1"><span class="bu">String</span> result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="bu">String</span> value;</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">if</span> (result != <span class="kw">null</span>) {</a>
+<a class="sourceLine" id="cb1-4" title="4">    value = result.<span class="fu">trim</span>();</a>
+<a class="sourceLine" id="cb1-5" title="5">} <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb1-6" title="6">    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;</a>
+<a class="sourceLine" id="cb1-7" title="7">}</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</a></code></pre></div>
 <p>In fact, most Java monoglots have probably seen and written code like this so many times, that they don’t even see the problem anymore. And yet, with Java 8, they have to deal with a solution: the <code>Optional</code> type.</p>
 <p>I recently came across this popular article: <a href="https://www.voxxed.com/blog/2015/01/embracing-void-6-refined-tricks-dealing-nulls-java/">Embracing the Void: 6 Refined Tricks for Dealing with Nulls in Java</a>. It gives a nice rundown of strategies around the <code>null</code> reference. Sadly, it discourages the use of Java 8’s <code>Optional</code>. In this post I will explain why the argumentation is flawed.</p>
 <h2 id="types-to-the-rescue">Types to the rescue</h2>
 <p>One way to re-write the above snippet using <code>Optional</code> could look like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">Optional&lt;<span class="bu">String</span>&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="bu">String</span> value;</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">if</span> (result.<span class="fu">isPresent</span>()) {</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">    value = result.<span class="fu">get</span>().<span class="fu">trim</span>();</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">} <span class="kw">else</span> {</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" title="1">Optional&lt;<span class="bu">String</span>&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="bu">String</span> value;</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">if</span> (result.<span class="fu">isPresent</span>()) {</a>
+<a class="sourceLine" id="cb2-4" title="4">    value = result.<span class="fu">get</span>().<span class="fu">trim</span>();</a>
+<a class="sourceLine" id="cb2-5" title="5">} <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb2-6" title="6">    value = <span class="st">&quot;&lt;absent&gt;&quot;</span>;</a>
+<a class="sourceLine" id="cb2-7" title="7">}</a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Value: &quot;</span> + value);</a></code></pre></div>
 <p>The service returns an <code>Optional&lt;String&gt;</code> and the caller is working her way around it. From a complexity point of view, the change is argueably not much of an improvement: We still need a mutable <code>value</code> variable, and the overall logic is roughly the same. And yet, the expressiveness has improved. The signature of the service has clearer semantics now. Originally, the caller of the service could not distinguish between <em>“the implementor of the service made a programming error”</em> and <em>“the value has not been found”</em> – both were resulting in <code>null</code>. This is possible now and – even better – the type system <strong>forces</strong> the caller to deal with absents values.</p>
 <h2 id="but-wait-theres-more">But wait, there’s more</h2>
 <p>Now that the semantics are straight, let’s make the <code>value</code> variable immutable and eliminate the <code>if .. else</code> construct:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">Optional&lt;<span class="bu">String</span>&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="dt">final</span> <span class="bu">String</span> value = result.<span class="fu">orElseGet</span>(() -&gt; <span class="st">&quot;&lt;absent&gt;&quot;</span>).<span class="fu">trim</span>();</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" title="1">Optional&lt;<span class="bu">String</span>&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="dt">final</span> <span class="bu">String</span> value = result.<span class="fu">orElseGet</span>(() -&gt; <span class="st">&quot;&lt;absent&gt;&quot;</span>).<span class="fu">trim</span>();</a></code></pre></div>
 <p>This code is safer, more expressive, and more concise than the original version, but the <code>() -&gt; &quot;...&quot;</code> clutter makes my Scala heart cringe, so I’m offering yet another variant:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1">Optional&lt;<span class="bu">String</span>&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="bu">String</span> value = result.<span class="fu">map</span>(<span class="bu">String</span>::trim).<span class="fu">orElse</span>(<span class="st">&quot;&lt;absent&gt;&quot;</span>);</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" title="1">Optional&lt;<span class="bu">String</span>&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="bu">String</span> value = result.<span class="fu">map</span>(<span class="bu">String</span>::trim).<span class="fu">orElse</span>(<span class="st">&quot;&lt;absent&gt;&quot;</span>);</a></code></pre></div>
 <p>We are taking advantage of the fact that <code>Optional</code> behaves like a collection: If it is absent, it behaves like an empty list, the call to <code>map</code> is never executed, and the result is an empty <code>Optional</code> (which we handle via <code>orElse</code>). If the result is present, it behaves like a list with one element, which we trim and return.</p>
 <h2 id="wrapping-legacy-code">Wrapping legacy code</h2>
 <p>Imagine that our original <code>service</code> interface is actually coming from a 3rd party library. You can’t simply change all the signatures to properly return <code>Option&lt;T&gt;</code>. But you can wrap the service calls and create yourself a <code>null</code>-safe world:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb5-1" data-line-number="1">Optional&lt;<span class="bu">String</span>&gt; result = Optional.<span class="fu">ofNullable</span>(legacyService.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>));</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb5-1" title="1">Optional&lt;<span class="bu">String</span>&gt; result = Optional.<span class="fu">ofNullable</span>(legacyService.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>));</a></code></pre></div>
 <h2 id="unboxing-a-cat-in-a-box-in-a-box">Unboxing a cat in a box in a box</h2>
 <p>And finally: The holy grail of functional programming, <code>flatMap</code>.</p>
 <p>Let’s start with a simple <code>User</code> which has an optional middle name:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">interface</span> User {</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">    <span class="bu">String</span> <span class="fu">getName</span>();</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="bu">Option</span>&lt;<span class="bu">String</span>&gt; <span class="fu">getMiddleName</span>();</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">interface</span> User {</a>
+<a class="sourceLine" id="cb6-2" title="2">    <span class="bu">String</span> <span class="fu">getName</span>();</a>
+<a class="sourceLine" id="cb6-3" title="3">    <span class="bu">Option</span>&lt;<span class="bu">String</span>&gt; <span class="fu">getMiddleName</span>();</a>
+<a class="sourceLine" id="cb6-4" title="4">}</a></code></pre></div>
 <p>Looking up the user via service is straightforward, but look at all those types:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb7-1" data-line-number="1">Optional&lt;User&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">Optional&lt;Optional&lt;<span class="bu">String</span>&gt;&gt; middleName = result.<span class="fu">map</span>(User::getMiddleName);</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb7-1" title="1">Optional&lt;User&gt; result = service.<span class="fu">find</span>(<span class="st">&quot;id&quot;</span>);</a>
+<a class="sourceLine" id="cb7-2" title="2">Optional&lt;Optional&lt;<span class="bu">String</span>&gt;&gt; middleName = result.<span class="fu">map</span>(User::getMiddleName);</a></code></pre></div>
 <p>The outer <code>Optional</code> is the result of the <code>map</code> call (presence/absence of <code>User</code>), while the inner <code>Optional</code> is wrapping the middle name value.</p>
 <p><code>flatMap</code> is our power tool to unwrap the value from nested <code>Optional</code>s:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="bu">String</span> middleName = result.<span class="fu">flatMap</span>(User::getMiddleName).<span class="fu">orElse</span>(<span class="st">&quot;Ada&quot;</span>);</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb8-1" title="1"><span class="bu">String</span> middleName = result.<span class="fu">flatMap</span>(User::getMiddleName).<span class="fu">orElse</span>(<span class="st">&quot;Ada&quot;</span>);</a></code></pre></div>
 <p>So next time you can’t remember the semantics of <code>flatMap</code>, just think of all those cats stuck in their nested boxes:</p>
 <p><img src="/images/cat.png" /></p>
 <p><em>(via <span class="citation" data-cites="channingwalton">[@channingwalton]</span>(https://twitter.com/channingwalton/status/447778554114502657))</em></p>

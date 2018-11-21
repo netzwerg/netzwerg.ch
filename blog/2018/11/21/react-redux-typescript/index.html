@@ -34,8 +34,7 @@
     </nav>
 </div>
 <div class="container content">
-    
-<div class="info">
+    <div class="info">
     November 21, 2018
 </div>
 <h1>How we use React/Redux with TypeScript</h1>
@@ -240,114 +239,6 @@ export default withStyles(styles)(ExampleComponent)</code></pre>
 <a class="sourceLine" id="cb15-6" title="6">  <span class="dt">&quot;printWidth&quot;</span><span class="fu">:</span> <span class="dv">120</span></a>
 <a class="sourceLine" id="cb15-7" title="7"><span class="fu">}</span></a></code></pre></div>
 <p><em>Thanks for reviewing this post, <a href="https://twitter.com/ben_rosenbaum">Ben</a>!</em></p>
-
-<hr />
-
-<div class="info">
-    May 24, 2018
-</div>
-<h1>React SVG Tooltips</h1>
-<p>SVG has built-in support for tooltips through its <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title"><code>&lt;title&gt;</code></a> element. However, the rendered text looks very basic and cannot easily by styled:</p>
-<p><img src="/images/svg-built-in-tooltip.png" /></p>
-<p>Tooltips are an important design element when creating information-heavy, visual applications. They allow keeping the user interface clean, providing information only when needed. As <a href="https://www.cs.umd.edu/~ben/papers/Shneiderman1996eyes.pdf">Shneiderman (1996)</a> put it in his famous <strong>visual information-seeking mantra</strong>:<br />
-<br />
-Overview first, zoom and filter, then details-on-demand<br />
-Overview first, zoom and filter, then details-on-demand<br />
-Overview first, zoom and filter, then details-on-demand<br />
-<br />
-Tooltips cover the <strong>details-on-demand</strong> aspect. However, in order to provide such details in an appealing way, built-in SVG tooltips are often not sufficient.</p>
-<h2 id="svg-tooltips">SVG Tooltips</h2>
-<p>There’s actually a pretty good technology out there to design appealing graphical UI elements: SVG! It is way superior to simple text boxes.</p>
-<p>In an ideal SVG world, tooltips would:</p>
-<ol type="1">
-<li>Be specific to an element<br />
-</li>
-<li>Be visible on demand (mouse hovering)<br />
-</li>
-<li>Support fully customizable SVG contents<br />
-</li>
-<li>Appear always on top</li>
-</ol>
-<p><strong>Good News</strong>: If you’re using React, I have got you covered! Meet <a href="https://www.npmjs.com/package/react-svg-tooltip">react-svg-tooltip</a>, my npm package that addresses all SVG tooltip needs.</p>
-<h2 id="intro-to-react-svg-tooltip">Intro to react-svg-tooltip</h2>
-<p>The library offers a <code>Tooltip</code> component which can be embedded in any SVG element hierarchy:</p>
-<pre class="jsx"><code>import * as React from 'react';
-import { Tooltip } from 'react-svg-tooltip';
-
-const App = () =&gt; {
-
-    const circleRef = React.createRef&lt;SVGCircleElement&gt;();
-
-    return (
-        &lt;div className='App'&gt;
-            &lt;svg viewBox='0 0 100 100'&gt;
-                &lt;circle ref={circleRef} cx={50} cy={50} r={10} fill='steelblue'/&gt;
-                &lt;Tooltip for={circleRef}&gt;
-                    &lt;rect x={2} y={2} width={10} height={5} rx={.5} ry={.5} fill='black'/&gt;
-                    &lt;text x={5} y={5} fontSize={2} fill='white'&gt;Yay!&lt;/text&gt;
-                &lt;/Tooltip&gt;
-            &lt;/svg&gt;
-        &lt;/div&gt;
-    );
-};
-
-export default App;</code></pre>
-<p><a href="https://codesandbox.io/s/pk7p4y9v3q"><img src="https://codesandbox.io/static/img/play-codesandbox.svg" alt="Edit pk7p4y9v3q" /></a></p>
-<p><img src="/images/react-svg-tooltip.png" /></p>
-<p>The component covers all requirements listed above:</p>
-<ol type="1">
-<li>Its <code>for</code> property accepts a reference to an element which serves as the mouse trigger<br />
-</li>
-<li>All mouse listener handling is happening behind the scenes<br />
-</li>
-<li>Arbitrary SVG can be used as tooltip contents. In fact, the library itself does not provide an actual tooltip. Instead, it gives you a 0-based coordinate system, so you can place your favorite SVG elements in whichever style suits your needs.<br />
-</li>
-<li>Contents are attached to the root <code>svg</code> element (using a <a href="https://reactjs.org/docs/portals.html">React portal</a> behind the scenes). Thereby your tooltip will always be rendered last, i.e. always on top.</li>
-</ol>
-<p>As usual, all <a href="https://github.com/netzwerg/react-svg-tooltip">code is on GitHub</a>, feedback is very welcome, and PRs are highly appreciated!</p>
-
-<hr />
-
-<div class="info">
-    May  3, 2018
-</div>
-<h1>GitHub Pages Custom Domains Via HTTPS</h1>
-<p>Two days ago, GitHub <a href="https://blog.github.com/2018-05-01-github-pages-custom-domains-https/">announced</a> the support of HTTPS for custom domains. In addition to this blog, I maintain a few websites for <a href="https://physiomovimento.ch/">friends</a> and <a href="https://psychotherapie-bieri.ch/">family</a>, all configured through <code>A</code> records – time for migration!</p>
-<p>Officially, the migration is a simple matter of toggling the “Enforce HTTPS” button, but the button was disabled for all of my sites. The explanation wasn’t particularly encouraging: <em>Unavailable for your site because your domain is not properly configured to support HTTPS</em>.</p>
-<p>Well, time for RTFM (not my favorite hobby).</p>
-<p>These are the steps that finally worked for me:</p>
-<h2 id="https-migration-steps">HTTPS Migration Steps</h2>
-<h3 id="step-0-mixed-content-prevention">Step 0: Mixed Content Prevention</h3>
-<p>First things first: Prepare your site’s content. Ensure that all your assets (links to CSS, JS, etc.) are loaded via HTTPS. Otherwise browsers might block your “Mixed Content”.</p>
-<h3 id="step-1-dns-a-record-migration">Step 1: DNS A-Record Migration</h3>
-<p>On your provider’s website, change all <code>A</code> records to point to the following four new IPs:<br />
- </p>
-<p><del><code>192.30.252.153</code></del></p>
-<p><del><code>192.30.252.154</code></del></p>
-<p><code>185.199.108.153</code></p>
-<p><code>185.199.109.153</code></p>
-<p><code>185.199.110.153</code></p>
-<p><code>185.199.111.153</code><br />
- </p>
-<p>This change might take a few hours to become effective (depending on the TTL). Use <code>dig</code> to check whether the new DNS configuration is ready:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">dig</span> netzwerg.ch +noall +answer</a></code></pre></div>
-<p>It should look like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">; <span class="op">&lt;&lt;&gt;&gt;</span> <span class="ex">DiG</span> 9.10.6 <span class="op">&lt;&lt;&gt;&gt;</span> netzwerg.ch +noall +answer</a>
-<a class="sourceLine" id="cb2-2" title="2">;; <span class="ex">global</span> options: +cmd</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.110.153</a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.111.153</a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.108.153</a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="ex">netzwerg.ch.</span>		10800	IN	A	185.199.109.153</a></code></pre></div>
-<h3 id="step-2-trigger-certificate-generation">Step 2: Trigger Certificate Generation</h3>
-<p>In order for GitHub to detect that your site is now ready for migration, you apparently need to trigger a detection script. Any change to your repository’s <code>CNAME</code> file will do, so e.g. make a minor change and revert it, or make a harmless whitespace edit. As a result, GitHub will now generate the certificates necessary for HTTPS.</p>
-<h3 id="step-3-wait-for-certificate-availability">Step 3: Wait For Certificate Availability</h3>
-<p>Now the “Enforce HTTPS” button will still be disabled, but the explanation will be much more encouraging: <em>Not yet available for your site because the certificate has not finished being issued</em>. More patience required, we’re getting there…</p>
-<h3 id="step-4-enforce-https">Step 4: Enforce HTTPS</h3>
-<p>It might take a few hours, but as soon as this message is gone, you can access your site via HTTPS. Check that everything still works (particularly your new HTTPS asset links). Once you’re happy, toggle the “Enforce HTTPS” switch – Voilà!</p>
-
-<hr />
-
-<a class="index-footer" href="/archive.html">Older Posts &raquo; Archive</a>
 
 </div>
 <div class="container footer">

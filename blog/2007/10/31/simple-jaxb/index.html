@@ -48,39 +48,39 @@
 <p>This approach works really well for a big project. However, if all you need is reading a simple xml and accessing its data from your java classes (or vice-versa: dumping parts of your java objects to xml), you’d probably want to use something less heavy-weight.</p>
 <p>what’s quite cool, is that you can also use jaxb for such simple tasks. when the jaxb compiler generates java classes, it uses annotations like <code>@XmlRootElement</code> to map from java types to xml elements. manually annotating your java classes can thus serve as a very simple marshalling/unmarshalling strategy, which doesn’t involve a schema, nor an xjc task, nor any further manual work.</p>
 <p>Here is an example of a simple Java → XML → Java round-trip:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">JAXBContext</span> context = <span class="bu">JAXBContext</span>.<span class="fu">newInstance</span>(Foo.<span class="fu">class</span>);</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">Foo foo = <span class="kw">new</span> <span class="fu">Foo</span>();</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">foo.<span class="fu">setText</span>(<span class="st">&quot;bar&quot;</span>);</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Original: &quot;</span> + foo);</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="bu">StringWriter</span> result = <span class="kw">new</span> <span class="bu">StringWriter</span>();</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="bu">Marshaller</span> marshaller = context.<span class="fu">createMarshaller</span>();</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">marshaller.<span class="fu">marshal</span>(foo, result);</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="bu">String</span> xml = <span class="kw">new</span> <span class="bu">String</span>(result.<span class="fu">getBuffer</span>());</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Marshalled: &quot;</span> + xml);</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="bu">Unmarshaller</span> um = context.<span class="fu">createUnmarshaller</span>();</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="bu">Object</span> o = um.<span class="fu">unmarshal</span>(<span class="kw">new</span> <span class="bu">StringReader</span>(xml));</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Unmarshalled: &quot;</span> + o);</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="at">@XmlRootElement</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="kw">private</span> <span class="dt">static</span> <span class="kw">class</span> Foo {</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">    <span class="at">@XmlAttribute</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="kw">private</span> <span class="bu">String</span> text;</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setText</span>(<span class="bu">String</span> text) {</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">        <span class="kw">this</span>.<span class="fu">text</span> = text;</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">    }</a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">    <span class="at">@Override</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">toString</span>() {</a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">        <span class="kw">return</span> <span class="st">&quot;[&quot;</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">          + Foo.<span class="fu">class</span>.<span class="fu">getSimpleName</span>()</a>
-<a class="sourceLine" id="cb1-31" data-line-number="31">          + <span class="st">&quot;] &quot;</span> + text;</a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">    }</a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" title="1"><span class="bu">JAXBContext</span> context = <span class="bu">JAXBContext</span>.<span class="fu">newInstance</span>(Foo.<span class="fu">class</span>);</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">Foo foo = <span class="kw">new</span> <span class="fu">Foo</span>();</a>
+<a class="sourceLine" id="cb1-4" title="4">foo.<span class="fu">setText</span>(<span class="st">&quot;bar&quot;</span>);</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Original: &quot;</span> + foo);</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="bu">StringWriter</span> result = <span class="kw">new</span> <span class="bu">StringWriter</span>();</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="bu">Marshaller</span> marshaller = context.<span class="fu">createMarshaller</span>();</a>
+<a class="sourceLine" id="cb1-9" title="9">marshaller.<span class="fu">marshal</span>(foo, result);</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="bu">String</span> xml = <span class="kw">new</span> <span class="bu">String</span>(result.<span class="fu">getBuffer</span>());</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Marshalled: &quot;</span> + xml);</a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="bu">Unmarshaller</span> um = context.<span class="fu">createUnmarshaller</span>();</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="bu">Object</span> o = um.<span class="fu">unmarshal</span>(<span class="kw">new</span> <span class="bu">StringReader</span>(xml));</a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Unmarshalled: &quot;</span> + o);</a>
+<a class="sourceLine" id="cb1-16" title="16"></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="at">@XmlRootElement</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="kw">private</span> <span class="dt">static</span> <span class="kw">class</span> Foo {</a>
+<a class="sourceLine" id="cb1-19" title="19"></a>
+<a class="sourceLine" id="cb1-20" title="20">    <span class="at">@XmlAttribute</span></a>
+<a class="sourceLine" id="cb1-21" title="21">    <span class="kw">private</span> <span class="bu">String</span> text;</a>
+<a class="sourceLine" id="cb1-22" title="22"></a>
+<a class="sourceLine" id="cb1-23" title="23">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setText</span>(<span class="bu">String</span> text) {</a>
+<a class="sourceLine" id="cb1-24" title="24">        <span class="kw">this</span>.<span class="fu">text</span> = text;</a>
+<a class="sourceLine" id="cb1-25" title="25">    }</a>
+<a class="sourceLine" id="cb1-26" title="26"></a>
+<a class="sourceLine" id="cb1-27" title="27">    <span class="at">@Override</span></a>
+<a class="sourceLine" id="cb1-28" title="28">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">toString</span>() {</a>
+<a class="sourceLine" id="cb1-29" title="29">        <span class="kw">return</span> <span class="st">&quot;[&quot;</span></a>
+<a class="sourceLine" id="cb1-30" title="30">          + Foo.<span class="fu">class</span>.<span class="fu">getSimpleName</span>()</a>
+<a class="sourceLine" id="cb1-31" title="31">          + <span class="st">&quot;] &quot;</span> + text;</a>
+<a class="sourceLine" id="cb1-32" title="32">    }</a>
+<a class="sourceLine" id="cb1-33" title="33">}</a></code></pre></div>
 <p>The fact that JAXB 2.0 is part of <a href="http://java.sun.com/javase/6/">Java 6</a> makes this approach even more attractive.</p>
 
 </div>

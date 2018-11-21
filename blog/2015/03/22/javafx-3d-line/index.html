@@ -42,24 +42,24 @@
 <p>Well, it shouldn’t be too difficult to connect the points with a slender cylinder, right?</p>
 <p>I was wrong, it took me an <em>embarrassingly</em> long time to get the trigonometry right :-)</p>
 <p>Here’s my magic crutch:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">public</span> Cylinder <span class="fu">createConnection</span>(Point3D origin, Point3D target) {</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">    Point3D yAxis = <span class="kw">new</span> <span class="fu">Point3D</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    Point3D diff = target.<span class="fu">subtract</span>(origin);</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="dt">double</span> height = diff.<span class="fu">magnitude</span>();</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    Point3D mid = target.<span class="fu">midpoint</span>(origin);</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    Translate moveToMidpoint = <span class="kw">new</span> <span class="fu">Translate</span>(mid.<span class="fu">getX</span>(), mid.<span class="fu">getY</span>(), mid.<span class="fu">getZ</span>());</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    Point3D axisOfRotation = diff.<span class="fu">crossProduct</span>(yAxis);</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="dt">double</span> angle = <span class="bu">Math</span>.<span class="fu">acos</span>(diff.<span class="fu">normalize</span>().<span class="fu">dotProduct</span>(yAxis));</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    Rotate rotateAroundCenter = <span class="kw">new</span> <span class="fu">Rotate</span>(-<span class="bu">Math</span>.<span class="fu">toDegrees</span>(angle), axisOfRotation);</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">    Cylinder line = <span class="kw">new</span> <span class="fu">Cylinder</span>(<span class="dv">1</span>, height);</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">    line.<span class="fu">getTransforms</span>().<span class="fu">addAll</span>(moveToMidpoint, rotateAroundCenter);</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">    <span class="kw">return</span> line;</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">public</span> Cylinder <span class="fu">createConnection</span>(Point3D origin, Point3D target) {</a>
+<a class="sourceLine" id="cb1-2" title="2">    Point3D yAxis = <span class="kw">new</span> <span class="fu">Point3D</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb1-3" title="3">    Point3D diff = target.<span class="fu">subtract</span>(origin);</a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="dt">double</span> height = diff.<span class="fu">magnitude</span>();</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">    Point3D mid = target.<span class="fu">midpoint</span>(origin);</a>
+<a class="sourceLine" id="cb1-7" title="7">    Translate moveToMidpoint = <span class="kw">new</span> <span class="fu">Translate</span>(mid.<span class="fu">getX</span>(), mid.<span class="fu">getY</span>(), mid.<span class="fu">getZ</span>());</a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9">    Point3D axisOfRotation = diff.<span class="fu">crossProduct</span>(yAxis);</a>
+<a class="sourceLine" id="cb1-10" title="10">    <span class="dt">double</span> angle = <span class="bu">Math</span>.<span class="fu">acos</span>(diff.<span class="fu">normalize</span>().<span class="fu">dotProduct</span>(yAxis));</a>
+<a class="sourceLine" id="cb1-11" title="11">    Rotate rotateAroundCenter = <span class="kw">new</span> <span class="fu">Rotate</span>(-<span class="bu">Math</span>.<span class="fu">toDegrees</span>(angle), axisOfRotation);</a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13">    Cylinder line = <span class="kw">new</span> <span class="fu">Cylinder</span>(<span class="dv">1</span>, height);</a>
+<a class="sourceLine" id="cb1-14" title="14"></a>
+<a class="sourceLine" id="cb1-15" title="15">    line.<span class="fu">getTransforms</span>().<span class="fu">addAll</span>(moveToMidpoint, rotateAroundCenter);</a>
+<a class="sourceLine" id="cb1-16" title="16"></a>
+<a class="sourceLine" id="cb1-17" title="17">    <span class="kw">return</span> line;</a>
+<a class="sourceLine" id="cb1-18" title="18">}</a></code></pre></div>
 <p>To illustrate what’s going on, I created a 2D representation of all individual steps, starting off with the creation of the cylinder. By default, its center is placed at the origin:</p>
 <p><img src="/images/cylinder-1.png" width="150px" /></p>
 <p>The <code>moveToMidpoint</code> transformation moves its center to the final location (the yellow midpoint in the above image):</p>

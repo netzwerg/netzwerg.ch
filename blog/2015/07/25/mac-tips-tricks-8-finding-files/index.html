@@ -39,7 +39,7 @@
 </div>
 <h1>Mac OSX Tips & Tricks #8: Finding Files via Terminal</h1>
 <p>This is how you recursively search all <code>notes.txt</code> files in your home directory (<code>~</code>) for the text snippet <code>foo</code> (from an OSX terminal):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">mdfind</span> -name notes.txt -onlyin ~ -0 <span class="kw">|</span> <span class="fu">xargs</span> -0 grep -i <span class="st">&quot;foo&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">mdfind</span> -name notes.txt -onlyin ~ -0 <span class="kw">|</span> <span class="fu">xargs</span> -0 grep -i <span class="st">&quot;foo&quot;</span></a></code></pre></div>
 <p>It has at least 3 advantages over the traditional <code>find/grep</code> combo:</p>
 <ul>
 <li><code>mdfind</code> is the terminal version of Spotlight: It is blazingly fast because it uses an index</li>

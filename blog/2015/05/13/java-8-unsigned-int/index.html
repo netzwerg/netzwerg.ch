@@ -41,26 +41,26 @@
 <p>When I recently profiled one of our applications, it turned out that a lot of memory was wasted on a huge number of <code>long</code> primitives. They were used to represent IDs, which were originating from a 3rd party text file. Someone must have loved huge numbers, so they chose an ID format that didn’t fit into an <code>int</code>.</p>
 <p>Well, while being huge, the IDs were at least always positive. So I was confident that some data massage would allow me to squeeze them into primitive <code>int</code> values eventually. It took me by surprise that Java 8 actually supports unsigned primitives out of the box. Guess we all missed that while wrapping our heads around lambdas and streams, right?</p>
 <p>Here’s how it works:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">public</span> <span class="kw">class</span> UnsignedIntTest {</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="at">@Test</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">roundTrip</span>() {</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="co">// compile error: 2^32 - 1 is too large for an int</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="co">// int intValue = 4294967295;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">        <span class="dt">long</span> longValue = (<span class="dt">long</span>) <span class="bu">Math</span>.<span class="fu">pow</span>(<span class="dv">2</span>, <span class="dv">32</span>) - <span class="dv">1</span>;</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">        <span class="bu">String</span> longValueAsString = <span class="bu">String</span>.<span class="fu">valueOf</span>(longValue);</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        <span class="dt">int</span> unsignedInt = <span class="bu">Integer</span>.<span class="fu">parseUnsignedInt</span>(longValueAsString);</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">        <span class="dt">long</span> result = <span class="bu">Integer</span>.<span class="fu">toUnsignedLong</span>(unsignedInt);</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        <span class="fu">assertEquals</span>(longValue, result);</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">    }</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">public</span> <span class="kw">class</span> UnsignedIntTest {</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="at">@Test</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">roundTrip</span>() {</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">        <span class="co">// compile error: 2^32 - 1 is too large for an int</span></a>
+<a class="sourceLine" id="cb1-7" title="7">        <span class="co">// int intValue = 4294967295;</span></a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9">        <span class="dt">long</span> longValue = (<span class="dt">long</span>) <span class="bu">Math</span>.<span class="fu">pow</span>(<span class="dv">2</span>, <span class="dv">32</span>) - <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb1-10" title="10">        <span class="bu">String</span> longValueAsString = <span class="bu">String</span>.<span class="fu">valueOf</span>(longValue);</a>
+<a class="sourceLine" id="cb1-11" title="11"></a>
+<a class="sourceLine" id="cb1-12" title="12">        <span class="dt">int</span> unsignedInt = <span class="bu">Integer</span>.<span class="fu">parseUnsignedInt</span>(longValueAsString);</a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14">        <span class="dt">long</span> result = <span class="bu">Integer</span>.<span class="fu">toUnsignedLong</span>(unsignedInt);</a>
+<a class="sourceLine" id="cb1-15" title="15"></a>
+<a class="sourceLine" id="cb1-16" title="16">        <span class="fu">assertEquals</span>(longValue, result);</a>
+<a class="sourceLine" id="cb1-17" title="17"></a>
+<a class="sourceLine" id="cb1-18" title="18">    }</a>
+<a class="sourceLine" id="cb1-19" title="19"></a>
+<a class="sourceLine" id="cb1-20" title="20">}</a></code></pre></div>
 
 </div>
 <div class="container footer">
