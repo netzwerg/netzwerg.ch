@@ -179,7 +179,7 @@ type State = Readonly<{
 ```
 
 Unfortunately, things look more type-safe than they are.
-Aliases are nothing more than what their name implies: They are simple synonyms.
+Aliases are nothing more than what their name implies: they are simple synonyms.
 Any `string` can be used in place of a `PatientId` or `BedId` – and vice versa:
 
 ```typescript
@@ -221,8 +221,8 @@ state.bedByPatient.set('foo', 'bar')
 ## <a name="6"></a>Explicit Types Enhance Readability
 
 While it is often possible to not specify types explicitly, they still sometimes enhance code readability (and IDE completion, for that matter).
-Container components are a good example: They involve a lot of "plumbing", where input/output types have to match, so explicit types are a plus here.
-This is how our container components tend to look like:
+Container components are a good example: they involve a lot of "plumbing", where input/output types have to match, so explicit types are a plus here.
+This is how our container components tend to look:
 
 ```typescript
 type Props = Readonly<{
@@ -259,11 +259,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExampleComponent)
 
 As a developer, CSS has always been the scary corner of my applications.
 It uses a global namespace, you cannot use variables, and it's almost impossible to tell which code is even in use at all.
-So you end up treating your CSS very differently from the rest of your code: No refactorings, no re-use, no clean-up.
+So you end up treating your CSS very differently from the rest of your code: no refactorings, no re-use, no clean-up.
 
 We are using [Material-UI](https://material-ui.com) in all our projects, so it did not take much convincing to also use their styling solution.
 It uses JSS at its core and has excellent TypeScript support.
-This is how a basic component looks like:
+This is how a basic component looks:
 
 ```typescript
 import { createStyles, withStyles, WithStyles } from '@material-ui/core'
@@ -287,7 +287,7 @@ export default withStyles(styles)(ExampleComponent)
 
 ## <a name="8"></a>Look Ma, No Semicolons!
 
-And finally, a good practice that is not specific to React nor TypeScript: Make your code [prettier](https://prettier.io)!
+And finally, a good practice that is not specific to React nor TypeScript: make your code [prettier](https://prettier.io)!
 We use [husky](https://github.com/typicode/husky) to kick off code formatting before each git commit.
 Here's our current configuration:
 
@@ -301,3 +301,5 @@ _.prettierrc:_
   "printWidth": 120
 }
 ```
+
+_Thanks for reviewing this post, [Ben](https://twitter.com/ben_rosenbaum)!_
