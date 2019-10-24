@@ -1,0 +1,99 @@
+<html>
+<head>
+
+    <title>Above, Below, and Beyond Tech Talk</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="/favicon.png" rel="icon" />
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/tomorrow-night-bright.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+
+    <link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container header">
+    <div class="jumbotron">
+        <h1>Above, Below, and Beyond Tech Talk</h1>
+        <p>by Rahel Lüthy</p>
+    </div>
+    <nav class="navbar navbar-default">
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archive.html">Archive</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container content">
+    <div class="info">
+    October 24, 2019
+</div>
+<h1>A CSS Subgrid Example</h1>
+<p>Whenever I hear about a new technology or language feature, the first question I ask myself is: <strong>Which problem does it solve?</strong> So when I learned about the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Subgrid">addition of subgrid to the CSS Grid Layout specification</a>, I wanted to see a simple example which showed a subgrid-based solution to an actual problem. I found <a href="https://www.youtube.com/watch?v=gmQlK3kRft4">helpful videos</a> and <a href="https://rachelandrew.co.uk/archives/2019/04/16/css-subgrid-news-and-demos">rock-solid-but-complicated layout arrangements</a>, but nothing simple.</p>
+<p>This post is the 3’-intro I was looking for:</p>
+<h2 id="a-simple-form">A Simple Form</h2>
+<p>Suppose you are dealing with the following HTML form:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">&lt;form&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;name&quot;</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;label-text&quot;</span><span class="kw">&gt;</span>Name<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;name&quot;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;email&quot;</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-7" title="7">    <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;label-text&quot;</span><span class="kw">&gt;</span>Email<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-8" title="8">    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;email&quot;</span><span class="ot"> id=</span><span class="st">&quot;email&quot;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-9" title="9">  <span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;message&quot;</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-11" title="11">    <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;label-text&quot;</span><span class="kw">&gt;</span>A Looong Label<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-12" title="12">    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;message&quot;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-13" title="13">  <span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw">&lt;/form&gt;</span></a></code></pre></div>
+<p>The existing CSS Grid layout already makes it easy to arrange individual fields:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">.field</span> {</a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="kw">display</span>: grid<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="kw">grid-template-columns</span>: <span class="bu">auto</span> <span class="dv">1</span>fr<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="kw">grid-column-gap</span>: <span class="dv">1</span><span class="dt">em</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="kw">margin-bottom</span>: <span class="dv">1</span><span class="dt">em</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">}</a></code></pre></div>
+<p>As a result, each row dynamically respects the preferred width of its label:</p>
+<p><img src="/images/form-css-grid.png" /></p>
+<p>While this is a good start, we would like to have something better:</p>
+<p>A two-column definition, so that</p>
+<ul>
+<li>the widest label determines the width of the left column</li>
+<li>all input fields are aligned in the right column</li>
+</ul>
+<p><img src="/images/form-css-subgrid.png" /></p>
+<p>This is exactly what the new <strong>subgrid</strong> feature is for: It matches up its grid lines to lines in the parent grid. We move the two-column grid layout definition to the parent form, and tell the fields to align along these tracks:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb3-1" title="1">form {</a>
+<a class="sourceLine" id="cb3-2" title="2">    <span class="kw">display</span>: grid<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="kw">grid-template-columns</span>: <span class="bu">auto</span> <span class="dv">1</span>fr<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="kw">grid-column-gap</span>: <span class="dv">1</span><span class="dt">em</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-5" title="5">}</a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="fu">.field</span> {</a>
+<a class="sourceLine" id="cb3-8" title="8">    <span class="kw">display</span>: grid<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="kw">grid-column</span>: span <span class="dv">2</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-10" title="10">    <span class="kw">grid-template-columns</span>: subgrid<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-11" title="11">    <span class="kw">margin-bottom</span>: <span class="dv">1</span><span class="dt">em</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-12" title="12">}</a></code></pre></div>
+<p><em>Caution: CSS Subgrid is <a href="https://caniuse.com/#feat=css-subgrid">only supported in Firefox (v71)</a></em></p>
+
+</div>
+<div class="container footer">
+    <p>Written by Rahel Lüthy &mdash; Generated by <a href="https://jaspervdj.be/hakyll">Hakyll</a></p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
