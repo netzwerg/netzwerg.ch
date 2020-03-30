@@ -13,7 +13,7 @@ And sometimes we lose track of priorities, we forget to take care of ourselves.
 Most of us have long lists of self-care routines.
 Active things, like running and yoga.
 Mindful practices, like meditation and gratitude journaling.
-Seemingly basic habits, like hugging your kids or calling a friend.
+Seemingly basic habits, like hugging our kids or calling a friend.
 Silly things, like dancing it out around the kitchen isle.
 
 In this post I will give a little background on some lesser known self-care practices that keep me afloat.
@@ -61,7 +61,7 @@ It may be helpful to use the metaphor of climbing a mountain:
 
 My daughter Filipa made a drawing for you:
 
-[TODO]
+<img src="/images/stairstep-breathing.png" alt="Stairstep Breathing" style="width: 100%"/>
 
 So what's the science behind all of this esoteric yoga quack, you might ask?
 Let me give you just a tiny bit of neurobiology background.
