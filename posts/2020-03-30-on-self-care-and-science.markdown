@@ -223,3 +223,5 @@ Yoga teachers can guide you and provide more details on breathing techniques.
 Psychotherapists know a lot about the relationships between behavior, thoughts, and emotions.
 They can help you break cycles that cause suffering in everyday life.
 Please [reach out for help](https://www.psychologie.ch) if you are struggling.
+
+Take care, y'all!
