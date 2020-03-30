@@ -107,8 +107,11 @@ With self-compassion, we give ourselves the same kindness and care we'd give to 
 
 Kirstin Neff has many helpful [exercises](https://self-compassion.org/category/exercises/#exercises) and a ton of [excellent research](https://self-compassion.org/the-research/) around this topic.
 Most notably, having empathy for ourselves also creates more empathy for others.
+Empathy, love, and self-compassion are the last things we should ration right now!
 
 Recommended reading: [Self-Compassion: The Proven Power of Being Kind to Yourself](https://self-compassion.org/self-compassion-kristin-neff/) by Kristin Neff
+
+Recommended listening: [Unlocking Us](https://brenebrown.com/podcast/brene-on-comparative-suffering-the-50-50-myth-and-settling-the-ball) by Brené Brown
 
 ## <a name="3"></a>Cold Showers
 
