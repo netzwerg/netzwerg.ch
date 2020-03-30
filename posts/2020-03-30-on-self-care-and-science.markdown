@@ -126,7 +126,7 @@ Recommended reading: [Nurturing Resilience](https://www.resilienceandregulation.
 
 ## <a name="4"></a>Completing The Stress Cycle
 
-While our ancestors were running from saber-toothed tigers, today's stressors are very different: work problems, COVID-19 fears, money issues – the list goes on and on.
+While our ancestors were running from saber-toothed tigers, today's stressors are very different: work problems, health concerns, money issues – the list goes on and on.
 We do our best to fix the problems and deal with the stressors, but our bodies stay stuck in the stress response.
 
 The reason is that, evolutionarily, our bodies rely on the full circle of a stress response:
