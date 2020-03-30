@@ -91,7 +91,7 @@ If you manage to mindfully observe your body's reactions during and after the br
 How many times have you told yourself to calm down lately?
 That you shouldn't be scared about COVID-19 because you live in a very safe country?
 That fear won't get you anywhere?
-That you shouldn't complain because you have food on the table?
+That you shouldn't complain, because you have food on the table?
 That your worries are not helpful, and that you should keep quiet?
 That you should stop whining and just get on that yoga mat?
 
