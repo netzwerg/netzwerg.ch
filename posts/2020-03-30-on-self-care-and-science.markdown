@@ -32,7 +32,7 @@ Here's the list:
 I have been practicing all of these techniques over the last few years, some of them daily.
 I learned them from professionals – most notably from my therapist and from my yoga teachers.
 
-As usual, [the source of this post is available openly](https://github.com/netzwerg/netzwerg.github.com/tree/source/posts), please correct any mistakes.
+As usual, [the source of this post is available openly](https://github.com/netzwerg/netzwerg.github.com/blob/source/posts/2020-03-30-on-self-care-and-science.markdown), please correct any mistakes.
 
 ## <a name="1"></a>Stairstep Breathing
 
