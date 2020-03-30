@@ -58,7 +58,7 @@ It may be helpful to use the metaphor of climbing a mountain:
 
 1. Climb up in about 5-10 big, steep steps
 2. At the top: pause, look around & enjoy the view
-3. Take the fast cable-car back down
+3. Take the gentle cable-car back down
 
 My daughter [Filipa](https://www.instagram.com/kashmir_saphire) made a drawing for you:
 <br/><br/>
@@ -68,7 +68,7 @@ So what's the science behind all of this esoteric yoga quack, you might ask?
 Let me give you just a tiny bit of neurobiology background.
 
 In humans, any response to fear is modulated by a brain structure called the amygdala.
-Very simply put, this is what the amygdala triggers in a threatening situation:
+Very simply put, this is what the amygdala kicks off in a threatening situation:
 
 * stress hormone levels increase
 * breathing becomes shallow and rapid
@@ -116,12 +116,12 @@ Recommended listening: [Unlocking Us](https://brenebrown.com/podcast/brene-on-co
 
 ## <a name="3"></a>Cold Showers
 
-At the end of your warm shower, turn the water very cold and stay underneath for a minute. 
+At the end of your warm shower, turn the water very cold and stay underneath for 30 seconds. 
 
 Super simple, yet very good for your nervous system.
 Here's why:
 The vagus nerve is one of the most important nerves in our body.
-It plays a powerful part in bringing our minds and bodies back to calm after encountering a perceived threat (in today's time, new COVID-19 numbers can be as threatening as a saber-toothed tiger).
+It plays a powerful part in bringing our minds and bodies back to calm after encountering a perceived threat (in today's time, new COVID-19 numbers can be very threatening).
 
 Exposing your body to cold conditions, such as taking a cold shower, stimulates the vagus nerve.
 While your body adjusts to the cold, sympathetic activity ("fight-or-flight") declines, while parasympathetic activity ("rest and digest") increases. 
@@ -208,8 +208,9 @@ Worries about the future or the past don't exist either – they're just narrati
 
 This exercise is a form of mindfulness meditation.
 There's [scientific evidence](https://www.nature.com/articles/s41598-018-26268-w) that it results in a gain of [insulae](https://en.wikipedia.org/wiki/Insular_cortex) connection strength.
-The insulae are brain strutures believed to be involved in consciousness.
+The insulae are brain structures believed to be involved in consciousness.
 They play a role in diverse functions, such as compassion & empathy, self-awareness, cognitive functioning, and interpersonal experience.
+The more activation in the insulae, the calmer we are. 
 
 Recommended reading: [First, We Make the Beast Beautiful](https://www.sarahwilson.com/2017/01/first-make-beast-beautiful/) by Sarah Wilson
  
