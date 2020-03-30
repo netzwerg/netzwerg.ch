@@ -47,17 +47,17 @@ Or lay down on your back, the exercise is also very helpful to wind down at nigh
 For a couple of cycles, observe your breath without influencing it in any way.
 After your next exhalation:
 
-(1) Fill your lungs by inhaling through your nose in a step-wise fashion 
-(2) Once your lungs are really full – pause...
-(3) Breathe out through your nose in one very long and steady stream
-(4) Mindfully observe how your body feels
-(5) Rinse & repeat! 
+1. Fill your lungs by inhaling through your nose in a step-wise fashion 
+2. Once your lungs are really full – pause...
+3. Breathe out through your nose in one very long and steady stream
+4. Mindfully observe how your body feels
+5. Rinse & repeat! 
 
 It may be helpful to use the metaphor of climbing a mountain:
 
-(1) Climb up in about 5-10 big, steep steps
-(2) At the top: pause, look around & enjoy the view
-(3) Take the fast cable-car back down
+1. Climb up in about 5-10 big, steep steps
+2. At the top: pause, look around & enjoy the view
+3. Take the fast cable-car back down
 
 My daughter Filipa made a drawing for you:
 
