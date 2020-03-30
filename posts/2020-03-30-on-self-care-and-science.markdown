@@ -106,7 +106,7 @@ You are just there for them, compassionately.
 The thing is, you can do just that with *yourself*.
 With self-compassion, we give ourselves the same kindness and care we'd give to a good friend or our children.
 
-Kirstin Neff has many helpful [exercises](https://self-compassion.org/category/exercises/#exercises) and a ton of [excellent research](https://self-compassion.org/the-research/) around this topic.
+Kristin Neff has many helpful [exercises](https://self-compassion.org/category/exercises/#exercises) and a ton of [excellent research](https://self-compassion.org/the-research/) around this topic.
 Most notably, having empathy for ourselves also creates more empathy for others.
 Empathy, love, and self-compassion are the last things we should ration right now!
 
