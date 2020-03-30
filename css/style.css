@@ -82,6 +82,11 @@ code {
     color: darkgrey;
 }
 
+.reading-time {
+    display: inline;
+    float: right;
+}
+
 blockquote {
     color: darkgrey;
     font-style: italic;

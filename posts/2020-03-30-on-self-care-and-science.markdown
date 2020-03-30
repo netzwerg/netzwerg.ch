@@ -1,6 +1,7 @@
 ---
 title: "On Self-Care and Science"
 date: 2020-03-30
+reading-time: 9
 --- 
 
 If you are a scientist, like me, you probably like facts.
@@ -71,7 +72,7 @@ Very simply put, this is what the amygdala triggers in a threatening situation:
 
 * stress hormone levels increase
 * breathing becomes shallow and rapid
-* blood pressure increases and heart rate goes up
+* blood pressure and heart rate go up
 * complex decision-making disappears
 
 The amygdala (actually, it's the amygdalae – we have two of them) are part of the limbic system.
