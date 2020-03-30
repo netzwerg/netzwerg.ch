@@ -59,10 +59,10 @@ It may be helpful to use the metaphor of climbing a mountain:
 2. At the top: pause, look around & enjoy the view
 3. Take the fast cable-car back down
 
-My daughter Filipa made a drawing for you:
-
+My daughter [Filipa](https://www.instagram.com/kashmir_saphire) made a drawing for you:
+<br/><br/>
 <img src="/images/stairstep-breathing.png" alt="Stairstep Breathing" style="width: 100%"/>
-
+<br/><br/>
 So what's the science behind all of this esoteric yoga quack, you might ask?
 Let me give you just a tiny bit of neurobiology background.
 
